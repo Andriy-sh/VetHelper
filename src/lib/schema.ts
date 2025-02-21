@@ -3,9 +3,7 @@ import { z } from "zod";
 export const signupSchema = z.object({
   name: z
     .string()
-    .min(1, {
-      message: "Name must be at least 3 characters",
-    })
+    .min(1, { message: "Name must be at least 1 character" })
     .max(30, {
       message: "Name must be at most 30 characters",
     }),

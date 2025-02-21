@@ -1,20 +1,25 @@
-"use client"; // Додаємо, бо обробник подій виконується на клієнті
+"use client";
 
 import { signUp } from "@/lib/actions/singUp";
 import { useRouter } from "next/navigation";
-import { FormEvent } from "react";
 import { Button } from "../ui/button";
-import { Form, FormItem } from "../ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "../ui/form";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { signupSchema } from "@/lib/schema";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import Link from "next/link";
+import { SignUpSchema, signupSchema } from "@/lib/schema";
 
 export const SignUpForm = () => {
   const router = useRouter();
-  const form = useForm({
+  const form = useForm<SignUpSchema>({
     resolver: zodResolver(signupSchema),
     defaultValues: {
       name: "",
@@ -24,9 +29,13 @@ export const SignUpForm = () => {
     },
   });
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
+  const handleSubmit = async (data: SignUpSchema) => {
+    const formData = new FormData();
+    formData.append("name", data.name);
+    formData.append("surname", data.surname);
+    formData.append("email", data.email);
+    formData.append("password", data.password);
+
     const res = await signUp(formData);
     if (res?.success) {
       router.push("/signIn");
@@ -34,63 +43,79 @@ export const SignUpForm = () => {
   };
 
   return (
-    <div className="flex flex-col items-center">
-      <Form {...form}>
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <FormItem>
-            <Label htmlFor="name">Name</Label>
-            <Input
-              id="name"
+    <div className="flex justify-center items-center min-h-screen">
+      <div className="w-96 p-8 bg-white shadow-lg rounded-2xl">
+        <h2 className="text-2xl font-semibold text-center mb-6">Sign Up</h2>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-5">
+            <FormField
+              control={form.control}
               name="name"
-              type="text"
-              placeholder="Name"
-              required
-              className="w-full"
+              render={({ field }) => (
+                <FormItem>
+                  <Label htmlFor="name">Name</Label>
+                  <FormControl>
+                    <Input {...field} id="name" type="text" placeholder="Name" />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-          </FormItem>
 
-          <FormItem>
-            <Label htmlFor="surname">Surname</Label>
-            <Input
-              id="surname"
+            <FormField
+              control={form.control}
               name="surname"
-              type="text"
-              placeholder="Surname"
-              required
-              className="w-full"
+              render={({ field }) => (
+                <FormItem>
+                  <Label htmlFor="surname">Surname</Label>
+                  <FormControl>
+                    <Input {...field} id="surname" type="text" placeholder="Surname" />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-          </FormItem>
 
-          <FormItem>
-            <Label htmlFor="email">Email</Label>
-            <Input
-              id="email"
+            <FormField
+              control={form.control}
               name="email"
-              type="email"
-              placeholder="Email"
-              required
-              className="w-full"
+              render={({ field }) => (
+                <FormItem>
+                  <Label htmlFor="email">Email</Label>
+                  <FormControl>
+                    <Input {...field} id="email" type="email" placeholder="Email" />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-          </FormItem>
 
-          <FormItem>
-            <Label htmlFor="password">Password</Label>
-            <Input
-              id="password"
+            <FormField
+              control={form.control}
               name="password"
-              type="password"
-              placeholder="Password"
-              required
-              className="w-full"
+              render={({ field }) => (
+                <FormItem>
+                  <Label htmlFor="password">Password</Label>
+                  <FormControl>
+                    <Input {...field} id="password" type="password" placeholder="Password" />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-          </FormItem>
 
-          <Button type="submit" className="w-full mt-4">
-            Sign Up
-          </Button>
-        </form>
-        <Link href="/signIn">Go to SignIn</Link>
-      </Form>
+            <Button type="submit" className="w-full text-lg py-3 rounded-xl">
+              Sign Up
+            </Button>
+          </form>
+          <p className="text-center mt-4 text-gray-600">
+            Already have an account?{" "}
+            <Link href="/signIn" className="text-blue-600 font-medium hover:underline">
+              Sign In
+            </Link>
+          </p>
+        </Form>
+      </div>
     </div>
   );
 };
