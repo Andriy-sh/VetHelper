@@ -27,6 +27,7 @@ export const signupSchema = z.object({
       message: "Password must be at most 15 characters",
     }),
 });
+export type SignUpSchema = z.infer<typeof signupSchema>;
 
 export const signinSchema = z.object({
   email: z.string().email({
@@ -39,4 +40,21 @@ export const signinSchema = z.object({
 });
 
 export type SignInSchema = z.infer<typeof signinSchema>;
-export type SignUpSchema = z.infer<typeof signupSchema>;
+export const petSchema = z.object({
+  name: z
+    .string()
+    .min(1, {
+      message: "Name is required",
+    })
+    .max(30, {
+      message: "Name must be at most 30 characters",
+    }),
+  species: z.string().min(1, { message: "Species is require" }),
+  gender: z.string().min(1, { message: "Gender is require" }),
+  breed: z.string().min(1, { message: "Breed is require" }),
+  age: z.coerce
+    .number()
+    .min(1, { message: "Enter age" })
+    .max(100, { message: "Max age is 100" }),
+});
+export type PetSchema = z.infer<typeof petSchema>;

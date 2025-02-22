@@ -15,6 +15,7 @@ import { Button } from "../ui/button";
 import { signInAction } from "@/lib/actions/signIn";
 import { Input } from "../ui/input";
 import Link from "next/link";
+import { GoogleButton } from "./GoogleButton";
 
 export const SignInForm = () => {
   const form = useForm<SignInSchema>({
@@ -36,6 +37,18 @@ export const SignInForm = () => {
     <div className="flex justify-center items-center min-h-screen">
       <div className="w-96 p-8 bg-white shadow-lg rounded-2xl">
         <h2 className="text-2xl font-semibold text-center mb-6">Sign In</h2>
+
+        <GoogleButton info="Sign In with Google" />
+
+        <div className="relative my-6">
+          <div className="absolute inset-0 flex items-center">
+            <div className="w-full border-t border-gray-300"></div>
+          </div>
+          <div className="relative flex justify-center text-sm">
+            <span className="bg-white px-2 text-gray-500">or</span>
+          </div>
+        </div>
+
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
             <FormField
@@ -81,7 +94,7 @@ export const SignInForm = () => {
           <p className="text-center mt-4 text-gray-600">
             Don`t have an account?{" "}
             <Link
-              href="/signUp"
+              href="/sign-up"
               className="text-blue-600 font-medium hover:underline"
             >
               Sign Up
