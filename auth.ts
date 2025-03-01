@@ -3,7 +3,7 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import { prisma } from "./prisma";
 import Credentials from "next-auth/providers/credentials";
 import Google from "next-auth/providers/google";
-export const { handlers, auth, signIn, signOut } = NextAuth({
+export const { handlers,auth, signIn, signOut } = NextAuth({
   session: { strategy: "jwt" },
   adapter: PrismaAdapter(prisma),
   providers: [

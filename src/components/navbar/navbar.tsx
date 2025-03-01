@@ -13,14 +13,7 @@ export const NavBar = async () => {
         >
           VetHelper
         </Link>
-        <div className="text-center py-3">
-          <Link
-            href="/adding-pet"
-            className="text-lg text-black font-semibold hover:text-gray-700 transition duration-300"
-          >
-            Add Pet
-          </Link>
-        </div>
+
         <div className="hidden md:flex space-x-6 items-center">
           {!session ? (
             <>

@@ -16,7 +16,7 @@ import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import Link from "next/link";
 import { SignUpSchema, signupSchema } from "@/lib/schema";
-import { GoogleButton } from "./GoogleButton";
+import { GoogleButtonSingUp } from "./GoogleButton";
 
 export const SignUpForm = () => {
   const router = useRouter();
@@ -48,7 +48,7 @@ export const SignUpForm = () => {
       <div className="w-96 p-8 bg-white shadow-lg rounded-2xl">
         <h2 className="text-2xl font-semibold text-center mb-6">Sign Up</h2>
 
-        <GoogleButton info="Sign Up with Google" />
+        <GoogleButtonSingUp info="Sign Up with Google" />
 
         <div className="relative my-6">
           <div className="absolute inset-0 flex items-center">

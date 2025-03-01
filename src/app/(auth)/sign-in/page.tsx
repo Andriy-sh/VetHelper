@@ -1,9 +1,9 @@
 import { SignInForm } from "@/components/auth/SignInForm";
-import { auth } from "../../../../auth";
 import { redirect } from "next/navigation";
+import { getSession } from "@/lib/service/user";
 
 export default async function Page() {
-  const session = await auth();
+  const session = await getSession();
   if (session) {
     redirect("/adding-pet");
   }
