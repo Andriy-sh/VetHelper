@@ -9,19 +9,7 @@ type Session = {
   };
 };
 
-export async function getSession() {
-  const session = await auth();
-  if (!session) {
-    throw new Error('User not logged');
-  }
-  const user = session?.user;
 
-  if (!user) {
-    return { isLoggedIn: false, user: null };
-  }
-
-  return { isLoggedIn: true, user };
-}
 
 export async function getUser(session: Session) {
   if (!session?.user?.email) {

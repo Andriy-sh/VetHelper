@@ -27,6 +27,7 @@ export const SignUpForm = () => {
       surname: "",
       email: "",
       password: "",
+      city: "",
     },
   });
 
@@ -36,6 +37,7 @@ export const SignUpForm = () => {
     formData.append("surname", data.surname);
     formData.append("email", data.email);
     formData.append("password", data.password);
+    formData.append("city" , data.city)
 
     const res = await signUp(formData);
     if (res?.success) {
@@ -114,6 +116,24 @@ export const SignUpForm = () => {
                       id="email"
                       type="email"
                       placeholder="Email"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="city"
+              render={({ field }) => (
+                <FormItem>
+                  <Label htmlFor="email">City</Label>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      id="city"
+                      type="text"
+                      placeholder="City"
                     />
                   </FormControl>
                   <FormMessage />

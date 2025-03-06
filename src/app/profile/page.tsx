@@ -2,12 +2,23 @@ import { HandleSignOut } from "@/components/auth/SignOut";
 import Image from "next/image";
 import { auth } from "../../../auth";
 import { PetInfo } from "@/components/profile/petInfo";
+import { getUser } from "@/lib/service/user";
 
 export default async function ProfilePage() {
   const session = await auth();
 
+  if (!session?.user?.email) {
+    throw new Error("User not authenticated");
+  }
+
+  const user = await getUser({ user: { email: session.user.email } });
+
+  if (!user.city) {
+    throw new Error("User has no city specified");
+  }
+
   return (
-    <div className="min-h-screen flex bg-gray-100 justify-center items-center" >
+    <div className="min-h-screen flex bg-gray-100 justify-center items-center">
       <div className="flex-1 p-8 flex flex-col items-center justify-center">
         <div className="min-h-[82vh] mt-[40px] w-full bg-white rounded-2xl shadow-xl p-8 flex    space-x-8">
           <div className="relative w-32 h-32">
@@ -27,6 +38,7 @@ export default async function ProfilePage() {
             <p className="text-gray-600 text-lg mt-2">
               {session?.user?.email || "No email available"}
             </p>
+            <p>{user.city}</p>
           </div>
 
           {session && (

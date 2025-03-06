@@ -1,10 +1,11 @@
 import Link from "next/link";
 import Image from "next/image";
 import { FaPaw } from "react-icons/fa";
-import { getPets, getSession, getUser } from "@/lib/service/user";
+import { getPets, getUser } from "@/lib/service/user";
+import { auth } from "../../../auth";
 
 export const PetInfo = async () => {
-  const session = await getSession();
+  const session = await auth();
 
   if (!session?.user?.email) {
     throw new Error("User not authenticated");
@@ -39,6 +40,7 @@ export const PetInfo = async () => {
                     </div>
                   )}
                 </div>
+
                 <div>
                   <h3 className="text-2xl font-semibold text-gray-800">
                     {pet.name}
@@ -74,6 +76,7 @@ export const PetInfo = async () => {
       >
         Add Pet
       </Link>
+
     </div>
   );
 };

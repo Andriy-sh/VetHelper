@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { auth } from "../../../auth";
+import { HandleSignOut } from "../auth/SignOut";
 
 export const NavBar = async () => {
   const session = await auth();
@@ -31,12 +32,26 @@ export const NavBar = async () => {
               </Link>
             </>
           ) : (
-            <Link
-              href="/profile"
-              className="px-6 py-2 rounded-lg text-black bg-white border border-black hover:bg-gray-100 transition duration-300 shadow-md"
-            >
-              Profile
-            </Link>
+            <div>
+              <Link
+                href="/map"
+                className="px-6 py-2 rounded-lg text-black bg-white border border-black hover:bg-gray-100 transition duration-300 shadow-md"
+              >
+                Maps
+              </Link>
+              <Link
+                href="/profile"
+                className="px-6 py-2 rounded-lg text-black bg-white border border-black hover:bg-gray-100 transition duration-300 shadow-md"
+              >
+                Profile
+              </Link>
+              <button
+                onClick={HandleSignOut}
+                className="px-6 py-3 bg-red-600 w-30 h-14 text-white rounded-xl hover:bg-red-700 transition-colors duration-300"
+              >
+                Sign Out
+              </button>
+            </div>
           )}
         </div>
       </div>

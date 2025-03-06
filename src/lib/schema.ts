@@ -26,6 +26,7 @@ export const signupSchema = z.object({
     .max(15, {
       message: "Password must be at most 15 characters",
     }),
+  city: z.string().min(1,{message:'City is require'})
 });
 export type SignUpSchema = z.infer<typeof signupSchema>;
 

@@ -16,8 +16,10 @@ import { signInAction } from "@/lib/actions/signIn";
 import { Input } from "../ui/input";
 import Link from "next/link";
 import { GoogleButton } from "./GoogleButton";
+import { useRouter } from "next/navigation";
 
 export const SignInForm = () => {
+  const router = useRouter()
   const form = useForm<SignInSchema>({
     resolver: zodResolver(signinSchema),
     defaultValues: {
@@ -30,7 +32,11 @@ export const SignInForm = () => {
     const formdata = new FormData();
     formdata.append("email", values.email);
     formdata.append("password", values.password);
-    await signInAction(formdata);
+    const res = await signInAction(formdata);
+    if (res?.success) {
+      router.push("/addint-pet");
+    }
+    
   };
 
   return (
