@@ -41,6 +41,27 @@ model Pet {
   updatedAt DateTime @updatedAt
 }
 
+model Clinic {
+  id          String   @id @default(cuid())
+  name        String
+  address     String
+  city        String
+  description String
+  phone       String?
+  website     String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// model UserClinic {
+//   userId   String
+//   clinicId String
+//   user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+//   clinic   Clinic @relation(fields: [clinicId], references: [id], onDelete: Cascade)
+
+//   @@id([userId, clinicId])
+// }
+
 model Account {
   userId            String
   type              String

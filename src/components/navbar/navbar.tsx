@@ -32,7 +32,13 @@ export const NavBar = async () => {
               </Link>
             </>
           ) : (
-            <div>
+            <div className="space-x-3">
+              <Link
+                href="/clinics"
+                className="px-6 py-2 rounded-lg text-black bg-white border border-black hover:bg-gray-100 transition duration-300 shadow-md"
+              >
+                Clinics
+              </Link>
               <Link
                 href="/map"
                 className="px-6 py-2 rounded-lg text-black bg-white border border-black hover:bg-gray-100 transition duration-300 shadow-md"
