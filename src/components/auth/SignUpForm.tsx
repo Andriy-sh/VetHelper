@@ -37,7 +37,7 @@ export const SignUpForm = () => {
     formData.append("surname", data.surname);
     formData.append("email", data.email);
     formData.append("password", data.password);
-    formData.append("city" , data.city)
+    formData.append("city", data.city);
 
     const res = await signUp(formData);
     if (res?.success) {

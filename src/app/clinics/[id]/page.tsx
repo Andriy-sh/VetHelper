@@ -1,10 +1,22 @@
 import { notFound } from "next/navigation";
 import { prisma } from "../../../../prisma";
 import SingleClinic from "@/components/clinics/clinic";
+import { auth } from "../../../../auth";
+import { getPets } from "@/lib/service/user";
 
 export default async function Clinic({ params }: { params: { id: string } }) {
   if (!params.id) {
     notFound();
+  }
+  const session = await auth();
+  if (!session) {
+    throw new Error("Blablabla");
+  }
+  const user = await prisma.user.findUnique({
+    where: { email: session?.user?.email ?? undefined },
+  });
+  if (!user) {
+    throw new Error("User not logged");
   }
   const clinic = await prisma.clinic.findUnique({
     where: { id: params.id },
@@ -12,6 +24,7 @@ export default async function Clinic({ params }: { params: { id: string } }) {
   if (!clinic) {
     notFound();
   }
+
   return (
     <div className="mt-[72px]">
       <SingleClinic
@@ -22,6 +35,7 @@ export default async function Clinic({ params }: { params: { id: string } }) {
           updatedAt: clinic.updatedAt.toISOString(),
           createdAt: clinic.createdAt.toISOString(),
         }}
+        userId={user.id}
       />
     </div>
   );

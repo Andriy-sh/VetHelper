@@ -17,14 +17,33 @@ model User {
   emailVerified DateTime?
   image         String?
   city          String?
+  role          Role            @default(User)
   accounts      Account[]
   sessions      Session[]
   // Optional for WebAuthn support
   Authenticator Authenticator[]
 
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  Pet         Pet[]
+  Appointment Appointment[]
+}
+
+model Appointment {
+  id       String            @id @default(cuid())
+  userId   String
+  clinicId String
+  petId    String?
+  date     DateTime
+  status   AppointmentStatus @default(PENDING)
+  notes    String?
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  clinic Clinic @relation(fields: [clinicId], references: [id], onDelete: Cascade)
+  pet    Pet?   @relation(fields: [petId], references: [id], onDelete: Cascade)
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  Pet       Pet[]
 }
 
 model Pet {
@@ -37,20 +56,22 @@ model Pet {
   userId  String
   user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  Appointment Appointment[]
 }
 
 model Clinic {
-  id          String   @id @default(cuid())
+  id          String        @id @default(cuid())
   name        String
   address     String
   city        String
   description String
   phone       String?
   website     String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  Appointment Appointment[]
 }
 
 // model UserClinic {
@@ -128,4 +149,16 @@ enum Species {
 enum Gender {
   Male
   Female
+}
+
+enum Role {
+  User
+  Admin
+}
+
+enum AppointmentStatus {
+  PENDING
+  CONFIRMED
+  CANCELED
+  COMPLETED
 }

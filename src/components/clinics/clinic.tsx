@@ -1,9 +1,12 @@
 import React from "react";
+import { AppointmentDialog } from "./appointmentDialog";
 
 export default function SingleClinic({
   clinic,
+  userId,
 }: {
   clinic: {
+    id: string;
     name: string;
     description: string;
     address: string;
@@ -13,6 +16,7 @@ export default function SingleClinic({
     updatedAt: string;
     createdAt: string;
   };
+  userId: string;
 }) {
   return (
     <div className="min-h-[90vh] min-w-[90vh] p-8 bg-gray-50 flex items-center justify-center">
@@ -64,7 +68,11 @@ export default function SingleClinic({
               </p>
             </div>
           </div>
-          <div className="mt-12  flex justify-center">Записатися</div>
+          <AppointmentDialog
+            name={clinic.name}
+            clinicId={clinic.id}
+            userId={userId}
+          />
         </div>
       </div>
     </div>

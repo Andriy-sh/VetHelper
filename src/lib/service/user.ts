@@ -9,8 +9,6 @@ type Session = {
   };
 };
 
-
-
 export async function getUser(session: Session) {
   if (!session?.user?.email) {
     throw new Error("User not authenticated");

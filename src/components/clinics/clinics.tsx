@@ -1,22 +1,8 @@
+"use client";
 import { PawPrint } from "lucide-react";
-import { prisma } from "../../../prisma";
 import Link from "next/link";
-import { auth } from "../../../auth";
 
-export default async function Clinics() {
-  const session = await auth();
-  if (!session) {
-    throw new Error("Blablabla");
-  }
-  const user = await prisma.user.findUnique({
-    where: { email: session?.user?.email ?? undefined },
-  });
-  if (!user) {
-    throw new Error("User not logged");
-  }
-  const clinics = await prisma.clinic.findMany({
-    where: { city: user?.city ?? undefined },
-  });
+export default function Clinics({ clinics }: { clinics: typeof clinics }) {
   return (
     <div className="p-4">
       {clinics.map((clinic) => (

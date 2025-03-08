@@ -26,7 +26,7 @@ export const signupSchema = z.object({
     .max(15, {
       message: "Password must be at most 15 characters",
     }),
-  city: z.string().min(1,{message:'City is require'})
+  city: z.string().min(1, { message: "City is require" }),
 });
 export type SignUpSchema = z.infer<typeof signupSchema>;
 
@@ -59,3 +59,11 @@ export const petSchema = z.object({
     .max(100, { message: "Max age is 100" }),
 });
 export type PetSchema = z.infer<typeof petSchema>;
+export const appointmentSchema = z.object({
+  petId: z.string({ message: "You shoud choise your pet" }),
+  date: z.string().refine((val) => !isNaN(Date.parse(val)), {
+    message: "Please select a valid date",
+  }),
+  notes: z.string(),
+});
+export type AppointmentSchema = z.infer<typeof appointmentSchema>;
