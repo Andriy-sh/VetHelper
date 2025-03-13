@@ -114,11 +114,10 @@ export function AppointmentDialog({
   const selectedDate = form.watch("date");
   const disabledTimes = bookedTimesMap[selectedDate] || [];
 
-  // Обчислюємо дату через два тижні
   const twoWeeksLater = new Date();
   twoWeeksLater.setDate(twoWeeksLater.getDate() + 14);
-  const minDate = new Date().toISOString().split("T")[0]; // Мінімальна дата - сьогодні
-  const maxDate = twoWeeksLater.toISOString().split("T")[0]; // Максимальна дата - через два тижні
+  const minDate = new Date().toISOString().split("T")[0]; 
+  const maxDate = twoWeeksLater.toISOString().split("T")[0]; 
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>

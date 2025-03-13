@@ -1,14 +1,7 @@
 import React from "react";
 import { AppointmentDialog } from "./appointmentDialog";
 import { prisma } from "../../../prisma";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "../ui/table";
+import Link from "next/link";
 
 export default async function SingleClinic({
   clinic,
@@ -28,9 +21,10 @@ export default async function SingleClinic({
   user: {
     id: string;
     role: string;
+    clinicId: string;
   };
 }) {
-  const as = await prisma.appointment.findMany({
+  const appointments = await prisma.appointment.findMany({
     where: { clinicId: clinic.id },
   });
 
@@ -38,9 +32,17 @@ export default async function SingleClinic({
     <div className="min-h-[90vh] min-w-[90vh] p-8 bg-gray-50 flex items-center justify-center">
       <div className="min-h-[80vh] w-full bg-white shadow-2xl rounded-lg overflow-hidden ">
         <div className="p-8">
-          <h1 className="text-4xl font-bold text-gray-800 mb-6">
-            {clinic.name}
-          </h1>
+          <div className="flex justify-between items-center mb-6">
+            <h1 className="text-4xl font-bold text-gray-800">{clinic.name}</h1>
+            {clinic.id === user.clinicId && (
+              <Link
+                href={`/clinics/${clinic.id}/dashboard`}
+                className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-300"
+              >
+                Перегляд прийомів
+              </Link>
+            )}
+          </div>
           <p className="text-gray-600 mb-6 text-lg">{clinic.description}</p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
             <div className="space-y-4">
@@ -88,45 +90,9 @@ export default async function SingleClinic({
             name={clinic.name}
             clinicId={clinic.id}
             userId={user.id}
-            times={as.map((a) => a.time)}
-            date={as.map((a) => a.date)}
+            times={appointments.map((a) => a.time)}
+            date={appointments.map((a) => a.date)}
           />
-          {user.role === "Veterinarian" && (
-            <div className="mt-8">
-              <h2 className="text-2xl font-semibold text-gray-700 border-b-2 border-blue-500 pb-2">
-                Прийоми
-              </h2>
-
-              <div className="mt-4">
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>Дата</TableHead>
-                      <TableHead>Час</TableHead>
-                      <TableHead>Статус</TableHead>
-                      <TableHead>Проблема</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {as.map(
-                      (appointment) =>
-                        appointment.status !== "COMPLETED" &&
-                        appointment.status !== "CANCELED" && (
-                          <TableRow key={appointment.id}>
-                            <TableCell>
-                              {new Date(appointment.date).toLocaleDateString()}
-                            </TableCell>
-                            <TableCell>{appointment.time}</TableCell>
-                            <TableCell>{appointment.status}</TableCell>
-                            <TableCell>{appointment.notes}</TableCell>
-                          </TableRow>
-                        )
-                    )}
-                  </TableBody>
-                </Table>
-              </div>
-            </div>
-          )}
         </div>
       </div>
     </div>

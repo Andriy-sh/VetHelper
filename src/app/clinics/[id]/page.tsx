@@ -3,6 +3,7 @@ import { prisma } from "../../../../prisma";
 import SingleClinic from "@/components/clinics/clinic";
 import { auth } from "../../../../auth";
 import { getPets } from "@/lib/service/user";
+import Link from "next/link";
 
 export default async function Clinic({ params }: { params: { id: string } }) {
   if (!params.id) {
@@ -26,7 +27,7 @@ export default async function Clinic({ params }: { params: { id: string } }) {
   }
 
   return (
-    <div className="mt-[72px]">
+    <div>
       <SingleClinic
         clinic={{
           ...clinic,

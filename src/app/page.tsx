@@ -5,10 +5,10 @@ export default async function Home() {
   return (
     <div className="min-h-screen">
       <div
-        className="h-screen pt-[72px] bg-zinc-900 bg-cover bg-center"
+        className="min-h-screen pt-[72px] bg-zinc-900 bg-cover bg-center relative"
         style={{ backgroundImage: "url(/main.png)" }}
       >
-        <div className="absolute inset-0 bg-black bg-opacity-80"></div>{" "}
+        <div className="absolute inset-0 bg-black bg-opacity-80"></div>
         <div className="ml-16 w-[500px] flex flex-col h-full justify-center items-start px-4 relative z-10">
           <div className="h-[390px] space-y-4 flex flex-col justify-center items-start">
             <h1 className="font-bold text-5xl text-white">

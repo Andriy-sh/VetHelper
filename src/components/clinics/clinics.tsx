@@ -5,7 +5,13 @@ import Link from "next/link";
 export default function Clinics({
   clinics,
 }: {
-  clinics: typeof clinics;
+  clinics: {
+    id: string;
+    name: string;
+    description: string;
+    address: string;
+    city: string;
+  }[];
 }) {
   return (
     <div className="p-4">

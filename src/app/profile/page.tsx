@@ -18,9 +18,9 @@ export default async function ProfilePage() {
   }
 
   return (
-    <div className="min-h-screen flex bg-gray-100 justify-center items-center">
-      <div className="flex-1 p-8 flex flex-col items-center justify-center">
-        <div className="min-h-[82vh] mt-[40px] w-full bg-white rounded-2xl shadow-xl p-8 flex    space-x-8">
+    <div className=" flex bg-gray-100 justify-center items-center">
+      <div className=" flex-1 p-8 flex flex-col items-center justify-center">
+        <div className="min-h-screen w-full bg-white rounded-2xl shadow-xl p-8 flex    space-x-8">
           <div className="relative w-32 h-32">
             <Image
               src={session?.user?.image || "/default-avatar.png"}
@@ -52,7 +52,7 @@ export default async function ProfilePage() {
         </div>
       </div>
 
-      <div className="w-2/7 rounded-2xl  min-h-[82vh] mt-[40px] bg-white shadow-xl flex items-center flex-col justify-top p-6 overflow-y-auto">
+      <div className="w-2/7 rounded-2xl  min-h-screen  bg-white shadow-xl flex items-center flex-col justify-top p-6 overflow-y-auto">
         <h2 className="text-2xl font-bold text-gray-800 ">Your Pets</h2>
         <PetInfo />
       </div>

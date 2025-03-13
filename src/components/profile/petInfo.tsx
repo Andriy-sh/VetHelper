@@ -17,7 +17,7 @@ export const PetInfo = async () => {
 
   return (
     <div className="space-y-6 ">
-      <div className="max-h-[63vh] overflow-y-auto">
+      <div className="max-w-[50vh] overflow-y-auto">
         {pets.length > 0 ? (
           pets.map((pet) => (
             <div
@@ -76,7 +76,6 @@ export const PetInfo = async () => {
       >
         Add Pet
       </Link>
-
     </div>
   );
 };

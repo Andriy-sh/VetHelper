@@ -16,7 +16,7 @@ export default async function MapPage() {
   }
 
   return (
-    <div className="flex justify-center items-center mt-[72px]">
+    <div className="flex justify-center items-center ">
       <Map city={user.city} />
     </div>
   );

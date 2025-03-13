@@ -27,7 +27,8 @@ model User {
   updatedAt   DateTime      @updatedAt
   Pet         Pet[]
   Appointment Appointment[]
-  Clinic      Clinic[]
+  Clinic      Clinic?       @relation(fields: [clinicId], references: [id])
+  clinicId    String?
 }
 
 model Appointment {
@@ -74,8 +75,7 @@ model Clinic {
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt
   Appointment Appointment[]
-  User        User?         @relation(fields: [userId], references: [id])
-  userId      String?
+  User        User[]
 }
 
 // model UserClinic {

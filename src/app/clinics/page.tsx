@@ -1,6 +1,7 @@
 import Clinics from "@/components/clinics/clinics";
 import { auth } from "../../../auth";
 import { prisma } from "../../../prisma";
+import Link from "next/link";
 
 export default async function Page() {
   const session = await auth();
@@ -17,7 +18,7 @@ export default async function Page() {
     where: { city: user?.city ?? undefined },
   });
   return (
-    <div className="mt-[72px]">
+    <div>
       <div className="flex justify-between mx-8">
         <h1>All in your City</h1>
         {user.role === "Admin" && <div>Ви Адмін</div>}
