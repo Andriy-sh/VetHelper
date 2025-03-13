@@ -35,7 +35,7 @@ export default async function Clinic({ params }: { params: { id: string } }) {
           updatedAt: clinic.updatedAt.toISOString(),
           createdAt: clinic.createdAt.toISOString(),
         }}
-        userId={user.id}
+        user={user}
       />
     </div>
   );

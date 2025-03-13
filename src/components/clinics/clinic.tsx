@@ -1,9 +1,18 @@
 import React from "react";
 import { AppointmentDialog } from "./appointmentDialog";
+import { prisma } from "../../../prisma";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "../ui/table";
 
-export default function SingleClinic({
+export default async function SingleClinic({
   clinic,
-  userId,
+  user,
 }: {
   clinic: {
     id: string;
@@ -16,8 +25,15 @@ export default function SingleClinic({
     updatedAt: string;
     createdAt: string;
   };
-  userId: string;
+  user: {
+    id: string;
+    role: string;
+  };
 }) {
+  const as = await prisma.appointment.findMany({
+    where: { clinicId: clinic.id },
+  });
+
   return (
     <div className="min-h-[90vh] min-w-[90vh] p-8 bg-gray-50 flex items-center justify-center">
       <div className="min-h-[80vh] w-full bg-white shadow-2xl rounded-lg overflow-hidden ">
@@ -71,8 +87,46 @@ export default function SingleClinic({
           <AppointmentDialog
             name={clinic.name}
             clinicId={clinic.id}
-            userId={userId}
+            userId={user.id}
+            times={as.map((a) => a.time)}
+            date={as.map((a) => a.date)}
           />
+          {user.role === "Veterinarian" && (
+            <div className="mt-8">
+              <h2 className="text-2xl font-semibold text-gray-700 border-b-2 border-blue-500 pb-2">
+                Прийоми
+              </h2>
+
+              <div className="mt-4">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Дата</TableHead>
+                      <TableHead>Час</TableHead>
+                      <TableHead>Статус</TableHead>
+                      <TableHead>Проблема</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {as.map(
+                      (appointment) =>
+                        appointment.status !== "COMPLETED" &&
+                        appointment.status !== "CANCELED" && (
+                          <TableRow key={appointment.id}>
+                            <TableCell>
+                              {new Date(appointment.date).toLocaleDateString()}
+                            </TableCell>
+                            <TableCell>{appointment.time}</TableCell>
+                            <TableCell>{appointment.status}</TableCell>
+                            <TableCell>{appointment.notes}</TableCell>
+                          </TableRow>
+                        )
+                    )}
+                  </TableBody>
+                </Table>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

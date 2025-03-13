@@ -64,6 +64,7 @@ export const appointmentSchema = z.object({
   date: z.string().refine((val) => !isNaN(Date.parse(val)), {
     message: "Please select a valid date",
   }),
+  time: z.string().nonempty({ message: "Time is required" }),
   notes: z.string(),
 });
 export type AppointmentSchema = z.infer<typeof appointmentSchema>;

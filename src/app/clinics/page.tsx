@@ -16,18 +16,13 @@ export default async function Page() {
   const clinics = await prisma.clinic.findMany({
     where: { city: user?.city ?? undefined },
   });
-  const as = await prisma.appointment.findMany({});
   return (
     <div className="mt-[72px]">
       <div className="flex justify-between mx-8">
         <h1>All in your City</h1>
         {user.role === "Admin" && <div>Ви Адмін</div>}
-        {as.map((as) => (
-          <div key={as.id}>{as.date.toString()}</div>
-        ))}
       </div>
-
-      <Clinics clinics={clinics} />
+      <Clinics clinics={clinics} user={user} />
     </div>
   );
 }

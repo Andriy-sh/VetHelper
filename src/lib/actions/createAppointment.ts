@@ -2,21 +2,35 @@
 import { prisma } from "../../../prisma";
 
 export const createAppointment = async (formData: FormData) => {
-  const userId = formData.get("userId");
-  const notes = formData.get("notes");
-  const clinicId = formData.get("clinicId");
-  const dateValue = formData.get("date");
-  if (!dateValue) {
-    throw new Error("Date is required");
-  }
-  const date = new Date(dateValue as string).toISOString();
+  const userId = formData.get("userId") as string;
+  const clinicId = formData.get("clinicId") as string;
+  const notes = formData.get("notes") as string;
+  const dateValue = formData.get("date") as string;
+  const time = formData.get("time") as string;
 
-  await prisma.appointment.create({
+  if (!dateValue || !time) {
+    throw new Error("Date and time are required");
+  }
+
+  const date = new Date(dateValue).toISOString();
+
+  // Перевіряємо, чи вже існує запис на цей час
+  const existingAppointment = await prisma.appointment.findFirst({
+    where: { clinicId, date, time },
+  });
+
+  if (existingAppointment) {
+    throw new Error("Цей час уже зайнятий. Оберіть інший.");
+  }
+
+  // Додаємо новий запис
+  return await prisma.appointment.create({
     data: {
-      userId: userId as string,
-      clinicId: clinicId as string,
-      notes: notes as string,
-      date: date,
+      userId,
+      clinicId,
+      notes,
+      date,
+      time,
     },
   });
 };

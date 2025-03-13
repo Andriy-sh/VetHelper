@@ -2,7 +2,11 @@
 import { PawPrint } from "lucide-react";
 import Link from "next/link";
 
-export default function Clinics({ clinics }: { clinics: typeof clinics }) {
+export default function Clinics({
+  clinics,
+}: {
+  clinics: typeof clinics;
+}) {
   return (
     <div className="p-4">
       {clinics.map((clinic) => (
