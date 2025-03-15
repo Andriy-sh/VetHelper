@@ -17,7 +17,7 @@ model User {
   emailVerified DateTime?
   image         String?
   city          String?
-  role          Role            @default(User)
+  role          Role?           @default(USER)
   accounts      Account[]
   sessions      Session[]
   // Optional for WebAuthn support
@@ -151,14 +151,14 @@ enum Species {
 }
 
 enum Gender {
-  Male
-  Female
+  MALE
+  FEMALE
 }
 
 enum Role {
-  User
-  Admin
-  Veterinarian
+  USER
+  ADMIN
+  VETERINARIAN
 }
 
 enum AppointmentStatus {

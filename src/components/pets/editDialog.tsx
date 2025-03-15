@@ -1,7 +1,15 @@
 "use client";
-import { petSchema, PetSchema } from "@/lib/schema";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+
+import { useState, useEffect } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "../ui/dialog";
+import { Button } from "../ui/button";
 import {
   Form,
   FormControl,
@@ -11,6 +19,9 @@ import {
 } from "../ui/form";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { petSchema, PetSchema } from "@/lib/schema";
 import {
   Select,
   SelectContent,
@@ -18,46 +29,59 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import { Button } from "../ui/button";
-import { Card, CardHeader, CardContent } from "../ui/card";
-import { addingPet } from "@/lib/actions/addingpet";
+import { editPet } from "@/lib/actions/editPet";
 import { useRouter } from "next/navigation";
 
-const AddPetForm = () => {
+interface EditDialogProps {
+  pet: PetSchema & { id: string };
+}
+
+export default function EditDialog({ pet }: EditDialogProps) {
+  const [open, setOpen] = useState(false);
   const router = useRouter();
   const form = useForm<PetSchema>({
     resolver: zodResolver(petSchema),
     defaultValues: {
-      age: undefined,
-      breed: "",
-      gender: "",
-      name: "",
-      species: "",
+      age: pet.age || undefined,
+      breed: pet.breed || "",
+      gender: pet.gender || "",
+      name: pet.name || "",
+      species: pet.species || "",
     },
   });
 
-  const handlePetSubmit = async (data: PetSchema) => {
-    const formdata = new FormData();
-    formdata.append("age", String(data.age));
-    formdata.append("breed", data.breed);
-    formdata.append("gender", data.gender);
-    formdata.append("species", data.species);
-    formdata.append("name", data.name);
-    const res = await addingPet(formdata);
-    if (res.success) {
-      router.push("/profile");
+  useEffect(() => {
+    if (pet) {
+      form.reset({
+        age: pet.age || undefined,
+        breed: pet.breed || "",
+        gender: pet.gender || "",
+        name: pet.name || "",
+        species: pet.species || "",
+      });
     }
+  }, [pet, form]);
+  const handlePetSubmit = async (data: PetSchema) => {
+    const formData = new FormData();
+    formData.append("id", pet.id);
+    formData.append("age", String(data.age));
+    formData.append("breed", data.breed);
+    formData.append("name", data.name);
+    formData.append("species", data.species);
+    formData.append("gender", data.gender);
+    await editPet(formData);
+    setOpen(false);
+    router.refresh();
   };
-
   return (
-    <Card className="max-w-md mx-auto mt-20 shadow-lg p-6">
-      <CardHeader>
-        <h2 className="text-xl font-semibold">Add a New Pet</h2>
-        <p className="text-sm text-gray-500">
-          Fill in the details to add your pet.
-        </p>
-      </CardHeader>
-      <CardContent>
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button variant="outline">Змінити дані про {pet.name}</Button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>Змінити дані про {pet.name}</DialogTitle>
+        </DialogHeader>
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(handlePetSubmit)}
@@ -166,9 +190,7 @@ const AddPetForm = () => {
             </Button>
           </form>
         </Form>
-      </CardContent>
-    </Card>
+      </DialogContent>
+    </Dialog>
   );
-};
-
-export default AddPetForm;
+}

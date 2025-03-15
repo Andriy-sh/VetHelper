@@ -14,7 +14,6 @@ export const createAppointment = async (formData: FormData) => {
 
   const date = new Date(dateValue).toISOString();
 
-  // Перевіряємо, чи вже існує запис на цей час
   const existingAppointment = await prisma.appointment.findFirst({
     where: { clinicId, date, time },
   });
@@ -23,7 +22,6 @@ export const createAppointment = async (formData: FormData) => {
     throw new Error("Цей час уже зайнятий. Оберіть інший.");
   }
 
-  // Додаємо новий запис
   return await prisma.appointment.create({
     data: {
       userId,

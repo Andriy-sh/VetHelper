@@ -68,3 +68,7 @@ export const appointmentSchema = z.object({
   notes: z.string(),
 });
 export type AppointmentSchema = z.infer<typeof appointmentSchema>;
+export const citySchema = z.object({
+  city: z.string().min(1, { message: "City is require" }),
+});
+export type CitySchema = z.infer<typeof citySchema>;

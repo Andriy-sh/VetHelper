@@ -2,6 +2,7 @@ import Clinics from "@/components/clinics/clinics";
 import { auth } from "../../../auth";
 import { prisma } from "../../../prisma";
 import Link from "next/link";
+import AddingCity from "@/components/profile/addingCity";
 
 export default async function Page() {
   const session = await auth();
@@ -17,6 +18,9 @@ export default async function Page() {
   const clinics = await prisma.clinic.findMany({
     where: { city: user?.city ?? undefined },
   });
+  if (!user.city) {
+    return <AddingCity user={user} session={session}/>;
+  }
   return (
     <div>
       <div className="flex justify-between mx-8">

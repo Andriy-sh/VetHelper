@@ -2,6 +2,7 @@ import { prisma } from "../../../../prisma";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import { FaPaw } from "react-icons/fa";
+import EditDialog from "@/components/pets/editDialog";
 
 export async function generateStaticParams() {
   const pets = await prisma.pet.findMany({ select: { id: true } });
@@ -22,9 +23,9 @@ export default async function Page({ params }: { params: { id: string } }) {
   }
 
   return (
-    <div className="flex justify-center items-center min-h-screen">
-      <div className="bg-white rounded-xl shadow-lg p-6 w-full max-w-md">
-        <div className="relative w-24 h-24 mx-auto">
+    <div className="flex">
+      <div className="p-6 w-screen h-screen">
+        <div className="relative w-24 h-24">
           {pet.image ? (
             <Image
               src={pet.image}
@@ -38,7 +39,7 @@ export default async function Page({ params }: { params: { id: string } }) {
             </div>
           )}
         </div>
-        <div className="text-center mt-4">
+        <div className="mt-4">
           <h3 className="text-2xl font-semibold text-gray-800">{pet.name}</h3>
           <div className="space-y-2 mt-2">
             <p className="text-gray-700 text-lg">
@@ -54,6 +55,7 @@ export default async function Page({ params }: { params: { id: string } }) {
               <span className="font-medium">Breed:</span> {pet.breed}
             </p>
           </div>
+          <EditDialog pet={pet} />
         </div>
       </div>
     </div>

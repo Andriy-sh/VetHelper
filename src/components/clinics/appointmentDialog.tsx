@@ -38,7 +38,7 @@ export function AppointmentDialog({
   name: string;
   userId: string;
   clinicId: string;
-  times: string[]; 
+  times: string[];
   date: string[];
 }) {
   const form = useForm<AppointmentSchema>({
@@ -116,8 +116,8 @@ export function AppointmentDialog({
 
   const twoWeeksLater = new Date();
   twoWeeksLater.setDate(twoWeeksLater.getDate() + 14);
-  const minDate = new Date().toISOString().split("T")[0]; 
-  const maxDate = twoWeeksLater.toISOString().split("T")[0]; 
+  const minDate = new Date().toISOString().split("T")[0];
+  const maxDate = twoWeeksLater.toISOString().split("T")[0];
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -163,8 +163,8 @@ export function AppointmentDialog({
                       id="date"
                       type="date"
                       placeholder="Choose date"
-                      min={minDate} 
-                      max={maxDate} 
+                      min={minDate}
+                      max={maxDate}
                     />
                   </FormControl>
                   <FormMessage />
