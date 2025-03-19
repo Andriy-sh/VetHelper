@@ -23,12 +23,14 @@ model User {
   // Optional for WebAuthn support
   Authenticator Authenticator[]
 
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
-  Pet         Pet[]
-  Appointment Appointment[]
-  Clinic      Clinic?       @relation(fields: [clinicId], references: [id])
-  clinicId    String?
+  createdAt             DateTime       @default(now())
+  updatedAt             DateTime       @updatedAt
+  Pet                   Pet[]
+  Appointment           Appointment[]
+  Clinic                Clinic?        @relation(fields: [clinicId], references: [id])
+  clinicId              String?
+  sentNotifications     Notification[] @relation("NotificationSender")
+  receivedNotifications Notification[] @relation("NotificationUser")
 }
 
 model Appointment {
@@ -65,27 +67,35 @@ model Pet {
 }
 
 model Clinic {
-  id          String        @id @default(cuid())
-  name        String
-  address     String
-  city        String
-  description String
-  phone       String?
-  website     String?
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
-  Appointment Appointment[]
-  User        User[]
+  id           String         @id @default(cuid())
+  name         String
+  address      String
+  city         String
+  description  String
+  phone        String?
+  website      String?
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  Appointment  Appointment[]
+  User         User[]
+  Notification Notification[]
 }
 
-// model UserClinic {
-//   userId   String
-//   clinicId String
-//   user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-//   clinic   Clinic @relation(fields: [clinicId], references: [id], onDelete: Cascade)
+model Notification {
+  id       String  @id @default(cuid())
+  userId   String
+  senderId String?
+  clinicId String?
+  message  String
+  read     Boolean @default(false)
 
-//   @@id([userId, clinicId])
-// }
+  user   User    @relation("NotificationUser", fields: [userId], references: [id], onDelete: Cascade)
+  sender User?   @relation("NotificationSender", fields: [senderId], references: [id], onDelete: SetNull)
+  clinic Clinic? @relation(fields: [clinicId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
 
 model Account {
   userId            String

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { HandleSignOut } from "../auth/SignOut";
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import Notification from "./notification";
 
 interface NavLinkProps {
   href: string;
@@ -22,11 +23,27 @@ const NavLink = ({ href, children }: NavLinkProps) => (
 
 export default function NavBarElements({
   session,
+  notifications,
+  senders,
 }: {
   session: Session | null;
+  notifications: {
+    id: string;
+    message: string;
+    userId: string;
+    senderId: string;
+    read: boolean;
+    clinicId: string;
+    createdAt: Date;
+  }[];
+  senders: {
+    id: string;
+    email: string;
+    name: string;
+    role: string;
+  }[];
 }) {
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
-
   const toggleProfileMenu = () => {
     setIsProfileMenuOpen((prev) => !prev);
   };
@@ -63,7 +80,7 @@ export default function NavBarElements({
             <>
               <NavLink href="/clinics">Clinics</NavLink>
               <NavLink href="/map">Maps</NavLink>
-
+              <Notification notifications={notifications} senders={senders} />
               <div className="relative profile-menu">
                 <button
                   onClick={toggleProfileMenu}
@@ -85,6 +102,7 @@ export default function NavBarElements({
                       : "opacity-0 -translate-y-2 pointer-events-none"
                   }`}
                 >
+                  <div className="absolute -top-2 right-4 w-4 h-4 bg-white transform rotate-45 border-t border-l border-gray-200"></div>
                   <Link
                     onClick={closeProfileMenu}
                     href="/profile"
