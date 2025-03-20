@@ -2,7 +2,7 @@
 import {
   readAllNotification,
   readNotification,
-} from "@/lib/actions/notidication";
+} from "@/lib/actions/notification";
 import { Bell, X, Check } from "lucide-react";
 import { useEffect, useState } from "react";
 
@@ -34,6 +34,17 @@ export default function Notification({
   const [unreadNotifications, setUnreadNotifications] = useState(
     notifications.filter((notification) => !notification.read)
   );
+
+  useEffect(() => {
+    setUnreadNotifications(
+      notifications
+        .filter((notification) => !notification.read)
+        .sort(
+          (a, b) =>
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        )
+    );
+  }, [notifications]);
 
   const toggleNotification = () => {
     setIsNotificationOpen((prev) => !prev);
@@ -71,6 +82,7 @@ export default function Notification({
     await readNotification({ id });
     setUnreadNotifications((prev) => prev.filter((n) => n.id !== id));
   };
+
   const handleReadAllMessage = async ({ userId }: { userId: string }) => {
     await readAllNotification({ userId });
     setUnreadNotifications([]);
@@ -78,7 +90,14 @@ export default function Notification({
 
   return (
     <div className="notification-menu relative">
-      <Bell onClick={toggleNotification} className="cursor-pointer" />
+      <div className="relative cursor-pointer" onClick={toggleNotification}>
+        <Bell className="w-6 h-6" />
+        {unreadNotifications.length > 0 && (
+          <span className="absolute -top-1 -right-2 bg-red-500 text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full">
+            {unreadNotifications.length}
+          </span>
+        )}
+      </div>
       {isNotificationOpen && (
         <div className="absolute top-10 right-0 w-80 bg-white shadow-lg border border-gray-200 rounded-lg transform transition-all duration-300 ease-in-out">
           <div className="absolute -top-2 right-4 w-4 h-4 bg-white transform rotate-45 border-t border-l border-gray-200"></div>
@@ -89,61 +108,66 @@ export default function Notification({
             </button>
           </div>
           <div className="p-4 max-h-60 overflow-auto">
-            {unreadNotifications.map((notification, index) => {
-              const sender = senders.find(
-                (s) => s.id === notification.senderId
-              );
-
-              const notificationId = notification.id ?? `notification-${index}`;
-
-              return (
-                <div key={notificationId} className="mb-4 border-b pb-2">
-                  <div>
-                    <div className="flex justify-between">
-                      <p className="font-semibold">
-                        {sender ? sender.name : "Unknown Sender"}
-                      </p>
-                      <button
-                        onClick={() => handleReadMessage(notification.id)}
-                        className="ml-2 text-sm font-semibold flex items-center"
-                      >
-                        <Check className="w-4 h-4 mr-1" />
-                      </button>
-                    </div>
-                    <p className="text-sm text-gray-500 break-words max-w-full max-h-40 overflow-auto">
-                      {expandedMessageIndex === index
-                        ? notification.message
-                        : truncateMessage(notification.message, 40)}
-                    </p>
-                  </div>
-                  <div>
-                    {notification.message.length > 40 && (
-                      <button
-                        onClick={() => handleViewFullMessage(index)}
-                        className="text-sm text-blue-500 hover:text-blue-700 mt-1"
-                      >
+            {unreadNotifications.length > 0 ? (
+              unreadNotifications.map((notification, index) => {
+                const sender = senders.find(
+                  (s) => s.id === notification.senderId
+                );
+                return (
+                  <div key={notification.id} className="mb-4 border-b pb-2">
+                    <div>
+                      <div className="flex justify-between">
+                        <p className="font-semibold">
+                          {sender ? sender.name : "Unknown Sender"}
+                        </p>
+                        <button
+                          onClick={() => handleReadMessage(notification.id)}
+                          className="ml-2 text-sm font-semibold flex items-center"
+                        >
+                          <Check className="w-4 h-4 mr-1" />
+                        </button>
+                      </div>
+                      <p className="text-sm text-gray-500 break-words max-w-full max-h-40 overflow-auto">
                         {expandedMessageIndex === index
-                          ? "Згорнути"
-                          : "Розгорнути"}
-                      </button>
-                    )}
+                          ? notification.message
+                          : truncateMessage(notification.message, 40)}
+                      </p>
+                    </div>
+                    <div>
+                      {notification.message.length > 40 && (
+                        <button
+                          onClick={() => handleViewFullMessage(index)}
+                          className="text-sm text-blue-500 hover:text-blue-700 mt-1"
+                        >
+                          {expandedMessageIndex === index
+                            ? "Згорнути"
+                            : "Розгорнути"}
+                        </button>
+                      )}
+                    </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })
+            ) : (
+              <p className="text-sm text-gray-500 text-center">
+                Немає нових повідомлень
+              </p>
+            )}
           </div>
-          <div className="p-4 border-t border-gray-200 flex justify-center">
-            <button
-              onClick={() =>
-                handleReadAllMessage({
-                  userId: notifications[0]?.userId || "",
-                })
-              }
-              className="text-blue-500 hover:text-blue-700 text-sm font-semibold"
-            >
-              Переглянути всі непрочитані
-            </button>
-          </div>
+          {unreadNotifications.length > 0 && (
+            <div className="p-4 border-t border-gray-200 flex justify-center">
+              <button
+                onClick={() =>
+                  handleReadAllMessage({
+                    userId: notifications[0]?.userId || "",
+                  })
+                }
+                className="text-blue-500 hover:text-blue-700 text-sm font-semibold"
+              >
+                Переглянути всі непрочитані
+              </button>
+            </div>
+          )}
         </div>
       )}
     </div>

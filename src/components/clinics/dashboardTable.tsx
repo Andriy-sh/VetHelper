@@ -18,6 +18,7 @@ import {
 import { updateAppointmentStatus } from "@/lib/actions/updateAppointmentStatus";
 import { AppointmentStatus } from "@prisma/client";
 import { useRouter } from "next/navigation";
+import { sendUpdateStatus } from "@/lib/actions/notification";
 
 export default function Dashboard({
   appointments,
@@ -28,11 +29,9 @@ export default function Dashboard({
 }) {
   const router = useRouter();
 
-  // Отримуємо поточну дату
   const today = new Date();
-  const todayDateString = today.toISOString().split("T")[0]; // Форматуємо дату у "YYYY-MM-DD"
+  const todayDateString = today.toISOString().split("T")[0];
 
-  // Фільтруємо записи, залишаючи лише сьогоднішні
   const todayAppointments = appointments.filter((appointment) => {
     const appointmentDate = new Date(appointment.date)
       .toISOString()
@@ -40,9 +39,8 @@ export default function Dashboard({
     return appointmentDate === todayDateString;
   });
 
-  // Сортуємо сьогоднішні записи за часом від меншого до більшого
   const sortedAppointments = todayAppointments.sort((a, b) => {
-    const timeA = a.time; // Припустимо, що час у форматі "HH:MM"
+    const timeA = a.time;
     const timeB = b.time;
     return timeA.localeCompare(timeB);
   });
@@ -56,12 +54,21 @@ export default function Dashboard({
       appointmentId,
       newStatus as AppointmentStatus
     );
+    const appointment = appointments.find((a) => a.id === appointmentId);
+    console.log(appointment);
     router.refresh();
+
+    await sendUpdateStatus({
+      senderId: user.id,
+      clinicId: appointment?.clinicId || "defaultClinicId",
+      userId: appointment?.userId || "",
+      status: newStatus,
+    });
   };
 
   return (
     <div className="mt-[72px]">
-      {user.role === "Veterinarian" && (
+      {user.role === "VETERINARIAN" && (
         <div className="mt-8">
           <h2 className="text-2xl font-semibold text-gray-700 border-b-2 border-blue-500 pb-2">
             Сьогоднішні прийоми
@@ -98,8 +105,8 @@ export default function Dashboard({
                         <SelectContent>
                           <SelectItem value="PENDING">Очікується</SelectItem>
                           <SelectItem value="CONFIRMED">В процесі</SelectItem>
-                          <SelectItem value="COMPLETED">Завершено</SelectItem>
                           <SelectItem value="CANCELED">Скасовано</SelectItem>
+                          <SelectItem value="COMPLETED">Завершено</SelectItem>
                         </SelectContent>
                       </Select>
                     </TableCell>
