@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Appointment, Clinic, User } from "@/lib/interface";
 import { Session } from "next-auth";
+import ChangeAvatar from "./changeAvatar";
 
 interface UserInfoProps {
   user: User;
@@ -20,15 +21,12 @@ export default function UserInfo({
   return (
     <div className="flex-1 flex flex-col items-center justify-center">
       <div className="min-h-screen w-full bg-white rounded-2xl shadow-xl p-8 flex flex-col lg:flex-row space-y-8 lg:space-y-0 lg:space-x-8">
-        {/* User Avatar Section */}
         <div className="flex flex-col items-center lg:items-start">
           <div className="relative w-32 h-32">
-            <Image
-              src={user.image || "/default-avatar.png"}
-              alt="User Avatar"
-              fill
-              priority
-              className="rounded-full object-cover border-4 border-gray-200"
+            <ChangeAvatar
+              userIds={user.id}
+              imageId={user.image || ""}
+              change={true}
             />
           </div>
           <h1 className="text-3xl font-bold text-gray-800 mt-4">
@@ -46,7 +44,6 @@ export default function UserInfo({
           </Link>
         </div>
 
-        {/* Appointments Section */}
         <div className="flex-1">
           <h2 className="text-2xl font-bold text-gray-800 mb-6">
             Your Appointments

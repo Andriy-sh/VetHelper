@@ -4,8 +4,9 @@ import { Session } from "next-auth";
 import Link from "next/link";
 import { HandleSignOut } from "../auth/SignOut";
 import { useState, useEffect } from "react";
-import Image from "next/image";
 import Notification from "./notification";
+import ChangeAvatar from "../profile/changeAvatar";
+import { User } from "@/lib/interface";
 
 interface NavLinkProps {
   href: string;
@@ -25,6 +26,7 @@ export default function NavBarElements({
   session,
   notifications,
   senders,
+  user,
 }: {
   session: Session | null;
   notifications: {
@@ -42,6 +44,7 @@ export default function NavBarElements({
     name: string;
     role: string;
   }[];
+  user: User;
 }) {
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const toggleProfileMenu = () => {
@@ -86,12 +89,10 @@ export default function NavBarElements({
                   onClick={toggleProfileMenu}
                   className="w-10 h-10 rounded-full overflow-hidden border-2 border-gray-200 hover:border-gray-400 transition duration-300"
                 >
-                  <Image
-                    src={session.user?.image || "/default-avatar.png"}
-                    alt="Profile"
-                    width={40}
-                    height={40}
-                    className="object-cover"
+                  <ChangeAvatar
+                    imageId={user.image || ""}
+                    userIds={user.id}
+                    change={false}
                   />
                 </button>
 

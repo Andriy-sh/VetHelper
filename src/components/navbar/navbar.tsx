@@ -57,6 +57,7 @@ export const NavBar = async () => {
       session={session}
       notifications={formattedNotifications}
       senders={senders}
+      user={user}
     />
   );
 };
