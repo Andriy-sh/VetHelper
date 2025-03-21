@@ -3,6 +3,7 @@ import Image from "next/image";
 import { FaPaw } from "react-icons/fa";
 import { getPets, getUser } from "@/lib/service/user";
 import { auth } from "../../../auth";
+import ChangeAvatar from "./changeAvatar";
 
 export const PetInfo = async () => {
   const session = await auth();

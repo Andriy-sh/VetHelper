@@ -24,6 +24,8 @@ export default function UserInfo({
         <div className="flex flex-col items-center lg:items-start">
           <div className="relative w-32 h-32">
             <ChangeAvatar
+              width={100}
+              height={100}
               userIds={user.id}
               imageId={user.image || ""}
               change={true}

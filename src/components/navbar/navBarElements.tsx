@@ -90,8 +90,10 @@ export default function NavBarElements({
                   className="w-10 h-10 rounded-full overflow-hidden border-2 border-gray-200 hover:border-gray-400 transition duration-300"
                 >
                   <ChangeAvatar
-                    imageId={user.image || ""}
-                    userIds={user.id}
+                    height={40}
+                    width={40}
+                    imageId={user?.image || "default.png"}
+                    userIds={user?.id}
                     change={false}
                   />
                 </button>

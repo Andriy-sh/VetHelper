@@ -1,3 +1,5 @@
+import { Gender, Species } from "@prisma/client";
+
 export interface User {
   name: string | null;
   id: string;
@@ -35,4 +37,13 @@ export interface Clinic {
   createdAt: Date;
   updatedAt: Date;
 }
-
+export interface Pet {
+  id: string;
+  name: string;
+  species: Species;
+  breed: string | null;
+  age: number | null;
+  gender: Gender | null;
+  image: string | null;
+  userId: string;
+}

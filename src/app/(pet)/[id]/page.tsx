@@ -28,10 +28,11 @@ export default async function Page({ params }: { params: { id: string } }) {
         <div className="relative w-24 h-24">
           {pet.image ? (
             <Image
-              src={pet.image}
+              width={220}
+              height={220}
+              src={`https://res.cloudinary.com/dddgmovz2/image/upload/w_200,h_200,c_thumb/${pet.image}`}
               alt={pet.name}
-              fill
-              className="rounded-full object-cover"
+              className="rounded-full object-cover aspect-square"
             />
           ) : (
             <div className="flex items-center justify-center w-full h-full bg-gray-200 rounded-full">

@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { auth } from "../../../../../auth";
 import { prisma } from "../../../../../prisma";
+import AppointmentInfo from "@/components/appointment/appointmentInfo";
 
 export default async function Page({
   params,
@@ -22,5 +23,20 @@ export default async function Page({
   const appointment = await prisma.appointment.findUnique({
     where: { id: params.appointmentId },
   });
-  return <div>{appointment?.id}</div>;
+  if (!appointment) {
+    notFound();
+  }
+  const pet = await prisma.pet.findUnique({
+    where: {
+      id: appointment?.petId,
+    },
+  });
+  if (!pet) {
+    notFound();
+  }
+  return (
+    <div>
+      <AppointmentInfo appointment={appointment} pet={pet} />
+    </div>
+  );
 }

@@ -37,7 +37,7 @@ model Appointment {
   id       String            @id @default(cuid())
   userId   String
   clinicId String
-  petId    String?
+  petId    String
   date     DateTime
   status   AppointmentStatus @default(PENDING)
   notes    String?

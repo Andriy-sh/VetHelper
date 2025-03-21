@@ -102,7 +102,7 @@ export default function Notification({
         <div className="absolute top-10 right-0 w-80 bg-white shadow-lg border border-gray-200 rounded-lg transform transition-all duration-300 ease-in-out">
           <div className="absolute -top-2 right-4 w-4 h-4 bg-white transform rotate-45 border-t border-l border-gray-200"></div>
           <div className="p-4 flex justify-between items-center border-b border-gray-200">
-            <h2 className="text-lg font-semibold">Notifications</h2>
+            <h2 className="text-lg font-semibold">Повідомелення</h2>
             <button onClick={toggleNotification}>
               <X className="cursor-pointer" />
             </button>

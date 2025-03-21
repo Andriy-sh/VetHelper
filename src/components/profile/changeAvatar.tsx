@@ -13,10 +13,16 @@ export default function ChangeAvatar({
   userIds,
   imageId,
   change,
+  width,
+  height,
+  className = "",
 }: {
   userIds: string;
   imageId: string;
   change: boolean;
+  height: number;
+  width: number;
+  className?: string;
 }) {
   const [imageUrl, setImageUrl] = useState<string | null>(imageId);
   const [loading, setLoading] = useState(false);
@@ -58,28 +64,20 @@ export default function ChangeAvatar({
   };
 
   return (
-    <div className="">
+    <div className={`${className}`}>
       <div
-        className={`overflow-hidden cursor-pointer rounded-full w-full h-full`}
+        className={`overflow-hidden cursor-pointer rounded-full`}
         onClick={() =>
           change && document.getElementById("uploadInput")?.click()
         }
       >
         <Image
-          width={200}
-          height={200}
+          width={width}
+          height={height}
           src={`https://res.cloudinary.com/dddgmovz2/image/upload/w_200,h_200,c_thumb/${imageUrl}`}
           alt="User Avatar"
           className="rounded-full object-cover"
         />
-        {change && (
-          <button
-            id="uploadBtn"
-            className="absolute inset-0 rounded-full opacity-30 hover:opacity-70 flex justify-center items-center text-white text-xl"
-          >
-            <span></span>
-          </button>
-        )}
       </div>
 
       {change && (
