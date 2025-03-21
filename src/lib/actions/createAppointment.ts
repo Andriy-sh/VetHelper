@@ -4,6 +4,7 @@ import { prisma } from "../../../prisma";
 export const createAppointment = async (formData: FormData) => {
   const userId = formData.get("userId") as string;
   const clinicId = formData.get("clinicId") as string;
+  const petId = formData.get("petId") as string;
   const notes = formData.get("notes") as string;
   const dateValue = formData.get("date") as string;
   const time = formData.get("time") as string;
@@ -26,6 +27,7 @@ export const createAppointment = async (formData: FormData) => {
     data: {
       userId,
       clinicId,
+      petId,
       notes,
       date,
       time,

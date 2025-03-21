@@ -58,6 +58,7 @@ model Pet {
   breed   String?
   age     Int?
   gender  Gender?
+  image   String?
   userId  String
   user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 

@@ -6,6 +6,7 @@ import Link from "next/link";
 export default async function SingleClinic({
   clinic,
   user,
+  pets,
 }: {
   clinic: {
     id: string;
@@ -23,11 +24,16 @@ export default async function SingleClinic({
     role: string;
     clinicId: string;
   };
+  pets: {
+    id: string;
+    name: string;
+    image: string | null;
+  }[];
 }) {
   const appointments = await prisma.appointment.findMany({
     where: { clinicId: clinic.id },
   });
-
+  console.log(pets);
   return (
     <div className="min-h-[90vh] min-w-[90vh] p-8 bg-gray-50 flex items-center justify-center">
       <div className="min-h-[80vh] w-full bg-white shadow-2xl rounded-lg overflow-hidden ">
@@ -92,6 +98,7 @@ export default async function SingleClinic({
             userId={user.id}
             times={appointments.map((a) => a.time)}
             date={appointments.map((a) => a.date)}
+            pets={pets}
           />
         </div>
       </div>

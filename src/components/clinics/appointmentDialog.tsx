@@ -27,6 +27,7 @@ import { useState, useMemo } from "react";
 import { Select, SelectContent, SelectItem, SelectTrigger } from "../ui/select";
 import { SelectValue } from "@radix-ui/react-select";
 import { format } from "date-fns";
+import Image from "next/image";
 
 export function AppointmentDialog({
   name,
@@ -34,12 +35,18 @@ export function AppointmentDialog({
   clinicId,
   times,
   date,
+  pets,
 }: {
   name: string;
   userId: string;
   clinicId: string;
   times: string[];
   date: string[];
+  pets: {
+    id: string;
+    name: string;
+    image: string;
+  }[];
 }) {
   const form = useForm<AppointmentSchema>({
     resolver: zodResolver(appointmentSchema),
@@ -50,7 +57,6 @@ export function AppointmentDialog({
       time: "",
     },
   });
-
   const availableTimes = [
     "9:00",
     "10:00",
@@ -66,10 +72,9 @@ export function AppointmentDialog({
     "20:00",
     "21:00",
   ];
-
   const [open, setOpen] = useState(false);
   const router = useRouter();
-
+  console.log(pets);
   const bookedTimesMap = useMemo(() => {
     const map: Record<string, string[]> = {};
     date.forEach((d, index) => {
@@ -94,6 +99,7 @@ export function AppointmentDialog({
       const formData = new FormData();
       formData.append("userId", userId);
       formData.append("clinicId", clinicId);
+      formData.append("petId", data.petId);
       formData.append("notes", data.notes);
       formData.append("date", data.date);
       formData.append("time", data.time);
@@ -200,6 +206,42 @@ export function AppointmentDialog({
                 </FormItem>
               )}
             />
+            <FormField
+              control={form.control}
+              name="petId"
+              render={({ field }) => (
+                <FormItem>
+                  <Label>Виберіть тваринку</Label>
+                  <Select value={field.value} onValueChange={field.onChange}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Оберіть вашу тваринку" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {pets.map((pet) => (
+                        <SelectItem key={pet.id} value={pet.id}>
+                          <div className="flex items-center gap-3 rounded-md p-2 hover:bg-gray-100">
+                            <Image
+                              width={40}
+                              height={40}
+                              src={`https://res.cloudinary.com/dddgmovz2/image/upload/w_200,h_200,c_thumb/${pet.image}`}
+                              alt={pet.name}
+                              className="rounded-full object-cover aspect-square"
+                            />
+                            <span className="text-lg font-medium">
+                              {pet.name}
+                            </span>
+                          </div>
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
             <Button
               type="submit"
               className="w-full text-lg py-3 rounded-xl"

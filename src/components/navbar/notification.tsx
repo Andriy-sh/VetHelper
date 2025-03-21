@@ -130,11 +130,11 @@ export default function Notification({
                       <p className="text-sm text-gray-500 break-words max-w-full max-h-40 overflow-auto">
                         {expandedMessageIndex === index
                           ? notification.message
-                          : truncateMessage(notification.message, 40)}
+                          : truncateMessage(notification.message, 60)}
                       </p>
                     </div>
                     <div>
-                      {notification.message.length > 40 && (
+                      {notification.message.length > 60 && (
                         <button
                           onClick={() => handleViewFullMessage(index)}
                           className="text-sm text-blue-500 hover:text-blue-700 mt-1"

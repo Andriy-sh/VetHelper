@@ -19,13 +19,13 @@ export default async function Page() {
     where: { city: user?.city ?? undefined },
   });
   if (!user.city) {
-    return <AddingCity user={user} session={session}/>;
+    return <AddingCity user={user} session={session} />;
   }
   return (
     <div>
       <div className="flex justify-between mx-8">
         <h1>All in your City</h1>
-        {user.role === "Admin" && <div>Ви Адмін</div>}
+        {user.role === "ADMIN" && <div>Ви Адмін</div>}
       </div>
       <Clinics clinics={clinics} user={user} />
     </div>

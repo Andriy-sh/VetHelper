@@ -53,29 +53,31 @@ export default function UserInfo({
           ) : (
             <div className="space-y-4">
               {appointment.map((appointment) => (
-                <div
+                <Link
                   key={appointment.id}
-                  className="p-6 bg-gray-50 rounded-lg shadow-sm hover:shadow-md transition-shadow"
+                  href={`/clinics/${appointment.clinicId}/${appointment.id}`}
                 >
-                  <div className="flex flex-col space-y-2">
-                    <p className="text-lg font-semibold text-gray-800">
-                      Clinic:{" "}
-                      <span className="font-normal">
-                        {clinics.find(
-                          (clinic) => clinic.id === appointment.clinicId
-                        )?.name || "Unknown Clinic"}
-                      </span>
-                    </p>
-                    <p className="text-lg font-semibold text-gray-800">
-                      Time:{" "}
-                      <span className="font-normal">{appointment.time}</span>
-                    </p>
-                    <p className="text-lg font-semibold text-gray-800">
-                      Notes:{" "}
-                      <span className="font-normal">{appointment.notes}</span>
-                    </p>
+                  <div className="p-6 bg-gray-50 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                    <div className="flex flex-col space-y-2">
+                      <p className="text-lg font-semibold text-gray-800">
+                        Clinic:{" "}
+                        <span className="font-normal">
+                          {clinics.find(
+                            (clinic) => clinic.id === appointment.clinicId
+                          )?.name || "Unknown Clinic"}
+                        </span>
+                      </p>
+                      <p className="text-lg font-semibold text-gray-800">
+                        Time:{" "}
+                        <span className="font-normal">{appointment.time}</span>
+                      </p>
+                      <p className="text-lg font-semibold text-gray-800">
+                        Notes:{" "}
+                        <span className="font-normal">{appointment.notes}</span>
+                      </p>
+                    </div>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           )}
