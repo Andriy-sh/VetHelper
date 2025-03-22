@@ -34,9 +34,17 @@ export default async function Page({
   if (!pet) {
     notFound();
   }
+  const diseases = await prisma.disease.findMany({
+    where: { petId: pet.id },
+  });
   return (
     <div>
-      <AppointmentInfo appointment={appointment} pet={pet} />
+      <AppointmentInfo
+        appointment={appointment}
+        pet={pet}
+        user={user}
+        diseases={diseases}
+      />
     </div>
   );
 }

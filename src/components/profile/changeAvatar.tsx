@@ -4,6 +4,7 @@ import { updateAvatar } from "@/lib/actions/updateAvatar";
 import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { CloudinaryResponse } from "@/lib/interface";
 
 const newAvatar = async (userId: string, image: string) => {
   await updateAvatar(userId, image);
@@ -40,10 +41,6 @@ export default function ChangeAvatar({
       formData.append("upload_preset", "gigachad");
 
       try {
-        interface CloudinaryResponse {
-          public_id: string;
-        }
-
         const response = await axios.post<CloudinaryResponse>(
           "https://api.cloudinary.com/v1_1/dddgmovz2/image/upload",
           formData

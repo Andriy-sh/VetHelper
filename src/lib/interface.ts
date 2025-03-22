@@ -1,4 +1,4 @@
-import { Gender, Species } from "@prisma/client";
+import { AppointmentStatus, Gender, Role, Species } from "@prisma/client";
 
 export interface User {
   name: string | null;
@@ -13,7 +13,7 @@ export interface User {
   createdAt: Date;
   updatedAt: Date;
   clinicId: string | null;
-  role: "USER" | "VETERINARIAN" | "ADMIN";
+  role: Role | null;
 }
 export interface Appointment {
   id: string;
@@ -25,7 +25,7 @@ export interface Appointment {
   notes: string | null;
   createdAt: Date;
   updatedAt: Date;
-  status: "PENDING" | "COMPLETED" | "CANCELED" | "CONFIRMED";
+  status: AppointmentStatus;
 }
 export interface Clinic {
   id: string;
@@ -46,4 +46,17 @@ export interface Pet {
   gender: Gender | null;
   image: string | null;
   userId: string;
+}
+
+export interface Diseases {
+  id: string;
+  petId: string;
+  name: string | null;
+  description: string | null;
+  image: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+}
+export interface CloudinaryResponse {
+  public_id: string;
 }

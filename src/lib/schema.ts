@@ -1,4 +1,5 @@
-import { z } from "zod";
+import { describe } from "node:test";
+import { string, z } from "zod";
 
 export const signupSchema = z.object({
   name: z
@@ -72,3 +73,12 @@ export const citySchema = z.object({
   city: z.string().min(1, { message: "City is require" }),
 });
 export type CitySchema = z.infer<typeof citySchema>;
+export const diseaseSchema = z.object({
+  name: z.string().min(1, "Назва хвороби є обов'язковою"),
+  describe: z.string().min(1, "Опис хвороби є обов'язковим"),
+  imageId: z
+    .any()
+    .refine((val) => val && val instanceof File, "Файл є обов'язковим"),
+});
+
+export type DiseaseSchema = z.infer<typeof diseaseSchema>;

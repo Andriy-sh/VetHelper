@@ -1,14 +1,94 @@
-import { Appointment } from "@/lib/interface";
+"use client";
+
+import {
+  Appointment,
+  CloudinaryResponse,
+  Diseases,
+  User,
+} from "@/lib/interface";
 import { Pet } from "@prisma/client";
 import ChangeAvatar from "../profile/changeAvatar";
+import { Button } from "../ui/button";
+import axios from "axios";
+import { addDiseasesImage } from "@/lib/actions/diseasesImage";
+import { Input } from "../ui/input";
+import { useState } from "react";
+import Image from "next/image";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "../ui/dialog";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "../ui/form";
+import { Label } from "../ui/label";
+import { useForm } from "react-hook-form";
+import { DiseaseSchema, diseaseSchema } from "@/lib/schema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "../ui/hover-card";
 
 export default function AppointmentInfo({
   appointment,
   pet,
+  user,
+  diseases,
 }: {
   appointment: Appointment;
   pet: Pet;
+  user: User;
+  diseases: Diseases[];
 }) {
+  const [open, setOpen] = useState(false);
+  const form = useForm<DiseaseSchema>({
+    resolver: zodResolver(diseaseSchema),
+    defaultValues: {
+      describe: "",
+      name: "",
+    },
+  });
+  const handleImageUpload = async (data: DiseaseSchema) => {
+    const file = form.getValues("imageId");
+
+    if (!file || !(file instanceof File)) {
+      console.error("Файл не вибрано");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "vet_diseases");
+
+    try {
+      setOpen(false);
+      const response = await axios.post<CloudinaryResponse>(
+        "https://api.cloudinary.com/v1_1/dddgmovz2/image/upload",
+        formData
+      );
+
+      const public_id = response.data.public_id;
+
+      await addDiseasesImage({
+        imageId: public_id,
+        name: data.name,
+        description: data.describe,
+        petId: pet.id,
+      });
+    } catch (error) {
+      console.error("Помилка при завантаженні зображення:", error);
+    }
+  };
+
   return (
     <div className="p-3 bg-gradient-to-r from-blue-50 to-purple-50 min-h-screen">
       <div className="bg-white rounded-2xl shadow-2xl overflow-hidden">
@@ -17,7 +97,6 @@ export default function AppointmentInfo({
             Інформація про прийом
           </h1>
         </div>
-
         <div className="p-8">
           <div className="flex flex-col md:flex-row items-center space-y-6 md:space-y-0 md:space-x-8 mb-8">
             <ChangeAvatar
@@ -82,48 +161,145 @@ export default function AppointmentInfo({
             </div>
           </div>
 
-          <div className="bg-gray-50 p-6 rounded-lg mb-8">
-            <h3 className="text-xl font-semibold text-gray-800 mb-4">
-              Медичні документи
-            </h3>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-              <div className="bg-white p-4 rounded-lg shadow-md">
-                <img
-                  src="/path/to/medical-image-1.jpg"
-                  alt="Medical Document"
-                  className="w-full h-32 object-cover rounded-md"
-                />
-                <p className="text-sm text-gray-600 mt-2">Фото шкіри</p>
-              </div>
-              <div className="bg-white p-4 rounded-lg shadow-md">
-                <img
-                  src="/path/to/medical-image-2.jpg"
-                  alt="Medical Document"
-                  className="w-full h-32 object-cover rounded-md"
-                />
-                <p className="text-sm text-gray-600 mt-2">Рентген</p>
-              </div>
-              <div className="bg-white p-4 rounded-lg shadow-md">
-                <img
-                  src="/path/to/medical-image-3.jpg"
-                  alt="Medical Document"
-                  className="w-full h-32 object-cover rounded-md"
-                />
-                <p className="text-sm text-gray-600 mt-2">Аналізи крові</p>
-              </div>
+          <div className=" bg-gray-50 p-6 rounded-lg mb-8">
+            <div className="flex justify-between">
+              <h3 className="text-xl font-semibold text-gray-800 mb-4">
+                Медичні документи
+              </h3>
+              {user.role === "VETERINARIAN" && (
+                <div>
+                  <Button>Додати фото </Button>
+                  <Dialog open={open} onOpenChange={setOpen}>
+                    <DialogTrigger asChild>
+                      <Button variant="outline">
+                        Змінити дані про {pet.name}
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent className="sm:max-w-[425px]">
+                      <DialogHeader>
+                        <DialogTitle>Змінити дані про {pet.name}</DialogTitle>
+                      </DialogHeader>
+                      <Form {...form}>
+                        <form
+                          onSubmit={form.handleSubmit(handleImageUpload)}
+                          className="space-y-4"
+                        >
+                          <FormField
+                            name="name"
+                            control={form.control}
+                            render={({ field }) => (
+                              <FormItem>
+                                <Label>Назва хвороби</Label>
+                                <FormControl>
+                                  <Input
+                                    type="text"
+                                    placeholder="Назва хвороби"
+                                    {...field}
+                                  />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                          <FormField
+                            name="describe"
+                            control={form.control}
+                            render={({ field }) => (
+                              <FormItem>
+                                <Label>Опис хвороби</Label>
+                                <FormControl>
+                                  <Input
+                                    type="text"
+                                    placeholder="Опис хвороби"
+                                    {...field}
+                                  />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                          <FormField
+                            name="imageId"
+                            control={form.control}
+                            render={({ field: { onChange } }) => (
+                              <FormItem>
+                                <Label>Зображення</Label>
+                                <FormControl>
+                                  <Input
+                                    type="file"
+                                    accept="image/*"
+                                    onChange={(e) => {
+                                      const file = e.target.files?.[0];
+                                      if (file) {
+                                        onChange(file);
+                                      }
+                                    }}
+                                  />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+
+                          <Button
+                            type="submit"
+                            className="w-full bg-blue-500 hover:bg-blue-600"
+                          >
+                            Add Pet
+                          </Button>
+                        </form>
+                      </Form>
+                    </DialogContent>
+                  </Dialog>
+                </div>
+              )}
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+              {diseases?.length > 0 ? (
+                diseases.map((disease) => (
+                  <HoverCard key={disease.id}>
+                    <div className="flex flex-col items-center bg-white shadow-md rounded-lg p-4">
+                      <HoverCardTrigger>
+                        <Image
+                          width={200}
+                          height={200}
+                          src={`https://res.cloudinary.com/dddgmovz2/image/upload/w_300,h_300,c_thumb/${disease.image}`}
+                          alt={disease.name ?? "Фото захворювання"}
+                          className="rounded-lg object-cover transform transition duration-300 hover:scale-110 hover:opacity-80"
+                        />
+                        <h4 className="text-lg font-semibold mt-2 truncate max-w-[12.5rem]">
+                          {disease.name}
+                        </h4>
+                      </HoverCardTrigger>
+                    </div>
+                    <HoverCardContent className="min-w-96 w-auto h-auto p-4 bg-white rounded-md shadow-lg">
+                      <div className="flex flex-col justify-center text-center">
+                        <div className="flex justify-center">
+                          <Image
+                            width={100}
+                            height={100}
+                            src={`https://res.cloudinary.com/dddgmovz2/image/upload/w_300,h_300,c_thumb/${disease.image}`}
+                            alt={disease.name ?? "Фото захворювання"}
+                            className="w-96 rounded-lg object-cover flex justify-center "
+                          />
+                        </div>
+                        <h5 className="text-lg font-semibold ">
+                          {disease.name}
+                        </h5>
+                        <p className="text-gray-600 max-w-96">
+                          {disease.description}
+                        </p>
+                      </div>
+                    </HoverCardContent>
+                  </HoverCard>
+                ))
+              ) : (
+                <p className="text-gray-600 col-span-full text-center">
+                  Немає даних
+                </p>
+              )}
             </div>
           </div>
-
-          {appointment.status !== "CANCELED" && (
-            <div className="flex justify-end space-x-4">
-              <button className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300">
-                Підтвердити
-              </button>
-              <button className="px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition duration-300">
-                Скасувати
-              </button>
-            </div>
-          )}
         </div>
       </div>
     </div>
