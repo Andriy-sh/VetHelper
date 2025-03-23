@@ -2,12 +2,12 @@
 
 import {
   Appointment,
+  Clinic,
   CloudinaryResponse,
   Diseases,
   User,
 } from "@/lib/interface";
 import { Pet } from "@prisma/client";
-import ChangeAvatar from "../profile/changeAvatar";
 import { Button } from "../ui/button";
 import axios from "axios";
 import { addDiseasesImage } from "@/lib/actions/diseasesImage";
@@ -37,18 +37,23 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "../ui/hover-card";
+import ChangePetAvatar from "../pets/changePetAvatar";
+import { useRouter } from "next/navigation";
 
 export default function AppointmentInfo({
   appointment,
   pet,
   user,
   diseases,
+  clinic,
 }: {
   appointment: Appointment;
   pet: Pet;
   user: User;
   diseases: Diseases[];
+  clinic: Clinic;
 }) {
+  const router = useRouter();
   const [open, setOpen] = useState(false);
   const form = useForm<DiseaseSchema>({
     resolver: zodResolver(diseaseSchema),
@@ -84,6 +89,7 @@ export default function AppointmentInfo({
         description: data.describe,
         petId: pet.id,
       });
+      router.refresh();
     } catch (error) {
       console.error("Помилка при завантаженні зображення:", error);
     }
@@ -99,13 +105,13 @@ export default function AppointmentInfo({
         </div>
         <div className="p-8">
           <div className="flex flex-col md:flex-row items-center space-y-6 md:space-y-0 md:space-x-8 mb-8">
-            <ChangeAvatar
+            <ChangePetAvatar
               height={160}
               width={160}
               className="rounded-full border-4 border-white shadow-lg"
               change={false}
               imageId={pet.image ?? ""}
-              userIds={pet.userId}
+              petId={pet.id}
             />
             <div className="text-center md:text-left">
               <h2 className="text-2xl font-bold text-gray-800">{pet.name}</h2>
@@ -123,19 +129,18 @@ export default function AppointmentInfo({
             </h3>
             <div className="space-y-3">
               <p className="text-gray-700">
-                <span className="font-semibold">Дата і час:</span>{" "}
+                <span className="font-semibold">Дата і час:</span>
                 {appointment.date.toLocaleDateString()} о {appointment.time}
               </p>
               <p className="text-gray-700">
-                <span className="font-semibold">Статус запису:</span>{" "}
+                <span className="font-semibold">Статус запису:</span>
                 {appointment.status}
               </p>
               <p className="text-gray-700">
-                <span className="font-semibold">Клініка:</span>{" "}
-                {appointment.clinicId}
+                <span className="font-semibold">Клініка:</span> {clinic.name}
               </p>
               <p className="text-gray-700">
-                <span className="font-semibold">Примітки:</span>{" "}
+                <span className="font-semibold">Примітки:</span>
                 {appointment.notes ?? "Немає приміток"}
               </p>
             </div>
@@ -168,16 +173,13 @@ export default function AppointmentInfo({
               </h3>
               {user.role === "VETERINARIAN" && (
                 <div>
-                  <Button>Додати фото </Button>
                   <Dialog open={open} onOpenChange={setOpen}>
                     <DialogTrigger asChild>
-                      <Button variant="outline">
-                        Змінити дані про {pet.name}
-                      </Button>
+                      <Button variant="default">Додати дані про хворобу</Button>
                     </DialogTrigger>
                     <DialogContent className="sm:max-w-[425px]">
                       <DialogHeader>
-                        <DialogTitle>Змінити дані про {pet.name}</DialogTitle>
+                        <DialogTitle>Додати дані про хворобу</DialogTitle>
                       </DialogHeader>
                       <Form {...form}>
                         <form
@@ -245,7 +247,7 @@ export default function AppointmentInfo({
                             type="submit"
                             className="w-full bg-blue-500 hover:bg-blue-600"
                           >
-                            Add Pet
+                            Додати дані про хворобу
                           </Button>
                         </form>
                       </Form>
@@ -267,7 +269,7 @@ export default function AppointmentInfo({
                           alt={disease.name ?? "Фото захворювання"}
                           className="rounded-lg object-cover transform transition duration-300 hover:scale-110 hover:opacity-80"
                         />
-                        <h4 className="text-lg font-semibold mt-2 truncate max-w-[12.5rem]">
+                        <h4 className="text-lg  text-center  font-semibold mt-2 truncate max-w-[12.5rem]">
                           {disease.name}
                         </h4>
                       </HoverCardTrigger>
@@ -283,10 +285,10 @@ export default function AppointmentInfo({
                             className="w-96 rounded-lg object-cover flex justify-center "
                           />
                         </div>
-                        <h5 className="text-lg font-semibold ">
+                        <h5 className="text-lgfont-semibold ">
                           {disease.name}
                         </h5>
-                        <p className="text-gray-600 max-w-96">
+                        <p className="text-gray-600  max-w-96">
                           {disease.description}
                         </p>
                       </div>

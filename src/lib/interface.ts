@@ -30,10 +30,11 @@ export interface Appointment {
 export interface Clinic {
   id: string;
   name: string;
-  city: string;
   address: string;
-  phone: string;
-  email: string;
+  city: string;
+  description: string;
+  phone: string | null;
+  website: string | null;
   createdAt: Date;
   updatedAt: Date;
 }

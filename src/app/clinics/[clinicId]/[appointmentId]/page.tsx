@@ -22,6 +22,7 @@ export default async function Page({
 
   const appointment = await prisma.appointment.findUnique({
     where: { id: params.appointmentId },
+    include: { clinic: true },
   });
   if (!appointment) {
     notFound();
@@ -44,6 +45,7 @@ export default async function Page({
         pet={pet}
         user={user}
         diseases={diseases}
+        clinic={appointment.clinic}
       />
     </div>
   );
