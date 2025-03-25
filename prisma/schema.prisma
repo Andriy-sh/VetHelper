@@ -66,6 +66,7 @@ model Pet {
   Appointment Appointment[]
   Disease     Disease[]
   Vaccination Vaccination[]
+  Allergy     Allergy[]
 }
 
 model Disease {
@@ -84,10 +85,24 @@ model Disease {
 model Vaccination {
   id          String    @id @default(cuid())
   petId       String
-  name        String 
-  date        DateTime 
-  nextDoseDue DateTime? 
-  notes       String? 
+  name        String
+  date        DateTime
+  nextDoseDue DateTime?
+  notes       String?
+
+  pet Pet @relation(fields: [petId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Allergy {
+  id              String   @id @default(cuid())
+  petId           String
+  name            String
+  symptoms        String
+  recommendations String?
+  dateDetected    DateTime
 
   pet Pet @relation(fields: [petId], references: [id], onDelete: Cascade)
 

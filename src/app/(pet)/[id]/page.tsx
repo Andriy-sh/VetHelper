@@ -44,12 +44,17 @@ export default async function Page({ params }: { params: { id: string } }) {
   const vacctination = await prisma.vaccination.findMany({
     where: { petId: pet.id },
   });
+
+  const allergies = await prisma.allergy.findMany({
+    where: { petId: pet.id },
+  });
   return (
     <PetInfo
       pet={pet}
       appointments={appointments}
       user={user}
       vacctination={vacctination}
+      allergies={allergies}
     />
   );
 }

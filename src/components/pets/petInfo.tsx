@@ -11,37 +11,35 @@ import Link from "next/link";
 import ChangePetAvatar from "@/components/pets/changePetAvatar";
 import { PawPrint } from "lucide-react";
 
-import { Appointment, Pet, User, Vacctination } from "@/lib/interface";
+import { Appointment, Pet, User, Vacctination, Allergy } from "@/lib/interface";
 import { useState } from "react";
 import { Button } from "../ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "../ui/dialog";
-import { Form } from "../ui/form";
 import VacctinationDialog from "./vaccinationDialog";
+import AllergyDialog from "./allergyDialog";
 
 export default function PetInfo({
   pet,
   appointments,
   user,
   vacctination,
+  allergies,
 }: {
   pet: Pet;
   appointments: Appointment[];
   user: User;
   vacctination: Vacctination[];
+  allergies: Allergy[];
 }) {
   const [petData, setPetData] = useState(pet);
   const [visibleVaccinations, setVisibleVaccinations] = useState(5);
+  const [visibleAllergies, setVisibleAllergies] = useState(5);
   const visibleVacctinations = vacctination.slice(0, visibleVaccinations);
+  const visibleAllergyList = allergies.slice(0, visibleAllergies);
 
   return (
-    <div className="flex justify-center  min-h-[80vh] bg-gray-100 py-12">
+    <div className="flex justify-center min-h-[80vh] bg-gray-100 py-12">
       <div className="bg-white shadow-xl rounded-2xl p-10 w-full max-w-4xl border-t-8 border-blue-500">
+        {/* Загальна інформація про улюбленця */}
         <div className="flex items-center space-x-6 mb-8">
           <div className="relative w-36 h-36">
             {pet.image ? (
@@ -62,10 +60,9 @@ export default function PetInfo({
             <p className="text-lg text-gray-700">
               {petData.species} | {petData.breed}
             </p>
-            <p className="text-md text-gray-600">{petData.age} years old</p>
+            <p className="text-md text-gray-600">{petData.age} років</p>
           </div>
         </div>
-
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           <div className="p-6 bg-gray-100 rounded-lg shadow-sm">
             <h4 className="text-xl font-semibold text-gray-800 mb-3">
@@ -102,10 +99,9 @@ export default function PetInfo({
             </p>
           </div>
         </div>
-
         <div className="p-6 bg-gray-100 rounded-lg shadow-sm mb-6">
           <Accordion type="single" collapsible>
-            <AccordionItem value="item-1">
+            <AccordionItem value="visits">
               <AccordionTrigger className="text-xl">
                 Історія відвідувань
               </AccordionTrigger>
@@ -115,27 +111,25 @@ export default function PetInfo({
                     href={`/clinics/${appointment.clinicId}/${appointment.id}`}
                     key={appointment.id}
                   >
-                    <div className="w-full p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-all border border-gray-200">
-                      <div className="flex flex-col space-y-2">
-                        <p className="text-lg font-semibold text-gray-900">
-                          Клініка:{" "}
-                          <span className="font-normal text-gray-700">
-                            {appointment.clinic.city}
-                          </span>
-                        </p>
-                        <p className="text-lg font-semibold text-gray-900">
-                          Час:{" "}
-                          <span className="font-normal text-gray-700">
-                            {appointment.time}
-                          </span>
-                        </p>
-                        <p className="text-lg font-semibold text-gray-900">
-                          Проблема:{" "}
-                          <span className="font-normal text-gray-700">
-                            {appointment.notes}
-                          </span>
-                        </p>
-                      </div>
+                    <div className="w-full p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-all border border-gray-200 mb-3">
+                      <p className="text-lg font-semibold text-gray-900">
+                        Клініка:{" "}
+                        <span className="font-normal text-gray-700">
+                          {appointment.clinic.city}
+                        </span>
+                      </p>
+                      <p className="text-lg font-semibold text-gray-900">
+                        Час:{" "}
+                        <span className="font-normal text-gray-700">
+                          {appointment.time}
+                        </span>
+                      </p>
+                      <p className="text-lg font-semibold text-gray-900">
+                        Проблема:{" "}
+                        <span className="font-normal text-gray-700">
+                          {appointment.notes}
+                        </span>
+                      </p>
                     </div>
                   </Link>
                 ))}
@@ -143,21 +137,21 @@ export default function PetInfo({
             </AccordionItem>
           </Accordion>
         </div>
+
         <div className="p-6 bg-gray-100 rounded-lg shadow-sm mb-6">
           <Accordion
             type="single"
             collapsible
             onValueChange={() => setVisibleVaccinations(5)}
           >
-            <AccordionItem value="item-1">
+            <AccordionItem value="vaccinations">
               <AccordionTrigger className="text-xl">
-                Історія вакцинації
+                Історія вакцинацій
               </AccordionTrigger>
               <AccordionContent>
                 {user.role === "VETERINARIAN" && (
                   <VacctinationDialog petId={pet.id} />
                 )}
-
                 {vacctination.length > 0 ? (
                   <>
                     {visibleVacctinations.map((vac) => (
@@ -171,39 +165,59 @@ export default function PetInfo({
                         <p className="text-gray-700">
                           {vac.notes || "Без приміток"}
                         </p>
-                        <div className="text-sm text-gray-600">
-                          <p>
-                            <strong>Дата вакцинації:</strong>{" "}
-                            {vac.date.toLocaleDateString()}
-                          </p>
-                          <p
-                            className={
-                              vac.nextDoseDue
-                                ? "text-yellow-600"
-                                : "text-gray-600"
-                            }
-                          >
-                            <strong>Наступна доза:</strong>{" "}
-                            {vac.nextDoseDue
-                              ? vac.nextDoseDue.toLocaleDateString()
-                              : "Немає запланованої дати"}
-                          </p>
-                        </div>
+                        <p className="text-sm text-gray-600">
+                          <strong>Дата вакцинації:</strong>{" "}
+                          {vac.date.toLocaleDateString()}
+                        </p>
                       </div>
                     ))}
-                    {vacctination.length > visibleVaccinations && (
-                      <button
-                        className="mt-3 px-4 py-2 bg-blue-500 text-white rounded-lg"
-                        onClick={() =>
-                          setVisibleVaccinations((prev) => prev + 5)
-                        }
-                      >
-                        Показати ще
-                      </button>
-                    )}
                   </>
                 ) : (
                   <p className="text-gray-500">Немає записів про вакцинації</p>
+                )}
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+        </div>
+
+        <div className="p-6 bg-gray-100 rounded-lg shadow-sm mb-6">
+          <Accordion
+            type="single"
+            collapsible
+            onValueChange={() => setVisibleAllergies(5)}
+          >
+            <AccordionItem value="allergies">
+              <AccordionTrigger className="text-xl">Алергії</AccordionTrigger>
+              <AccordionContent>
+                {user.role === "VETERINARIAN" && (
+                  <AllergyDialog petId={pet.id} />
+                )}
+                {allergies.length > 0 ? (
+                  <>
+                    {visibleAllergyList.map((allergy) => (
+                      <div
+                        key={allergy.id}
+                        className="w-full p-4 bg-white rounded-lg shadow-md border border-gray-200 mb-3"
+                      >
+                        <h4 className="text-lg font-semibold text-gray-900">
+                          {allergy.name}
+                        </h4>
+                        <p className="text-gray-700">
+                          <strong>Симптоми:</strong> {allergy.symptoms}
+                        </p>
+                        <p className="text-gray-700">
+                          <strong>Рекомендації:</strong>{" "}
+                          {allergy.recommendations || "Немає рекомендацій"}
+                        </p>
+                        <p className="text-sm text-gray-600">
+                          <strong>Дата виявлення:</strong>{" "}
+                          {allergy.dateDetected.toLocaleDateString()}
+                        </p>
+                      </div>
+                    ))}
+                  </>
+                ) : (
+                  <p className="text-gray-500">Немає записів про алергії</p>
                 )}
               </AccordionContent>
             </AccordionItem>

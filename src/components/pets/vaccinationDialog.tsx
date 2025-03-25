@@ -51,7 +51,8 @@ export default function VaccinationDialog({ petId }: { petId: string }) {
     } catch {
       new Error("фщытвщфтывщ");
     } finally {
-      setIsSubmitting(false);
+      if (isSubmitting) return;
+      setIsSubmitting(true);
     }
   };
   const min = new Date().toISOString().split("T")[0];
