@@ -82,3 +82,15 @@ export const diseaseSchema = z.object({
 });
 
 export type DiseaseSchema = z.infer<typeof diseaseSchema>;
+export const vaccinationSchema = z.object({
+  name: z.string().min(1),
+  date: z.string().refine((val) => !isNaN(Date.parse(val)), {
+    message: "Please select a valid date",
+  }),
+  nextDoseDue: z.string().refine((val) => !isNaN(Date.parse(val)), {
+    message: "Please select a valid date",
+  }),
+  notes: z.string(),
+});
+
+export type VaccinationSchema = z.infer<typeof vaccinationSchema>;

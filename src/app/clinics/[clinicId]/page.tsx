@@ -11,7 +11,6 @@ export default async function Clinic({
   if (!params.clinicId) {
     notFound();
   }
-  console.log(params.clinicId);
   const session = await auth();
   if (!session) {
     throw new Error("Blablabla");
@@ -23,7 +22,7 @@ export default async function Clinic({
     throw new Error("User not logged");
   }
   const clinic = await prisma.clinic.findUnique({
-    where: { id: params.clinicId },
+    where: { id: params?.clinicId },
   });
   if (!clinic) {
     notFound();

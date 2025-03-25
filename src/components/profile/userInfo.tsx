@@ -4,6 +4,12 @@ import Link from "next/link";
 import { Appointment, Clinic, User } from "@/lib/interface";
 import { Session } from "next-auth";
 import ChangeAvatar from "./changeAvatar";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "../ui/accordion";
 
 interface UserInfoProps {
   user: User;
@@ -47,40 +53,48 @@ export default function UserInfo({
         </div>
 
         <div className="flex-1">
-          <h2 className="text-2xl font-bold text-gray-800 mb-6">
-            Your Appointments
-          </h2>
           {appointment.length === 0 ? (
             <p className="text-gray-600">No appointments found.</p>
           ) : (
             <div className="space-y-4">
-              {appointment.map((appointment) => (
-                <Link
-                  key={appointment.id}
-                  href={`/clinics/${appointment.clinicId}/${appointment.id}`}
-                >
-                  <div className="p-6 bg-gray-50 rounded-lg shadow-sm hover:shadow-md transition-shadow">
-                    <div className="flex flex-col space-y-2">
-                      <p className="text-lg font-semibold text-gray-800">
-                        Clinic:{" "}
-                        <span className="font-normal">
-                          {clinics.find(
-                            (clinic) => clinic.id === appointment.clinicId
-                          )?.name || "Unknown Clinic"}
-                        </span>
-                      </p>
-                      <p className="text-lg font-semibold text-gray-800">
-                        Time:{" "}
-                        <span className="font-normal">{appointment.time}</span>
-                      </p>
-                      <p className="text-lg font-semibold text-gray-800">
-                        Notes:{" "}
-                        <span className="font-normal">{appointment.notes}</span>
-                      </p>
-                    </div>
-                  </div>
-                </Link>
-              ))}
+              <Accordion type="single" collapsible>
+                <AccordionItem value="item-1">
+                  <AccordionTrigger className="text-4xl">Ваші відвідування</AccordionTrigger>
+                  <AccordionContent>
+                    {appointment.map((appointment) => (
+                      <Link
+                        key={appointment.id}
+                        href={`/clinics/${appointment.clinicId}/${appointment.id}`}
+                      >
+                        <div className="p-6 bg-gray-50 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                          <div className="flex flex-col space-y-2">
+                            <p className="text-lg font-semibold text-gray-800">
+                              Clinic:{" "}
+                              <span className="font-normal">
+                                {clinics.find(
+                                  (clinic) => clinic.id === appointment.clinicId
+                                )?.name || "Unknown Clinic"}
+                              </span>
+                            </p>
+                            <p className="text-lg font-semibold text-gray-800">
+                              Time:{" "}
+                              <span className="font-normal">
+                                {appointment.time}
+                              </span>
+                            </p>
+                            <p className="text-lg font-semibold text-gray-800">
+                              Notes:{" "}
+                              <span className="font-normal">
+                                {appointment.notes}
+                              </span>
+                            </p>
+                          </div>
+                        </div>
+                      </Link>
+                    ))}
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
             </div>
           )}
         </div>

@@ -1,7 +1,6 @@
 import Clinics from "@/components/clinics/clinics";
 import { auth } from "../../../auth";
 import { prisma } from "../../../prisma";
-import Link from "next/link";
 import AddingCity from "@/components/profile/addingCity";
 
 export default async function Page() {

@@ -31,12 +31,17 @@ import {
 } from "../ui/select";
 import { editPet } from "@/lib/actions/editPet";
 import { useRouter } from "next/navigation";
+import { Pet } from "@/lib/interface";
+import { Gender, Species } from "@prisma/client";
 
-interface EditDialogProps {
-  pet: PetSchema & { id: string };
-}
-
-export default function EditDialog({ pet }: EditDialogProps) {
+export default function EditDialog({
+  pet,
+  setPetData,
+}: {
+  pet: Pet;
+  setPetData: (pet: Pet) => void;
+}) {
+  const [name, setName] = useState(pet.name);
   const [open, setOpen] = useState(false);
   const router = useRouter();
   const form = useForm<PetSchema>({
@@ -62,6 +67,12 @@ export default function EditDialog({ pet }: EditDialogProps) {
     }
   }, [pet, form]);
   const handlePetSubmit = async (data: PetSchema) => {
+    const updateData = {
+      ...pet,
+      ...data,
+      species: data.species as Species,
+      gender: data.gender as Gender,
+    };
     const formData = new FormData();
     formData.append("id", pet.id);
     formData.append("age", String(data.age));
@@ -71,16 +82,18 @@ export default function EditDialog({ pet }: EditDialogProps) {
     formData.append("gender", data.gender);
     await editPet(formData);
     setOpen(false);
+    setName(data.name);
+    setPetData(updateData);
     router.refresh();
   };
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline">Змінити дані про {pet.name}</Button>
+        <Button variant="outline">Змінити дані про {name}</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Змінити дані про {pet.name}</DialogTitle>
+          <DialogTitle>Змінити дані про {name}</DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form
@@ -186,7 +199,7 @@ export default function EditDialog({ pet }: EditDialogProps) {
               type="submit"
               className="w-full bg-blue-500 hover:bg-blue-600"
             >
-              Add Pet
+              Оновити дані
             </Button>
           </form>
         </Form>

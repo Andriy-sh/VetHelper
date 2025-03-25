@@ -8,29 +8,28 @@ generator client {
 }
 
 model User {
-  id            String          @id @default(cuid())
-  name          String?
-  surname       String?
-  username      String?
-  email         String          @unique
-  password      String?
-  emailVerified DateTime?
-  image         String?
-  city          String?
-  role          Role?           @default(USER)
-  accounts      Account[]
-  sessions      Session[]
+  id                    String          @id @default(cuid())
+  name                  String?
+  surname               String?
+  username              String?
+  email                 String          @unique
+  password              String?
+  emailVerified         DateTime?
+  image                 String?
+  city                  String?
+  role                  Role?           @default(USER)
+  accounts              Account[]
+  sessions              Session[]
   // Optional for WebAuthn support
-  Authenticator Authenticator[]
-
-  createdAt             DateTime       @default(now())
-  updatedAt             DateTime       @updatedAt
+  Authenticator         Authenticator[]
+  createdAt             DateTime        @default(now())
+  updatedAt             DateTime        @updatedAt
   Pet                   Pet[]
   Appointment           Appointment[]
-  Clinic                Clinic?        @relation(fields: [clinicId], references: [id])
   clinicId              String?
-  sentNotifications     Notification[] @relation("NotificationSender")
-  receivedNotifications Notification[] @relation("NotificationUser")
+  sentNotifications     Notification[]  @relation("NotificationSender")
+  receivedNotifications Notification[]  @relation("NotificationUser")
+  clinic                Clinic?         @relation(fields: [clinicId], references: [id], onDelete: Cascade)
 }
 
 model Appointment {
@@ -66,6 +65,7 @@ model Pet {
   updatedAt   DateTime      @updatedAt
   Appointment Appointment[]
   Disease     Disease[]
+  Vaccination Vaccination[]
 }
 
 model Disease {
@@ -74,6 +74,20 @@ model Disease {
   name        String?
   description String?
   image       String?
+
+  pet Pet @relation(fields: [petId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Vaccination {
+  id          String    @id @default(cuid())
+  petId       String
+  name        String 
+  date        DateTime 
+  nextDoseDue DateTime? 
+  notes       String? 
 
   pet Pet @relation(fields: [petId], references: [id], onDelete: Cascade)
 
@@ -92,7 +106,7 @@ model Clinic {
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
   Appointment  Appointment[]
-  User         User[]
+  User         User[]         @relation()
   Notification Notification[]
 }
 

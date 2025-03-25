@@ -61,3 +61,11 @@ export interface Diseases {
 export interface CloudinaryResponse {
   public_id: string;
 }
+export interface Vacctination {
+  id: string;
+  petId: string;
+  name: string;
+  date: Date;
+  nextDoseDue: Date | null;
+  notes: string | null;
+}

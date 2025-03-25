@@ -33,7 +33,6 @@ export default async function SingleClinic({
   const appointments = await prisma.appointment.findMany({
     where: { clinicId: clinic.id },
   });
-  console.log(pets);
   return (
     <div className="min-h-[90vh] min-w-[90vh] p-8 bg-gray-50 flex items-center justify-center">
       <div className="min-h-[80vh] w-full bg-white shadow-2xl rounded-lg overflow-hidden ">
