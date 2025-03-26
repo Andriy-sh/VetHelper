@@ -89,6 +89,7 @@ model Vaccination {
   date        DateTime
   nextDoseDue DateTime?
   notes       String?
+  clinicId    String?
 
   pet Pet @relation(fields: [petId], references: [id], onDelete: Cascade)
 
@@ -103,8 +104,10 @@ model Allergy {
   symptoms        String
   recommendations String?
   dateDetected    DateTime
+  clinicId        String?
 
-  pet Pet @relation(fields: [petId], references: [id], onDelete: Cascade)
+  pet    Pet     @relation(fields: [petId], references: [id], onDelete: Cascade)
+  clinic Clinic? @relation(fields: [clinicId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -123,6 +126,7 @@ model Clinic {
   Appointment  Appointment[]
   User         User[]         @relation()
   Notification Notification[]
+  Allergy      Allergy[]
 }
 
 model Notification {

@@ -47,6 +47,7 @@ export default async function Page({ params }: { params: { id: string } }) {
 
   const allergies = await prisma.allergy.findMany({
     where: { petId: pet.id },
+    include: { clinic: true },
   });
   return (
     <PetInfo

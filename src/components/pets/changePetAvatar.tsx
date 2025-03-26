@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { CloudinaryResponse } from "@/lib/interface";
 import { newPetAvatar } from "@/lib/actions/newPetAvatar";
+import { PawPrint } from "lucide-react";
 
 export default function ChangePetAvatar({
   petId,
@@ -63,13 +64,17 @@ export default function ChangePetAvatar({
           change && document.getElementById("uploadInput")?.click()
         }
       >
-        <Image
-          width={width}
-          height={height}
-          src={`https://res.cloudinary.com/dddgmovz2/image/upload/w_200,h_200,c_thumb/${imageUrl}`}
-          alt="User Avatar"
-          className="rounded-full object-cover"
-        />
+        {imageUrl ? (
+          <Image
+            width={width}
+            height={height}
+            src={`https://res.cloudinary.com/dddgmovz2/image/upload/w_200,h_200,c_thumb/${imageUrl}`}
+            alt="User Avatar"
+            className="rounded-full object-cover"
+          />
+        ) : (
+          <PawPrint className="w-32 h-32" />
+        )}
       </div>
 
       {change && (

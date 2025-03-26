@@ -22,7 +22,13 @@ import { Button } from "../ui/button";
 import { useState } from "react";
 import { allergy } from "@/lib/actions/allergy";
 
-export default function AllergyDialog({ petId }: { petId: string }) {
+export default function AllergyDialog({
+  petId,
+  clinicId,
+}: {
+  petId: string;
+  clinicId?: string;
+}) {
   const [open, setOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const form = useForm<AllergySchema>({
@@ -43,6 +49,7 @@ export default function AllergyDialog({ petId }: { petId: string }) {
       formData.append("symptoms", data.symptoms);
       formData.append("recommendations", data.recommendations);
       formData.append("date", new Date(data.date).toISOString());
+      formData.append("clinicId", clinicId);
 
       formData.append("petId", petId);
       await allergy(formData);
@@ -57,12 +64,12 @@ export default function AllergyDialog({ petId }: { petId: string }) {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger>
         <Button className="flex items-center gap-2 bg-blue-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-600 transition-all">
-          <span className="text-lg">+</span> Додати вакцинацію
+          <span className="text-lg">+</span> Додати алергію
         </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Додати вакцинацію</DialogTitle>
+          <DialogTitle>Додати дані про Алергію</DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleSubmit)}>

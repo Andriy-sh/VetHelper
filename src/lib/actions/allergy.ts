@@ -8,8 +8,10 @@ export const allergy = async (formData: FormData) => {
   const symptoms = formData.get("symptoms") as string;
   const recommendations = formData.get("recommendations") as string;
   const date = formData.get("date") as string;
+  const clinicId = formData.get("clinicId") as string;
   await prisma.allergy.create({
     data: {
+      clinicId: clinicId,
       petId: petId,
       name: name,
       symptoms: symptoms,
