@@ -83,6 +83,7 @@ export default function NavBarElements({
             <>
               <NavLink href="/clinics">Clinics</NavLink>
               <NavLink href="/map">Maps</NavLink>
+              <NavLink href="/blogs">Blogs</NavLink>
               <Notification notifications={notifications} senders={senders} />
               <div className="relative profile-menu">
                 <button

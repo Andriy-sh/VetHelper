@@ -104,3 +104,9 @@ export const allergySchema = z.object({
   }),
 });
 export type AllergySchema = z.infer<typeof allergySchema>;
+
+export const addingBlogSchema = z.object({
+  title: z.string().min(1),
+  content: z.string().min(1),
+});
+export type AddingBlogSchema = z.infer<typeof addingBlogSchema>;

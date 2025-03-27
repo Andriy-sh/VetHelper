@@ -59,7 +59,9 @@ export default function UserInfo({
             <div className="space-y-4">
               <Accordion type="single" collapsible>
                 <AccordionItem value="item-1">
-                  <AccordionTrigger className="text-4xl">Ваші відвідування</AccordionTrigger>
+                  <AccordionTrigger className="text-4xl">
+                    Ваші відвідування
+                  </AccordionTrigger>
                   <AccordionContent>
                     {appointment.map((appointment) => (
                       <Link

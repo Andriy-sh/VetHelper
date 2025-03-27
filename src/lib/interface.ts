@@ -78,3 +78,14 @@ export interface Allergy {
   recommendations: string | null;
   dateDetected: Date;
 }
+
+export interface Blogs {
+  id: string;
+  title: string;
+  content: string;
+  userId: string;
+  categoryId: string | null;
+  isPublished: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+}

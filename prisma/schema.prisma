@@ -1,10 +1,10 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
-}
-
-generator client {
-  provider = "prisma-client-js"
 }
 
 model User {
@@ -18,68 +18,65 @@ model User {
   image                 String?
   city                  String?
   role                  Role?           @default(USER)
-  accounts              Account[]
-  sessions              Session[]
-  // Optional for WebAuthn support
-  Authenticator         Authenticator[]
   createdAt             DateTime        @default(now())
   updatedAt             DateTime        @updatedAt
-  Pet                   Pet[]
-  Appointment           Appointment[]
   clinicId              String?
+  accounts              Account[]
+  Appointment           Appointment[]
+  Authenticator         Authenticator[]
+  BlogPost              BlogPost[]
+  Comment               Comment[]
+  Like                  Like[]
   sentNotifications     Notification[]  @relation("NotificationSender")
   receivedNotifications Notification[]  @relation("NotificationUser")
+  Pet                   Pet[]
+  sessions              Session[]
   clinic                Clinic?         @relation(fields: [clinicId], references: [id], onDelete: Cascade)
 }
 
 model Appointment {
-  id       String            @id @default(cuid())
-  userId   String
-  clinicId String
-  petId    String
-  date     DateTime
-  status   AppointmentStatus @default(PENDING)
-  notes    String?
-  time     String
-
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  clinic Clinic @relation(fields: [clinicId], references: [id], onDelete: Cascade)
-  pet    Pet?   @relation(fields: [petId], references: [id], onDelete: Cascade)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id        String            @id @default(cuid())
+  userId    String
+  clinicId  String
+  petId     String
+  date      DateTime
+  status    AppointmentStatus @default(PENDING)
+  notes     String?
+  time      String
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+  clinic    Clinic            @relation(fields: [clinicId], references: [id], onDelete: Cascade)
+  pet       Pet               @relation(fields: [petId], references: [id], onDelete: Cascade)
+  user      User              @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Pet {
-  id      String  @id @default(cuid())
-  name    String
-  species Species
-  breed   String?
-  age     Int?
-  gender  Gender?
-  image   String?
-  userId  String
-  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-
+  id          String        @id @default(cuid())
+  name        String
+  species     Species
+  breed       String?
+  age         Int?
+  gender      Gender?
+  image       String?
+  userId      String
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt
+  Allergy     Allergy[]
   Appointment Appointment[]
   Disease     Disease[]
+  user        User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   Vaccination Vaccination[]
-  Allergy     Allergy[]
 }
 
 model Disease {
-  id          String  @id @default(cuid())
+  id          String   @id @default(cuid())
   petId       String
   name        String?
   description String?
   image       String?
-
-  pet Pet @relation(fields: [petId], references: [id], onDelete: Cascade)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  pet         Pet      @relation(fields: [petId], references: [id], onDelete: Cascade)
 }
 
 model Vaccination {
@@ -89,12 +86,10 @@ model Vaccination {
   date        DateTime
   nextDoseDue DateTime?
   notes       String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
   clinicId    String?
-
-  pet Pet @relation(fields: [petId], references: [id], onDelete: Cascade)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  pet         Pet       @relation(fields: [petId], references: [id], onDelete: Cascade)
 }
 
 model Allergy {
@@ -104,13 +99,11 @@ model Allergy {
   symptoms        String
   recommendations String?
   dateDetected    DateTime
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
   clinicId        String?
-
-  pet    Pet     @relation(fields: [petId], references: [id], onDelete: Cascade)
-  clinic Clinic? @relation(fields: [clinicId], references: [id], onDelete: Cascade)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  clinic          Clinic?  @relation(fields: [clinicId], references: [id], onDelete: Cascade)
+  pet             Pet      @relation(fields: [petId], references: [id], onDelete: Cascade)
 }
 
 model Clinic {
@@ -123,26 +116,70 @@ model Clinic {
   website      String?
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
-  Appointment  Appointment[]
-  User         User[]         @relation()
-  Notification Notification[]
   Allergy      Allergy[]
+  Appointment  Appointment[]
+  Notification Notification[]
+  User         User[]
+  BlogPost     BlogPost[]
 }
 
 model Notification {
-  id       String  @id @default(cuid())
-  userId   String
-  senderId String?
-  clinicId String?
-  message  String
-  read     Boolean @default(false)
-
-  user   User    @relation("NotificationUser", fields: [userId], references: [id], onDelete: Cascade)
-  sender User?   @relation("NotificationSender", fields: [senderId], references: [id], onDelete: SetNull)
-  clinic Clinic? @relation(fields: [clinicId], references: [id], onDelete: Cascade)
-
+  id        String   @id @default(cuid())
+  userId    String
+  senderId  String?
+  clinicId  String?
+  message   String
+  read      Boolean  @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  clinic    Clinic?  @relation(fields: [clinicId], references: [id], onDelete: Cascade)
+  sender    User?    @relation("NotificationSender", fields: [senderId], references: [id])
+  user      User     @relation("NotificationUser", fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model BlogPost {
+  id          String    @id @default(cuid())
+  title       String
+  content     String
+  userId      String
+  clinicId    String
+  categoryId  String?
+  isPublished Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  clinic      Clinic    @relation(fields: [clinicId], references: [id])
+  category    Category? @relation(fields: [categoryId], references: [id])
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  comments    Comment[]
+  likes       Like[]
+}
+
+model Category {
+  id        String     @id @default(cuid())
+  name      String
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  blogPosts BlogPost[]
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  content   String
+  postId    String
+  userId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  post      BlogPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Like {
+  id        String   @id @default(cuid())
+  postId    String
+  userId    String
+  createdAt DateTime @default(now())
+  post      BlogPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Account {
@@ -157,11 +194,9 @@ model Account {
   scope             String?
   id_token          String?
   session_state     String?
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@id([provider, providerAccountId])
 }
@@ -170,10 +205,9 @@ model Session {
   sessionToken String   @unique
   userId       String
   expires      DateTime
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 }
 
 model VerificationToken {
@@ -184,7 +218,6 @@ model VerificationToken {
   @@id([identifier, token])
 }
 
-// Optional for WebAuthn support
 model Authenticator {
   credentialID         String  @unique
   userId               String
@@ -194,8 +227,7 @@ model Authenticator {
   credentialDeviceType String
   credentialBackedUp   Boolean
   transports           String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user                 User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@id([userId, credentialID])
 }

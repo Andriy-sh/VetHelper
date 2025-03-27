@@ -1,4 +1,3 @@
-import AddingCity from "@/components/profile/addingCity";
 import { PetInfo } from "@/components/profile/petInfo";
 import UserInfo from "@/components/profile/userInfo";
 import { getUser } from "@/lib/service/user";
@@ -24,7 +23,7 @@ export default async function ProfilePage() {
   });
   const clinics = await prisma.clinic.findMany();
   return (
-    <div className="p-8 space-x-8 flex bg-gray-100 justify-center ">
+    <div className="p-8 space-x-8 flex bg-gray-100 items-start ">
       <UserInfo
         user={user}
         session={session}

@@ -65,7 +65,6 @@ export default function PetInfo({
   return (
     <div className="flex justify-center min-h-[80vh] bg-gray-50 py-12">
       <div className="bg-white shadow-xl rounded-2xl p-8 w-full max-w-4xl border-t-8 border-blue-500">
-        {/* Header with pet info */}
         <div className="flex flex-col md:flex-row items-center space-x-0 md:space-x-6 space-y-4 md:space-y-0 mb-8">
           <div className="relative w-32 h-32">
             <ChangePetAvatar
@@ -90,7 +89,6 @@ export default function PetInfo({
           </div>
         </div>
 
-        {/* Owner Information */}
         <div className="p-6 bg-blue-50 rounded-lg shadow-sm mb-6">
           <h4 className="text-xl font-semibold text-gray-800 mb-3 flex items-center">
             <FaUser className="mr-2 text-blue-600" /> Інформація про власника
@@ -117,7 +115,6 @@ export default function PetInfo({
           </div>
         </div>
 
-        {/* General and Medical Info */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           <div className="p-6 bg-green-50 rounded-lg shadow-sm">
             <h4 className="text-xl font-semibold text-gray-800 mb-3 flex items-center">
@@ -179,7 +176,6 @@ export default function PetInfo({
           </div>
         </div>
 
-        {/* Visits History */}
         <div className="p-6 bg-purple-50 rounded-lg shadow-sm mb-6">
           <Accordion type="single" collapsible>
             <AccordionItem value="visits">
@@ -229,7 +225,6 @@ export default function PetInfo({
           </Accordion>
         </div>
 
-        {/* Vaccinations */}
         <div className="p-6 bg-yellow-50 rounded-lg shadow-sm mb-6">
           <Accordion
             type="single"
@@ -278,7 +273,6 @@ export default function PetInfo({
           </Accordion>
         </div>
 
-        {/* Allergies */}
         <div className="p-6 bg-pink-50 rounded-lg shadow-sm mb-6">
           <Accordion
             type="single"
@@ -347,7 +341,7 @@ export default function PetInfo({
 
         <div className="flex justify-center">
           <EditDialog pet={pet} setPetData={setPetData} />
-        </div>  
+        </div>
       </div>
     </div>
   );

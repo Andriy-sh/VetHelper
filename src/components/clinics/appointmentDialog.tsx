@@ -4,7 +4,6 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -28,6 +27,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger } from "../ui/select";
 import { SelectValue } from "@radix-ui/react-select";
 import { format } from "date-fns";
 import Image from "next/image";
+import { Pet } from "@/lib/interface";
 
 export function AppointmentDialog({
   name,
@@ -42,11 +42,7 @@ export function AppointmentDialog({
   clinicId: string;
   times: string[];
   date: string[];
-  pets: {
-    id: string;
-    name: string;
-    image: string;
-  }[];
+  pets: Pet[];
 }) {
   const form = useForm<AppointmentSchema>({
     resolver: zodResolver(appointmentSchema),
@@ -110,7 +106,9 @@ export function AppointmentDialog({
       setOpen(false);
     } catch (error) {
       setErrorMessage(
-        error instanceof Error ? error.message : "Не вдалося записатися."
+        error instanceof Error
+          ? error.message
+          : "Не вдалося записатися." + errorMessage
       );
     } finally {
       setIsSubmitting(false);

@@ -2,6 +2,7 @@ import React from "react";
 import { AppointmentDialog } from "./appointmentDialog";
 import { prisma } from "../../../prisma";
 import Link from "next/link";
+import { Pet } from "@/lib/interface";
 
 export default async function SingleClinic({
   clinic,
@@ -24,11 +25,7 @@ export default async function SingleClinic({
     role: string;
     clinicId: string;
   };
-  pets: {
-    id: string;
-    name: string;
-    image: string | null;
-  }[];
+  pets: Pet[];
 }) {
   const appointments = await prisma.appointment.findMany({
     where: { clinicId: clinic.id },
