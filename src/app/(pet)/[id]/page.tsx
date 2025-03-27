@@ -43,6 +43,7 @@ export default async function Page({ params }: { params: { id: string } }) {
   }
   const vacctination = await prisma.vaccination.findMany({
     where: { petId: pet.id },
+    include: { clinic: true },
   });
 
   const allergies = await prisma.allergy.findMany({

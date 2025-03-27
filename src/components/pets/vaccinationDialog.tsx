@@ -22,7 +22,13 @@ import { vaccination } from "@/lib/actions/vaccination";
 import { Button } from "../ui/button";
 import { useState } from "react";
 
-export default function VaccinationDialog({ petId }: { petId: string }) {
+export default function VaccinationDialog({
+  petId,
+  clinicId,
+}: {
+  petId: string;
+  clinicId?: string;
+}) {
   const [open, setOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const form = useForm<VaccinationSchema>({
@@ -44,6 +50,9 @@ export default function VaccinationDialog({ petId }: { petId: string }) {
       formData.append("notes", data.notes);
       formData.append("nextDoseDue", data.nextDoseDue);
       formData.append("petId", petId);
+      if (clinicId) {
+        formData.append("clinicId", clinicId);
+      }
       await vaccination(formData);
       setOpen(false);
       setIsSubmitting(true);

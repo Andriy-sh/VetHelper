@@ -238,7 +238,10 @@ export default function PetInfo({
               </AccordionTrigger>
               <AccordionContent className="pt-4">
                 {user.role === "VETERINARIAN" && (
-                  <VacctinationDialog petId={pet.id} />
+                  <VacctinationDialog
+                    petId={pet.id}
+                    clinicId={user.clinicId || ""}
+                  />
                 )}
                 {vacctination.length > 0 ? (
                   <>
@@ -259,6 +262,10 @@ export default function PetInfo({
                           <FaCalendarAlt className="mr-2 text-yellow-500" />
                           <strong>Дата вакцинації:</strong>{" "}
                           {new Date(vac.date).toLocaleDateString()}
+                        </p>
+                        <p className="text-sm text-gray-600 flex items-center">
+                          <FaMapMarkerAlt className="mr-2 text-pink-500" />
+                          <strong>Клініка:</strong> {vac.clinic.name}
                         </p>
                       </div>
                     ))}

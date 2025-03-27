@@ -17,7 +17,6 @@ export default async function Page() {
   const blogs = await prisma.blogPost.findMany({ include: { clinic: true } });
   return (
     <h1>
-      {/* <SearchBar /> */}
       <AddPostButton user={user} />
 
       <BlogPostCard blogs={blogs} />

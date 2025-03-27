@@ -89,6 +89,7 @@ model Vaccination {
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
   clinicId    String?
+  clinic      Clinic?   @relation(fields: [clinicId], references: [id], onDelete: Cascade)
   pet         Pet       @relation(fields: [petId], references: [id], onDelete: Cascade)
 }
 
@@ -121,6 +122,7 @@ model Clinic {
   Notification Notification[]
   User         User[]
   BlogPost     BlogPost[]
+  Vaccination  Vaccination[]
 }
 
 model Notification {
@@ -144,6 +146,7 @@ model BlogPost {
   userId      String
   clinicId    String
   categoryId  String?
+  imageId     String?
   isPublished Boolean   @default(true)
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt

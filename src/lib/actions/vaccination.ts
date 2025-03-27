@@ -8,7 +8,7 @@ export const vaccination = async (formData: FormData) => {
   const date = formData.get("date") as string;
   const nextDoseDue = formData.get("nextDoseDue") as string;
   const petId = formData.get("petId") as string;
-
+  const clinicId = formData.get("clinicId") as string;
   await prisma.vaccination.create({
     data: {
       name: name,
@@ -16,6 +16,7 @@ export const vaccination = async (formData: FormData) => {
       date: new Date(date),
       nextDoseDue: nextDoseDue ? new Date(nextDoseDue) : null,
       petId: petId,
+      clinicId: clinicId,
     },
   });
 };

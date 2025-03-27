@@ -3,43 +3,42 @@ import Image from "next/image";
 
 export default function BlogPostCard({ blogs }: { blogs: Blogs[] }) {
   return (
-    <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+    <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
       {blogs.map((blog) => (
         <div
           key={blog.id}
-          className="max-w-sm rounded-lg overflow-hidden shadow-lg border border-gray-200 bg-white"
+          className="max-w-md rounded-2xl overflow-hidden shadow-lg border border-gray-300 bg-white transition transform hover:-translate-y-1 hover:shadow-xl"
         >
-          <div className="relative w-full h-48">
+          <div className="relative w-full h-56">
             <Image
-              src="/placeholder.jpg"
-              alt={blog.title}
-              layout="fill"
-              objectFit="cover"
-              className="w-full h-full"
+              fill
+              src={`https://res.cloudinary.com/dddgmovz2/image/upload/w_400,h_400,c_thumb/${blog.imageId}`}
+              alt={blog.title ?? "Фото захворювання"}
+              className="rounded-t-2xl object-cover"
             />
           </div>
           <div className="p-6">
-            <p className="text-gray-600 text-sm line-clamp-3 mb-4">
+            <p className="text-gray-500 text-sm font-medium uppercase tracking-wide mb-2">
               {blog.clinic.name}
             </p>
-            <h2 className="text-xl font-semibold text-gray-800 mb-3">
+            <h2 className="text-2xl font-bold text-gray-900 mb-3 line-clamp-2">
               {blog.title}
             </h2>
             <p className="text-gray-600 text-sm line-clamp-3 mb-4">
               {blog.content}
             </p>
-            <div className="flex justify-between items-center">
-              <span className="text-xs text-gray-500">
-                {new Date(blog.createdAt).toLocaleDateString()}
-              </span>
+            <div className="flex justify-between items-center text-sm text-gray-500">
+              <span>{new Date(blog.createdAt).toLocaleDateString()}</span>
               {blog.isPublished ? (
-                <span className="text-xs text-green-500">Опубліковано</span>
+                <span className="text-green-600 font-semibold">
+                  Опубліковано
+                </span>
               ) : (
-                <span className="text-xs text-red-500">Чорновик</span>
+                <span className="text-red-500 font-semibold">Чорновик</span>
               )}
             </div>
             <div className="mt-4">
-              <button className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition duration-300">
+              <button className="w-full px-5 py-2.5 bg-blue-600 text-white rounded-xl font-semibold text-lg hover:bg-blue-700 transition duration-300 ease-in-out shadow-md hover:shadow-lg">
                 Читати більше
               </button>
             </div>
