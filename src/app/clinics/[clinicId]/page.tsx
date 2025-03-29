@@ -24,13 +24,18 @@ export default async function Clinic({
   const clinic = await prisma.clinic.findUnique({
     where: { id: params?.clinicId },
   });
+  const clinicImages = await prisma.clinicImage.findMany({
+    where: { clinicId: clinic?.id },
+  });
   if (!clinic) {
     notFound();
   }
   const pets = await prisma.pet.findMany({
     where: { userId: user.id },
   });
-
+  const appointments = await prisma.appointment.findMany({
+    where: { clinicId: clinic.id },
+  });
   return (
     <div>
       <SingleClinic
@@ -41,8 +46,10 @@ export default async function Clinic({
           updatedAt: clinic.updatedAt.toISOString(),
           createdAt: clinic.createdAt.toISOString(),
         }}
+        clinicImages={clinicImages}
         user={user}
         pets={pets}
+        appointments={appointments}
       />
     </div>
   );

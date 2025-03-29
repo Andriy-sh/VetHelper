@@ -1,4 +1,3 @@
-import AddPostButton from "./addPostButton";
 
 export default function SearchBar() {
   return (

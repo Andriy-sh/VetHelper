@@ -121,6 +121,13 @@ export default function NavBarElements({
                   >
                     Settings
                   </Link>
+                  <Link
+                    onClick={closeProfileMenu}
+                    href="/faq"
+                    className="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition duration-300"
+                  >
+                    FAQ
+                  </Link>
                   <button
                     onClick={() => {
                       HandleSignOut();

@@ -1,11 +1,13 @@
 import { Blogs } from "@/lib/interface";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function BlogPostCard({ blogs }: { blogs: Blogs[] }) {
   return (
     <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
       {blogs.map((blog) => (
-        <div
+        <Link
+          href={`/blogs/${blog.id}`}
           key={blog.id}
           className="max-w-md rounded-2xl overflow-hidden shadow-lg border border-gray-300 bg-white transition transform hover:-translate-y-1 hover:shadow-xl"
         >
@@ -43,7 +45,7 @@ export default function BlogPostCard({ blogs }: { blogs: Blogs[] }) {
               </button>
             </div>
           </div>
-        </div>
+        </Link>
       ))}
     </div>
   );

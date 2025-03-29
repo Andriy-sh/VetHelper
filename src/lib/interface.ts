@@ -89,4 +89,19 @@ export interface Blogs {
   isPublished: boolean;
   createdAt: Date;
   updatedAt: Date;
+  clinic: {
+    name: string;
+    city: string;
+    address: string;
+    phone: string | null;
+    website: string | null;
+  };
+}
+export interface ClinicImages {
+  id: string;
+  title: string | null;
+  content: string | null;
+  userId: string | null;
+  url: string;
+  clinicId: string;
 }
