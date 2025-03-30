@@ -149,3 +149,11 @@ export const clinicServiceSchema = z.object({
   category: z.string(),
 });
 export type ClinicServiceSchema = z.infer<typeof clinicServiceSchema>;
+
+export const clinicNewSchema = z.object({
+  title: z.string(),
+  content: z.string(),
+  imageUrl: z.string().optional(),
+  categoryId: z.string().optional(),
+});
+export type ClinicNewSchema = z.infer<typeof clinicNewSchema>;

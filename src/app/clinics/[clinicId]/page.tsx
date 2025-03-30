@@ -42,6 +42,13 @@ export default async function Clinic({
   const appointments = await prisma.appointment.findMany({
     where: { clinicId: clinic.id },
   });
+  const newsCategory = await prisma.clinicNewsCategory.findMany();
+  const clinicNews = await prisma.clinicNews.findMany({
+    where: {
+      clinicId: clinic.id,
+    },
+    include: { category: true },
+  });
   return (
     <div>
       <SingleClinic
@@ -60,6 +67,8 @@ export default async function Clinic({
         reviews={clinic.ClinicReview}
         FAQ={clinic.ClinicFAQ}
         clinicServices={clinic.ClinicService}
+        newsCategory={newsCategory}
+        clinicNews = {clinicNews}
       />
     </div>
   );

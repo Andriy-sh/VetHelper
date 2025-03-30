@@ -9,6 +9,8 @@ import {
   Clinic,
   ClinicFAQ,
   ClinicImages,
+  ClinicNews,
+  ClinicNewsCategory,
   ClinicReviews,
   ClinicService,
   Pet,
@@ -17,6 +19,7 @@ import {
 import AddingClinicReviews from "./addingClinicReviews";
 import AddingClinicFAQ from "./addingClinicFAQ";
 import AddingClinicService from "./addingClinicService";
+import AddingClinicNews from "./addingClinicNews";
 
 export default function SingleClinic({
   clinic,
@@ -28,6 +31,8 @@ export default function SingleClinic({
   reviews,
   FAQ,
   clinicServices,
+  newsCategory,
+  clinicNews,
 }: {
   clinic: Clinic;
   user: User;
@@ -38,10 +43,12 @@ export default function SingleClinic({
   reviews: ClinicReviews[];
   FAQ: ClinicFAQ[];
   clinicServices: ClinicService[];
+  newsCategory: ClinicNewsCategory[];
+  clinicNews: ClinicNews[];
 }) {
   const [view, setView] = useState("info");
   const [showAll, setShowAll] = useState(false);
-
+  console.log(clinicNews);
   return (
     <div className="min-h-[90vh] min-w-[90vh] p-8 bg-gray-50 flex items-center justify-center">
       <div className="min-h-[80vh] w-full bg-white shadow-2xl rounded-lg overflow-hidden p-8">
@@ -392,7 +399,55 @@ export default function SingleClinic({
             </div>
           </div>
         )}
-        {view === "news" && <div>Тут будуть новини та акції...</div>}
+        {view === "news" && (
+          <div className="mt-6">
+            <h2 className="text-2xl font-bold text-gray-800 mb-4">
+              Новини та акції
+            </h2>
+            {clinic.id === user.clinicId && (
+              <div className="mb-6">
+                <AddingClinicNews
+                  clinicId={clinic.id}
+                  category={newsCategory}
+                />
+              </div>
+            )}
+            {clinicNews.length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {clinicNews.map((newsItem) => (
+                  <div
+                    key={newsItem.id}
+                    className="bg-white shadow-md rounded-lg p-6 border border-black flex flex-col justify-between"
+                  >
+                    <div>
+                      <h3 className="text-xl font-semibold text-gray-800 mb-4">
+                        {newsItem.title}
+                      </h3>
+                      <p className="text-gray-600 mb-4">{newsItem.content}</p>
+                      {newsItem.imageUrl && (
+                        <Image
+                          width={300}
+                          height={200}
+                          src={newsItem.imageUrl}
+                          alt={newsItem.title}
+                          className="rounded-lg object-cover mb-4"
+                        />
+                      )}
+                      <p>{newsItem?.category?.name}</p>
+                      <div className="text-gray-500 text-sm mt-2">
+                        {new Date(newsItem.createdAt).toLocaleDateString()}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-gray-600 text-center mt-4">
+                Наразі новин немає. Будьте першими, хто додасть новину!
+              </p>
+            )}
+          </div>
+        )}
 
         {view === "contact" && (
           <div>

@@ -134,3 +134,36 @@ export interface ClinicService {
   createdAt: Date;
   updatedAt: Date;
 }
+export interface ClinicNews {
+  id: string;
+  title: string;
+  content: string;
+  imageUrl: string | null;
+  clinicId: string | null;
+  categoryId: string | null;
+  publishDate: Date;
+  isPublished: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+  category: ClinicNewsCategory;
+}
+
+export interface ClinicNewsCategory {
+  id: string;
+  name: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+export interface ClinicPromotion {
+  id: string;
+  title: string;
+  description: string;
+  startDate: Date;
+  endDate: Date;
+  discount: number;
+  clinicId: string;
+  imageUrl: string | null;
+  isActive: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+}

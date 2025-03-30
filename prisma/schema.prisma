@@ -109,15 +109,15 @@ model Allergy {
 }
 
 model Clinic {
-  id            String          @id @default(cuid())
+  id            String            @id @default(cuid())
   name          String
   address       String
   city          String
   description   String
   phone         String?
   website       String?
-  createdAt     DateTime        @default(now())
-  updatedAt     DateTime        @updatedAt
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
   Allergy       Allergy[]
   Appointment   Appointment[]
   Notification  Notification[]
@@ -128,6 +128,8 @@ model Clinic {
   ClinicReview  ClinicReview[]
   ClinicFAQ     ClinicFAQ[]
   ClinicService ClinicService[]
+  ClinicNews    ClinicNews[]
+  Promotion     ClinicPromotion[]
 }
 
 model ClinicFAQ {
@@ -179,6 +181,46 @@ model ClinicImage {
   url      String
   clinic   Clinic  @relation(fields: [clinicId], references: [id], onDelete: Cascade)
   clinicId String
+}
+
+model ClinicNews {
+  id          String   @id @default(cuid())
+  title       String
+  content     String
+  imageUrl    String?
+  clinicId    String?
+  categoryId  String?
+  publishDate DateTime @default(now())
+  isPublished Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  category ClinicNewsCategory? @relation("CategoryNews", fields: [categoryId], references: [id])
+  clinic   Clinic?             @relation(fields: [clinicId], references: [id])
+}
+
+model ClinicNewsCategory {
+  id        String       @id @default(cuid())
+  name      String
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+  news      ClinicNews[] @relation("CategoryNews")
+}
+
+model ClinicPromotion {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  startDate   DateTime
+  endDate     DateTime
+  discount    Float?
+  clinicId    String
+  imageUrl    String?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  clinic Clinic? @relation(fields: [clinicId], references: [id])
 }
 
 model Notification {
