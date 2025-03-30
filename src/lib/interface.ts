@@ -105,3 +105,14 @@ export interface ClinicImages {
   url: string;
   clinicId: string;
 }
+
+export interface ClinicReviews {
+  id: string;
+  userId: string;
+  clinicId: string;
+  rating: number | null;
+  comment: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+  user: User;
+}

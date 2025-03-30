@@ -68,13 +68,23 @@ export default function ChangeAvatar({
           change && document.getElementById("uploadInput")?.click()
         }
       >
-        <Image
-          width={width}
-          height={height}
-          src={`https://res.cloudinary.com/dddgmovz2/image/upload/w_200,h_200,c_thumb/${imageUrl}`}
-          alt="User Avatar"
-          className="rounded-full object-cover"
-        />
+        {imageUrl && imageUrl.startsWith("https") ? (
+          <Image
+            width={width}
+            height={height}
+            src={imageUrl}
+            alt="User Avatar"
+            className="rounded-full object-cover"
+          />
+        ) : (
+          <Image
+            width={width}
+            height={height}
+            src={`https://res.cloudinary.com/dddgmovz2/image/upload/w_200,h_200,c_thumb/${imageUrl}`}
+            alt="User Avatar"
+            className="rounded-full object-cover"
+          />
+        )}
       </div>
 
       {change && (

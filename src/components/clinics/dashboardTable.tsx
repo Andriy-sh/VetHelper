@@ -139,7 +139,7 @@ export default function Dashboard({
                     )}`}
                     onClick={() =>
                       router.push(
-                        `/clinics/${appointment.clinicId}/${appointment.id}`
+                        `/clinics/${appointment.clinicId}/appoiment/${appointment.id}`
                       )
                     }
                   >

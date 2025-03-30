@@ -32,6 +32,7 @@ model User {
   Pet                   Pet[]
   sessions              Session[]
   clinic                Clinic?         @relation(fields: [clinicId], references: [id], onDelete: Cascade)
+  ClinicReview          ClinicReview?
 }
 
 model Appointment {
@@ -120,10 +121,26 @@ model Clinic {
   Allergy      Allergy[]
   Appointment  Appointment[]
   Notification Notification[]
-  User         User[]
+  user         User[]
   BlogPost     BlogPost[]
   Vaccination  Vaccination[]
   images       ClinicImage[]
+  ClinicReview ClinicReview[]
+}
+
+model ClinicReview {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  clinicId  String
+  rating    String?
+  comment   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  clinic Clinic @relation(fields: [clinicId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, clinicId])
 }
 
 model ClinicImage {

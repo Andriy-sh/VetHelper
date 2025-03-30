@@ -122,3 +122,9 @@ export const addingClinicImage = z.object({
     .refine((val) => val && val instanceof File, "Файл є обов'язковим"),
 });
 export type AddingClinicImage = z.infer<typeof addingBlogSchema>;
+
+export const clinicReviewsSchema = z.object({
+  rating: z.string().min(1).max(5),
+  comment: z.string().max(500).nullable(),
+});
+export type ClinicReviewsSchema = z.infer<typeof clinicReviewsSchema>;
