@@ -149,8 +149,7 @@ model ClinicService {
   price       Float?
   duration    Int?
   category    String?
-  image       String?
-  available   Boolean  @default(true)
+  imageId     String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 

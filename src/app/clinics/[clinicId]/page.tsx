@@ -27,6 +27,7 @@ export default async function Clinic({
       user: true,
       ClinicReview: { include: { user: true } },
       ClinicFAQ: true,
+      ClinicService: true,
     },
   });
   const clinicImages = await prisma.clinicImage.findMany({
@@ -58,6 +59,7 @@ export default async function Clinic({
         doctors={clinic.user}
         reviews={clinic.ClinicReview}
         FAQ={clinic.ClinicFAQ}
+        clinicServices={clinic.ClinicService}
       />
     </div>
   );

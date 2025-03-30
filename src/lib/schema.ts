@@ -1,5 +1,4 @@
-import { describe } from "node:test";
-import { string, z } from "zod";
+import { z } from "zod";
 
 export const signupSchema = z.object({
   name: z
@@ -135,3 +134,18 @@ export const clinicFAQSchema = z.object({
 });
 
 export type ClinicFAQSchema = z.infer<typeof clinicFAQSchema>;
+
+export const clinicServiceSchema = z.object({
+  name: z.string(),
+  description: z.string(),
+  price: z.coerce
+    .number()
+    .min(1, { message: "Enter age" })
+    .max(100, { message: "Max age is 100" }),
+  duration: z.coerce
+    .number()
+    .min(1, { message: "Enter age" })
+    .max(100, { message: "Max age is 100" }),
+  category: z.string(),
+});
+export type ClinicServiceSchema = z.infer<typeof clinicServiceSchema>;

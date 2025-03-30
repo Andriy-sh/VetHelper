@@ -10,11 +10,13 @@ import {
   ClinicFAQ,
   ClinicImages,
   ClinicReviews,
+  ClinicService,
   Pet,
   User,
 } from "@/lib/interface";
 import AddingClinicReviews from "./addingClinicReviews";
 import AddingClinicFAQ from "./addingClinicFAQ";
+import AddingClinicService from "./addingClinicService";
 
 export default function SingleClinic({
   clinic,
@@ -25,6 +27,7 @@ export default function SingleClinic({
   doctors,
   reviews,
   FAQ,
+  clinicServices,
 }: {
   clinic: Clinic;
   user: User;
@@ -34,6 +37,7 @@ export default function SingleClinic({
   doctors: User[];
   reviews: ClinicReviews[];
   FAQ: ClinicFAQ[];
+  clinicServices: ClinicService[];
 }) {
   const [view, setView] = useState("info");
   const [showAll, setShowAll] = useState(false);
@@ -142,7 +146,84 @@ export default function SingleClinic({
           </div>
         )}
 
-        {view === "services" && <div>Тут будуть послуги клініки...</div>}
+        {view === "services" && (
+          <div className="mt-6">
+            <h2 className="text-2xl font-bold text-gray-800 mb-4">
+              Послуги клініки
+            </h2>
+            {clinic.id === user.clinicId && (
+              <div className="mb-6">
+                <AddingClinicService clinicId={clinic.id} />
+              </div>
+            )}
+            {clinicServices.length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {clinicServices.map((service) => (
+                  <div
+                    key={service.id}
+                    className="bg-white shadow-md rounded-lg p-6 border border-gray-200 flex flex-col justify-between"
+                  >
+                    <div>
+                      <h3 className="text-xl font-semibold text-gray-800 mb-4">
+                        {service.name}
+                      </h3>
+                      {service.description ? (
+                        <p className="text-gray-600 mb-4">
+                          {service.description}
+                        </p>
+                      ) : (
+                        <p className="text-gray-600 mb-4">Не вказано</p>
+                      )}
+                      {service.price ? (
+                        <div className="text-gray-800 mb-4">
+                          <strong>Ціна: </strong>${service.price}
+                        </div>
+                      ) : (
+                        <div className="text-gray-800 mb-4">
+                          <strong>Ціна: </strong>Не вказано
+                        </div>
+                      )}
+                      {service.duration ? (
+                        <div className="text-gray-800 mb-4">
+                          <strong>Тривалість: </strong>
+                          {service.duration} хв
+                        </div>
+                      ) : (
+                        <div className="text-gray-800 mb-4">
+                          <strong>Тривалість: </strong>Не вказано
+                        </div>
+                      )}
+                      {service.category ? (
+                        <div className="text-gray-800 mb-4">
+                          <strong>Категорія: </strong>
+                          {service.category}
+                        </div>
+                      ) : (
+                        <div className="text-gray-800 mb-4">
+                          <strong>Категорія: </strong>Не вказано
+                        </div>
+                      )}
+                    </div>
+                    <div className="flex items-center mt-4">
+                      <div className="ml-3">
+                        <p className="text-sm font-medium text-gray-800">
+                          {service.name}
+                        </p>
+                        <p className="text-sm text-gray-500">
+                          {new Date(service.createdAt).toLocaleDateString()}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-gray-600 text-center mt-4">
+                Наразі послуг немає. Будьте першими, хто додасть послугу!
+              </p>
+            )}
+          </div>
+        )}
 
         {view === "doctors" && (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">

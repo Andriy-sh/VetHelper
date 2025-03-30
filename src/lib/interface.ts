@@ -122,3 +122,15 @@ export interface ClinicFAQ {
   question: string;
   answer: string;
 }
+export interface ClinicService {
+  id: string;
+  clinicId: string;
+  name: string;
+  description: string | null;
+  price: number | null;
+  duration: number | null;
+  category: string | null;
+  imageId: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+}
