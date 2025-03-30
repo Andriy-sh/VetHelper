@@ -116,3 +116,9 @@ export interface ClinicReviews {
   updatedAt: Date;
   user: User;
 }
+export interface ClinicFAQ {
+  id: string;
+  clinicId: string;
+  question: string;
+  answer: string;
+}

@@ -7,12 +7,14 @@ import Image from "next/image";
 import {
   Appointment,
   Clinic,
+  ClinicFAQ,
   ClinicImages,
   ClinicReviews,
   Pet,
   User,
 } from "@/lib/interface";
 import AddingClinicReviews from "./addingClinicReviews";
+import AddingClinicFAQ from "./addingClinicFAQ";
 
 export default function SingleClinic({
   clinic,
@@ -22,6 +24,7 @@ export default function SingleClinic({
   appointments,
   doctors,
   reviews,
+  FAQ,
 }: {
   clinic: Clinic;
   user: User;
@@ -30,8 +33,10 @@ export default function SingleClinic({
   appointments: Appointment[];
   doctors: User[];
   reviews: ClinicReviews[];
+  FAQ: ClinicFAQ[];
 }) {
   const [view, setView] = useState("info");
+  const [showAll, setShowAll] = useState(false);
 
   return (
     <div className="min-h-[90vh] min-w-[90vh] p-8 bg-gray-50 flex items-center justify-center">
@@ -271,8 +276,41 @@ export default function SingleClinic({
           </div>
         )}
 
-        {view === "faq" && <div>Тут будуть часті питання...</div>}
+        {view === "faq" && (
+          <div className="max-w-3xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
+            {clinic.id === user.clinicId && (
+              <AddingClinicFAQ clinicId={clinic.id} />
+            )}
+            <div className="text-center mb-12">
+              <h1 className="text-3xl font-bold text-gray-900 mb-4">
+                Часто задавані питання
+              </h1>
+              <p className="text-lg text-gray-600">
+                Швидкі відповіді на питання, які можуть у вас виникнути.
+              </p>
+            </div>
 
+            <div className="space-y-8">
+              {FAQ.slice(0, showAll ? FAQ.length : 5).map((question, index) => (
+                <div key={index} className="border-b border-gray-200 pb-8">
+                  <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                    {question.question}
+                  </h3>
+                  <p className="text-gray-600">{question.answer}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-12 text-center">
+              <button
+                onClick={() => setShowAll(!showAll)}
+                className="px-6 py-3 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition duration-300"
+              >
+                {showAll ? "Показати менше" : "Показати більше"}
+              </button>
+            </div>
+          </div>
+        )}
         {view === "news" && <div>Тут будуть новини та акції...</div>}
 
         {view === "contact" && (

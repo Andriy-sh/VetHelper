@@ -128,3 +128,10 @@ export const clinicReviewsSchema = z.object({
   comment: z.string().max(500).nullable(),
 });
 export type ClinicReviewsSchema = z.infer<typeof clinicReviewsSchema>;
+
+export const clinicFAQSchema = z.object({
+  question: z.string().min(1).max(100),
+  answer: z.string().min(1).max(100),
+});
+
+export type ClinicFAQSchema = z.infer<typeof clinicFAQSchema>;

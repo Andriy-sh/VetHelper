@@ -6,7 +6,7 @@ import AppointmentInfo from "@/components/appointment/appointmentInfo";
 export default async function Page({
   params,
 }: {
-  params: { clinicId: string; zzz: string };
+  params: { clinicId: string; appointmentId: string };
 }) {
   const session = await auth();
   if (!session) {

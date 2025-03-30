@@ -109,23 +109,52 @@ model Allergy {
 }
 
 model Clinic {
-  id           String         @id @default(cuid())
-  name         String
-  address      String
-  city         String
-  description  String
-  phone        String?
-  website      String?
-  createdAt    DateTime       @default(now())
-  updatedAt    DateTime       @updatedAt
-  Allergy      Allergy[]
-  Appointment  Appointment[]
-  Notification Notification[]
-  user         User[]
-  BlogPost     BlogPost[]
-  Vaccination  Vaccination[]
-  images       ClinicImage[]
-  ClinicReview ClinicReview[]
+  id            String          @id @default(cuid())
+  name          String
+  address       String
+  city          String
+  description   String
+  phone         String?
+  website       String?
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  Allergy       Allergy[]
+  Appointment   Appointment[]
+  Notification  Notification[]
+  user          User[]
+  BlogPost      BlogPost[]
+  Vaccination   Vaccination[]
+  images        ClinicImage[]
+  ClinicReview  ClinicReview[]
+  ClinicFAQ     ClinicFAQ[]
+  ClinicService ClinicService[]
+}
+
+model ClinicFAQ {
+  id        String   @id @default(cuid())
+  clinicId  String
+  question  String
+  answer    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  clinic Clinic @relation(fields: [clinicId], references: [id], onDelete: Cascade)
+}
+
+model ClinicService {
+  id          String   @id @default(cuid())
+  clinicId    String
+  name        String
+  description String?
+  price       Float?
+  duration    Int?
+  category    String?
+  image       String?
+  available   Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  clinic Clinic @relation(fields: [clinicId], references: [id], onDelete: Cascade)
 }
 
 model ClinicReview {
