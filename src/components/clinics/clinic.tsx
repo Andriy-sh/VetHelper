@@ -48,7 +48,6 @@ export default function SingleClinic({
 }) {
   const [view, setView] = useState("info");
   const [showAll, setShowAll] = useState(false);
-  console.log(clinicNews);
   return (
     <div className="min-h-[90vh] min-w-[90vh] p-8 bg-gray-50 flex items-center justify-center">
       <div className="min-h-[80vh] w-full bg-white shadow-2xl rounded-lg overflow-hidden p-8">

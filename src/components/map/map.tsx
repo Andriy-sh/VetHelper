@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { Loader } from "@googlemaps/js-api-loader";
+import { Clinic } from "@/lib/interface";
 
 interface VetClinic {
   lat: number;
@@ -8,7 +9,13 @@ interface VetClinic {
   name: string;
 }
 
-export default function Map({ city }: { city: string }) {
+export default function Map({
+  city,
+  cityClinics,
+}: {
+  city: string;
+  cityClinics: Clinic[];
+}) {
   const mapRef = useRef<HTMLDivElement>(null);
   const [clinics, setClinics] = useState<VetClinic[]>([]);
 
@@ -76,12 +83,60 @@ export default function Map({ city }: { city: string }) {
     };
 
     initMap();
-  }, [city]); 
+  }, [city]);
+
+  const sortedClinics = [...cityClinics].sort((a, b) => {
+    const avgRatingA = a.ClinicReview?.rating
+      ? parseFloat(a.ClinicReview.rating) / 1
+      : 0;
+    const avgRatingB = b.ClinicReview?.rating
+      ? parseFloat(b.ClinicReview.rating) / 1
+      : 0;
+    return avgRatingB - avgRatingA;
+  });
 
   return (
-    <div
-      ref={mapRef}
-      className="flex justify-center items-center w-[700px] h-[700px]"
-    />
+    <div className="flex space-x-6 p-4">
+      <div
+        ref={mapRef}
+        className="w-[700px] h-[500px] rounded-lg shadow-lg border border-gray-300 overflow-hidden"
+      />
+      <div className="w-[400px] space-y-4">
+        <h2 className="text-2xl font-semibold text-gray-700">
+          Vet Clinics in {city}
+        </h2>
+        {sortedClinics.map((clinic) => {
+          const ratings = clinic.ClinicReview?.rating
+            ? parseFloat(clinic.ClinicReview.rating)
+            : 0;
+
+          return (
+            <div
+              key={clinic.id}
+              className="p-4 border rounded-lg shadow-sm bg-white"
+            >
+              <h3 className="text-lg font-bold">{clinic.name}</h3>
+              <p className="text-gray-600">{clinic.address}</p>
+              <p className="text-yellow-500 font-semibold text-center">
+                ⭐ {ratings.toFixed(1) || "No rating"}
+              </p>
+              {clinic.phone && (
+                <p className="text-gray-500">📞 {clinic.phone}</p>
+              )}
+              {clinic.website && (
+                <a
+                  href={clinic.website}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-500 hover:underline"
+                >
+                  Visit Website
+                </a>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </div>
   );
 }

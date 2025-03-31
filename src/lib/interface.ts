@@ -37,6 +37,15 @@ export interface Clinic {
   website: string | null;
   createdAt: Date;
   updatedAt: Date;
+  ClinicReview: {
+    id: string;
+    userId: string;
+    clinicId: string;
+    rating: string | null;
+    comment: string | null;
+    createdAt: Date;
+    updatedAt: Date;
+  };
 }
 export interface Pet {
   id: string;
