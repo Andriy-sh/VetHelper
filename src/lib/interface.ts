@@ -26,6 +26,17 @@ export interface Appointment {
   createdAt: Date;
   updatedAt: Date;
   status: AppointmentStatus;
+  clinic: {
+    id: string;
+    name: string;
+    address: string;
+    city: string;
+    description: string;
+    phone: string | null;
+    website: string | null;
+    createdAt: Date;
+    updatedAt: Date;
+    };
 }
 export interface Clinic {
   id: string;

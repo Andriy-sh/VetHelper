@@ -20,6 +20,7 @@ export default async function MapPage() {
     where: { city: user.city },
     include: { ClinicReview: true },
   });
+
   return (
     <div className="flex justify-center items-center ">
       <Map city={user.city} cityClinics={clinics} />

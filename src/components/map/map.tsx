@@ -59,7 +59,6 @@ export default function Map({
           radius: 5000,
           type: "veterinary_care",
         };
-
         service.nearbySearch(request, (results, status) => {
           if (status === "OK" && results) {
             const clinicData = results.map((place) => ({
@@ -85,15 +84,18 @@ export default function Map({
     initMap();
   }, [city]);
 
-  const sortedClinics = [...cityClinics].sort((a, b) => {
-    const avgRatingA = a.ClinicReview?.rating
-      ? parseFloat(a.ClinicReview.rating) / 1
-      : 0;
-    const avgRatingB = b.ClinicReview?.rating
-      ? parseFloat(b.ClinicReview.rating) / 1
-      : 0;
-    return avgRatingB - avgRatingA;
-  });
+  const sortedClinics = [...cityClinics]
+    .map((clinic) => {
+      const ratings = Array.isArray(clinic.ClinicReview)
+        ? clinic.ClinicReview.map((review) => parseFloat(review.rating || "0"))
+        : [];
+      const avgRating = ratings.length
+        ? (ratings.reduce((a, b) => a + b, 0) / ratings.length).toFixed(1)
+        : "No rating";
+
+      return { ...clinic, avgRating };
+    })
+    .sort((a, b) => parseFloat(b.avgRating) - parseFloat(a.avgRating));
 
   return (
     <div className="flex space-x-6 p-4">
@@ -105,37 +107,29 @@ export default function Map({
         <h2 className="text-2xl font-semibold text-gray-700">
           Vet Clinics in {city}
         </h2>
-        {sortedClinics.map((clinic) => {
-          const ratings = clinic.ClinicReview?.rating
-            ? parseFloat(clinic.ClinicReview.rating)
-            : 0;
-
-          return (
-            <div
-              key={clinic.id}
-              className="p-4 border rounded-lg shadow-sm bg-white"
-            >
-              <h3 className="text-lg font-bold">{clinic.name}</h3>
-              <p className="text-gray-600">{clinic.address}</p>
-              <p className="text-yellow-500 font-semibold text-center">
-                ⭐ {ratings.toFixed(1) || "No rating"}
-              </p>
-              {clinic.phone && (
-                <p className="text-gray-500">📞 {clinic.phone}</p>
-              )}
-              {clinic.website && (
-                <a
-                  href={clinic.website}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-500 hover:underline"
-                >
-                  Visit Website
-                </a>
-              )}
-            </div>
-          );
-        })}
+        {sortedClinics.map((clinic) => (
+          <div
+            key={clinic.id}
+            className="p-4 border rounded-lg shadow-sm bg-white"
+          >
+            <h3 className="text-lg font-bold">{clinic.name}</h3>
+            <p className="text-gray-600">{clinic.address}</p>
+            <p className="text-yellow-500 font-semibold">
+              ⭐ {clinic.avgRating}
+            </p>
+            {clinic.phone && <p className="text-gray-500">📞 {clinic.phone}</p>}
+            {clinic.website && (
+              <a
+                href={clinic.website}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-500 hover:underline"
+              >
+                Visit Website
+              </a>
+            )}
+          </div>
+        ))}
       </div>
     </div>
   );

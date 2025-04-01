@@ -96,7 +96,7 @@ export default function PetInfo({
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <p className="flex items-center">
               <strong className="flex items-center mr-2">
-                <FaUser className="mr-1" /> Ім'я:
+                <FaUser className="mr-1" /> Ім`я:
               </strong>
               {user.name || "Не вказано"}
             </p>
@@ -187,7 +187,7 @@ export default function PetInfo({
                 {appointments.length > 0 ? (
                   appointments.map((appointment) => (
                     <Link
-                      href={`/clinics/${appointment.clinicId}/${appointment.id}`}
+                      href={`/clinics/${appointment.clinicId}/appointment/${appointment.id}`}
                       key={appointment.id}
                     >
                       <div className="w-full p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-all border border-gray-200 mb-3">

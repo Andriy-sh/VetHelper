@@ -4,6 +4,7 @@ import { FaPaw } from "react-icons/fa";
 import { getPets, getUser } from "@/lib/service/user";
 import { auth } from "../../../auth";
 import ChangeAvatar from "./changeAvatar";
+import { PlusCircle } from "lucide-react";
 
 export const PetInfo = async () => {
   const session = await auth();
@@ -25,7 +26,10 @@ export const PetInfo = async () => {
               key={pet.id}
               className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 p-6"
             >
-              <Link href={`/${pet.id}`} className="flex items-center space-x-6">
+              <Link
+                href={`pets/${pet.id}`}
+                className="flex items-center space-x-6"
+              >
                 <div className="relative w-24 h-24">
                   {pet.image ? (
                     <Image
@@ -71,12 +75,14 @@ export const PetInfo = async () => {
           </p>
         )}
       </div>
-      <Link
-        href="/adding-pet"
-        className="text-lg flex bg-red-600 justify-center items-center text-white font-semibold hover:bg-black transition duration-300 shadow-lg hover:shadow-xl rounded-lg py-3 px-6"
-      >
-        Add Pet
-      </Link>
+      <div className="flex justify-center items-center">
+        <Link
+          href="/adding-pet"
+          className="flex items-center text-center gap-2 justify-center w-[70%] px-4 py-2 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 transition"
+        >
+          <PlusCircle size={20} /> Додати улюбленця
+        </Link>
+      </div>
     </div>
   );
 };

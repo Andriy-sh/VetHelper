@@ -52,9 +52,9 @@ const AddPetForm = () => {
   return (
     <Card className="max-w-md mx-auto mt-20 shadow-lg p-6">
       <CardHeader>
-        <h2 className="text-xl font-semibold">Add a New Pet</h2>
+        <h2 className="text-xl font-semibold">Додати нового улюбленця</h2>
         <p className="text-sm text-gray-500">
-          Fill in the details to add your pet.
+          Заповніть дані, щоб додати улюбленця.
         </p>
       </CardHeader>
       <CardContent>
@@ -68,9 +68,13 @@ const AddPetForm = () => {
               control={form.control}
               render={({ field }) => (
                 <FormItem>
-                  <Label>Pet Name</Label>
+                  <Label>Ім'я улюбленця</Label>
                   <FormControl>
-                    <Input type="text" placeholder="Pet name" {...field} />
+                    <Input
+                      type="text"
+                      placeholder="Ім'я улюбленця"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -81,19 +85,19 @@ const AddPetForm = () => {
               control={form.control}
               render={({ field }) => (
                 <FormItem>
-                  <Label>Pet Species</Label>
+                  <Label>Вид улюбленця</Label>
                   <Select value={field.value} onValueChange={field.onChange}>
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder="Select species" />
+                        <SelectValue placeholder="Оберіть вид" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="CAT">Cat</SelectItem>
-                      <SelectItem value="DOG">Dog</SelectItem>
-                      <SelectItem value="BIRD">Bird</SelectItem>
-                      <SelectItem value="REPTILE">Reptile</SelectItem>
-                      <SelectItem value="OTHER">Other</SelectItem>
+                      <SelectItem value="CAT">Кішка</SelectItem>
+                      <SelectItem value="DOG">Собака</SelectItem>
+                      <SelectItem value="BIRD">Птах</SelectItem>
+                      <SelectItem value="REPTILE">Рептилія</SelectItem>
+                      <SelectItem value="OTHER">Інше</SelectItem>
                     </SelectContent>
                   </Select>
                   <FormMessage />
@@ -105,11 +109,11 @@ const AddPetForm = () => {
               name="breed"
               render={({ field }) => (
                 <FormItem>
-                  <Label>Pet Breed</Label>
+                  <Label>Порода</Label>
                   <FormControl>
                     <Input
                       type="text"
-                      placeholder="Enter breed (optional)"
+                      placeholder="Вкажіть породу (необов'язково)"
                       {...field}
                     />
                   </FormControl>
@@ -122,11 +126,11 @@ const AddPetForm = () => {
               name="age"
               render={({ field }) => (
                 <FormItem>
-                  <Label>Pet Age</Label>
+                  <Label>Вік улюбленця</Label>
                   <FormControl>
                     <Input
                       type="number"
-                      placeholder="Enter age"
+                      placeholder="Вкажіть вік"
                       min="0"
                       max="100"
                       {...field}
@@ -142,16 +146,16 @@ const AddPetForm = () => {
               name="gender"
               render={({ field }) => (
                 <FormItem>
-                  <Label>Pet Gender</Label>
+                  <Label>Стать улюбленця</Label>
                   <Select value={field.value} onValueChange={field.onChange}>
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder="Select gender" />
+                        <SelectValue placeholder="Оберіть стать" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="MALE">Male</SelectItem>
-                      <SelectItem value="FEMALE">Female</SelectItem>
+                      <SelectItem value="MALE">Чоловіча</SelectItem>
+                      <SelectItem value="FEMALE">Жіноча</SelectItem>
                     </SelectContent>
                   </Select>
                   <FormMessage />
@@ -162,7 +166,7 @@ const AddPetForm = () => {
               type="submit"
               className="w-full bg-blue-500 hover:bg-blue-600"
             >
-              Add Pet
+              Додати улюбленця
             </Button>
           </form>
         </Form>

@@ -22,6 +22,24 @@ const NavLink = ({ href, children }: NavLinkProps) => (
   </Link>
 );
 
+const authLinks = [
+  { href: "/clinics", label: "Клініки" },
+  { href: "/map", label: "Карта" },
+  { href: "/blogs", label: "Блоги" },
+  { href: "/pets", label: "Ваші улюбленці" },
+];
+
+const profileLinks = [
+  { href: "/profile", label: "Профіль" },
+  { href: "/settings/profile", label: "Налаштування" },
+  { href: "/faq", label: "FAQ" },
+];
+
+const guestLinks = [
+  { href: "/sign-up", label: "Реєстрація" },
+  { href: "/sign-in", label: "Логін" },
+];
+
 export default function NavBarElements({
   session,
   notifications,
@@ -47,13 +65,8 @@ export default function NavBarElements({
   user: User;
 }) {
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
-  const toggleProfileMenu = () => {
-    setIsProfileMenuOpen((prev) => !prev);
-  };
-
-  const closeProfileMenu = () => {
-    setIsProfileMenuOpen(false);
-  };
+  const toggleProfileMenu = () => setIsProfileMenuOpen((prev) => !prev);
+  const closeProfileMenu = () => setIsProfileMenuOpen(false);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -63,9 +76,7 @@ export default function NavBarElements({
     };
 
     document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   return (
@@ -81,9 +92,11 @@ export default function NavBarElements({
         <div className="hidden md:flex space-x-6 items-center">
           {session ? (
             <>
-              <NavLink href="/clinics">Clinics</NavLink>
-              <NavLink href="/map">Maps</NavLink>
-              <NavLink href="/blogs">Blogs</NavLink>
+              {authLinks.map(({ href, label }) => (
+                <NavLink key={href} href={href}>
+                  {label}
+                </NavLink>
+              ))}
               <Notification notifications={notifications} senders={senders} />
               <div className="relative profile-menu">
                 <button
@@ -107,27 +120,16 @@ export default function NavBarElements({
                   }`}
                 >
                   <div className="absolute -top-2 right-4 w-4 h-4 bg-white transform rotate-45 border-t border-l border-gray-200"></div>
-                  <Link
-                    onClick={closeProfileMenu}
-                    href="/profile"
-                    className="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition duration-300"
-                  >
-                    Profile
-                  </Link>
-                  <Link
-                    onClick={closeProfileMenu}
-                    href="/settings/profile"
-                    className="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition duration-300"
-                  >
-                    Settings
-                  </Link>
-                  <Link
-                    onClick={closeProfileMenu}
-                    href="/faq"
-                    className="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition duration-300"
-                  >
-                    FAQ
-                  </Link>
+                  {profileLinks.map(({ href, label }) => (
+                    <Link
+                      key={href}
+                      onClick={closeProfileMenu}
+                      href={href}
+                      className="block px-4 py-2 text-gray-800 hover:bg-gray-100 transition duration-300"
+                    >
+                      {label}
+                    </Link>
+                  ))}
                   <button
                     onClick={() => {
                       HandleSignOut();
@@ -141,10 +143,11 @@ export default function NavBarElements({
               </div>
             </>
           ) : (
-            <>
-              <NavLink href="/sign-up">Sign Up</NavLink>
-              <NavLink href="/sign-in">Sign In</NavLink>
-            </>
+            guestLinks.map(({ href, label }) => (
+              <NavLink key={href} href={href}>
+                {label}
+              </NavLink>
+            ))
           )}
         </div>
       </div>

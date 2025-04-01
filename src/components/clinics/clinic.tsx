@@ -95,15 +95,22 @@ export default function SingleClinic({
 
         {view === "info" && (
           <div>
-            <p className="text-gray-600 mb-6 text-lg">{clinic.description}</p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div>
                 <h2 className="text-2xl font-semibold text-gray-700 border-b-2 border-blue-500 pb-2 text-center">
                   Контактна інформація
                 </h2>
                 <p className="text-gray-600">
-                  <span className="font-medium">Адреса:</span> {clinic.address},{" "}
-                  {clinic.city}
+                  <div>
+                    <span className="font-medium">Адреса:</span>{" "}
+                    <span>
+                      {clinic.address}, {clinic.city}
+                    </span>
+                  </div>
+                  <div>
+                    <span className="font-medium"> Опис:</span>{" "}
+                    <span>{clinic.description}</span>
+                  </div>
                 </p>
                 {clinic.phone && (
                   <p className="text-gray-600">
