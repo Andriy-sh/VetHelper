@@ -50,7 +50,20 @@ export default function PetInfo({
   const [visibleAllergies, setVisibleAllergies] = useState(5);
   const visibleVacctinations = vacctination.slice(0, visibleVaccinations);
   const visibleAllergyList = allergies.slice(0, visibleAllergies);
+  const getLastVisit = () => {
+    if (!appointments || appointments.length === 0) {
+      return "Не записано";
+    }
 
+    const sortedAppointments = [...appointments].sort(
+      (a, b) => new Date(b.time).getTime() - new Date(a.time).getTime()
+    );
+
+    const lastAppointment = sortedAppointments[0];
+    return `${lastAppointment.date.toLocaleDateString()} о ${
+      lastAppointment.time
+    }`;
+  };
   const getSpeciesIcon = () => {
     switch (petData.species.toLowerCase()) {
       case "dog":
@@ -150,7 +163,7 @@ export default function PetInfo({
             <p className="flex items-center mb-2">
               <FaCalendarAlt className="mr-2 text-gray-500" />
               <strong>Останній візит:</strong>{" "}
-              <span className="ml-1">{petData.lastVisit || "Не записано"}</span>
+              <span className="ml-1">{getLastVisit()}</span>
             </p>
             <p className="flex items-center mb-2">
               <FaSyringe className="mr-2 text-gray-500" />
@@ -202,7 +215,7 @@ export default function PetInfo({
                           <FaCalendarAlt className="mr-2 text-purple-500" />
                           Час:{" "}
                           <span className="font-normal text-gray-700 ml-1">
-                            {new Date(appointment.time).toLocaleString()}
+                            {`${appointment.date.toLocaleDateString()} ${appointment.time.toLocaleString()} `}
                           </span>
                         </p>
                         <p className="text-lg font-semibold text-gray-900 flex items-center">

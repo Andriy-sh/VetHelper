@@ -23,7 +23,7 @@ import { Card, CardHeader, CardContent } from "../ui/card";
 import { addingPet } from "@/lib/actions/addingpet";
 import { useRouter } from "next/navigation";
 
-const AddPetForm = () => {
+const AddPetForm = ({ userId }: { userId: string }) => {
   const router = useRouter();
   const form = useForm<PetSchema>({
     resolver: zodResolver(petSchema),
@@ -45,8 +45,8 @@ const AddPetForm = () => {
     formdata.append("name", data.name);
     const res = await addingPet(formdata);
     if (res.success) {
-      router.push("/profile");
     }
+    router.push(`/profile/${userId}`);
   };
 
   return (

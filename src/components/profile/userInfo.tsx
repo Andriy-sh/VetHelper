@@ -138,7 +138,7 @@ export default function UserInfo({
                         {appointment.map((appointment) => (
                           <Link
                             key={appointment.id}
-                            href={`/clinics/${appointment.clinicId}/${appointment.id}`}
+                            href={`/clinics/${appointment.clinicId}/appointment/${appointment.id}`}
                           >
                             <div className="p-6 bg-gray-50 rounded-lg border border-gray-200 hover:border-indigo-300 transition-colors group">
                               <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">

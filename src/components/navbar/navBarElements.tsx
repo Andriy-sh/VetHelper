@@ -103,7 +103,7 @@ export default function NavBarElements({
   }, []);
 
   return (
-    <nav className="fixed z-50 top-0 left-0 w-full bg-white/80 backdrop-blur-md border-b border-gray-200">
+    <nav className="fixed z-50 top-0 left-0 w-full bg-white/80 shadow-sm shadow-slate-400 backdrop-blur-md border-b border-gray-200">
       <div className="max-w-7xl mx-auto px-6 flex justify-between items-center h-16">
         <Link
           href="/"

@@ -284,11 +284,9 @@ export default function SingleClinic({
             <h2 className="text-2xl font-bold text-gray-800 mb-4">
               Відгуки клієнтів
             </h2>
-            {clinic.id === user.clinicId && (
-              <div className="mb-6">
-                <AddingClinicReviews clinicId={clinic.id} userId={user.id} />
-              </div>
-            )}
+            <div className="mb-6">
+              <AddingClinicReviews clinicId={clinic.id} userId={user.id} />
+            </div>
             {reviews.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {reviews.map((review) => (
@@ -298,7 +296,7 @@ export default function SingleClinic({
                   >
                     <div>
                       <p className="text-gray-600 italic mb-4">
-                        "{review.comment}"
+                        {review.comment}
                       </p>
                       <div className="flex items-center justify-between mb-4">
                         <span className="text-sm text-gray-500">
