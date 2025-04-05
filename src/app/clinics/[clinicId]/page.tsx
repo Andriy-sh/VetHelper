@@ -3,10 +3,8 @@ import { prisma } from "../../../../prisma";
 import SingleClinic from "@/components/clinics/clinic";
 import { auth } from "../../../../auth";
 import { ClinicNews } from "@/lib/interface";
-
-export default async function Clinic(props: {
-  params: Promise<{ clinicId: string }>;
-}) {
+type Params = Promise<{ clinicId: string }>;
+export default async function Clinic(props: { params: Params }) {
   const resolvedParams = await props.params;
   const clinicId = resolvedParams.clinicId;
 
