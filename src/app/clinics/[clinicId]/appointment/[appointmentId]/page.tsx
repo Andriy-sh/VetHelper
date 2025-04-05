@@ -3,29 +3,31 @@ import { auth } from "../../../../../../auth";
 import { prisma } from "../../../../../../prisma";
 import AppointmentInfo from "@/components/appointment/appointmentInfo";
 
-export default async function Page({
-  params,
-}: {
-  params: { clinicId: string; appointmentId: string };
-}) {
+type Params = { clinicId: string; appointmentId: string };
+
+export default async function Page({ params }: { params: Promise<Params> }) {
+  const resolvedParams = await params;
+
   const session = await auth();
   if (!session) {
-    throw new Error("Blablabla");
+    throw new Error("Користувач не авторизований");
   }
+
   const user = await prisma.user.findUnique({
     where: { email: session?.user?.email ?? undefined },
   });
   if (!user) {
-    throw new Error("User not logged");
+    throw new Error("Користувач не знайдений");
   }
 
   const appointment = await prisma.appointment.findUnique({
-    where: { id: params.appointmentId },
+    where: { id: resolvedParams.appointmentId },
     include: { clinic: true },
   });
   if (!appointment) {
     notFound();
   }
+
   const pet = await prisma.pet.findUnique({
     where: {
       id: appointment?.petId,
@@ -34,9 +36,11 @@ export default async function Page({
   if (!pet) {
     notFound();
   }
+
   const diseases = await prisma.disease.findMany({
     where: { petId: pet.id },
   });
+
   return (
     <div>
       <AppointmentInfo
