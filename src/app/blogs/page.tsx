@@ -18,7 +18,6 @@ export default async function Page() {
   return (
     <h1>
       <AddPostButton user={user} />
-
       <BlogPostCard blogs={blogs} />
     </h1>
   );
