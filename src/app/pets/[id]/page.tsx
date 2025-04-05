@@ -8,14 +8,15 @@ export async function generateStaticParams() {
   const pets = await prisma.pet.findMany({ select: { id: true } });
   return pets.map((pet) => ({ id: pet.id }));
 }
-
-export default async function Page({ params }: { params: { id: string } }) {
-  if (!params?.id) {
+type Params = Promise<{ id: string }>;
+export default async function Page({ params }: { params: Params }) {
+  const resolvedParams = await params;
+  if (!resolvedParams?.id) {
     notFound();
   }
 
   const pet = await prisma.pet.findUnique({
-    where: { id: params.id },
+    where: { id: resolvedParams.id },
   });
 
   if (!pet) {
