@@ -39,10 +39,11 @@
     "next-auth": "^5.0.0-beta.25",
     "next-cloudinary": "^6.16.0",
     "react": "^19.0.0",
-    "react-day-picker": "^9.6.3",
+    "react-day-picker": "^8.10.1",
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.54.2",
     "react-icons": "^5.5.0",
+    "shadcn": "^2.4.0-canary.17",
     "tailwind-merge": "^3.0.1",
     "tailwindcss-animate": "^1.0.7",
     "zod": "^3.24.2"
