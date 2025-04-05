@@ -100,7 +100,7 @@ export default function SingleClinic({
                 <h2 className="text-2xl font-semibold text-gray-700 border-b-2 border-blue-500 pb-2 text-center">
                   Контактна інформація
                 </h2>
-                <p className="text-gray-600">
+                <div className="text-gray-600">
                   <div>
                     <span className="font-medium">Адреса:</span>{" "}
                     <span>
@@ -111,7 +111,7 @@ export default function SingleClinic({
                     <span className="font-medium"> Опис:</span>{" "}
                     <span>{clinic.description}</span>
                   </div>
-                </p>
+                </div>
                 {clinic.phone && (
                   <p className="text-gray-600">
                     <span className="font-medium">Телефон:</span> {clinic.phone}
@@ -151,7 +151,7 @@ export default function SingleClinic({
                   clinicId={clinic.id}
                   userId={user.id}
                   times={appointments.map((a) => a.time)}
-                  date={appointments.map((a) => a.date)}
+                  date={appointments.map((a) => a.date.toISOString())}
                   pets={pets}
                 />
               </div>

@@ -68,7 +68,7 @@ const AddPetForm = ({ userId }: { userId: string }) => {
               control={form.control}
               render={({ field }) => (
                 <FormItem>
-                  <Label>Ім'я улюбленця</Label>
+                  <Label>Ім`я улюбленця</Label>
                   <FormControl>
                     <Input
                       type="text"

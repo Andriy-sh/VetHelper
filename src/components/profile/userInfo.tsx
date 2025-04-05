@@ -1,5 +1,4 @@
 "use client";
-import Image from "next/image";
 import Link from "next/link";
 import { Appointment, Clinic, User } from "@/lib/interface";
 import { Session } from "next-auth";
@@ -19,7 +18,6 @@ interface UserInfoProps {
 }
 
 export default function UserInfo({
-  session,
   user,
   appointment,
   clinics,
@@ -60,8 +58,8 @@ export default function UserInfo({
                 <div>
                   <p className="text-gray-600">Адреса:</p>
                   <p className="text-gray-800 font-medium">
-                    {user.city || "Львів"} |{" "}
-                    {user.address || "вул. Січових Стрільців 8"}
+                    <span>{user.city || "Львів"}</span> |{" "}
+                    <span>вул. Січових Стрільців 8</span>
                   </p>
                 </div>
               </div>
@@ -72,9 +70,7 @@ export default function UserInfo({
                 </div>
                 <div>
                   <p className="text-gray-600">Телефон:</p>
-                  <p className="text-gray-800 font-medium">
-                    {user.phone || "+380 98 654 4790"}
-                  </p>
+                  <p className="text-gray-800 font-medium">+380 98 654 4790</p>
                 </div>
               </div>
 
@@ -84,9 +80,7 @@ export default function UserInfo({
                 </div>
                 <div>
                   <p className="text-gray-600">Email:</p>
-                  <p className="text-gray-800 font-medium">
-                    {user.email || "qwerty@gmail.com"}
-                  </p>
+                  <p className="text-gray-800 font-medium">{user.email}</p>
                 </div>
               </div>
             </div>
@@ -184,7 +178,7 @@ export default function UserInfo({
   );
 }
 
-function MapPinIcon(props: any) {
+function MapPinIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg {...props} fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path
@@ -203,7 +197,7 @@ function MapPinIcon(props: any) {
   );
 }
 
-function PhoneIcon(props: any) {
+function PhoneIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg {...props} fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path
@@ -216,7 +210,7 @@ function PhoneIcon(props: any) {
   );
 }
 
-function MailIcon(props: any) {
+function MailIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg {...props} fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path
@@ -229,7 +223,7 @@ function MailIcon(props: any) {
   );
 }
 
-function EditIcon(props: any) {
+function EditIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg {...props} fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path
@@ -242,7 +236,7 @@ function EditIcon(props: any) {
   );
 }
 
-function CalendarDaysIcon(props: any) {
+function CalendarDaysIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg {...props} fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path
@@ -255,7 +249,7 @@ function CalendarDaysIcon(props: any) {
   );
 }
 
-function ClockIcon(props: any) {
+function ClockIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg {...props} fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path
@@ -268,7 +262,7 @@ function ClockIcon(props: any) {
   );
 }
 
-function ChevronRightIcon(props: any) {
+function ChevronRightIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg {...props} fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path
@@ -281,7 +275,7 @@ function ChevronRightIcon(props: any) {
   );
 }
 
-function CalendarIcon(props: any) {
+function CalendarIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg {...props} fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path

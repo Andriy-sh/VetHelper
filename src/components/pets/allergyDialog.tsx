@@ -49,7 +49,9 @@ export default function AllergyDialog({
       formData.append("symptoms", data.symptoms);
       formData.append("recommendations", data.recommendations);
       formData.append("date", new Date(data.date).toISOString());
-      formData.append("clinicId", clinicId);
+      if (clinicId) {
+        formData.append("clinicId", clinicId);
+      }
 
       formData.append("petId", petId);
       await allergy(formData);

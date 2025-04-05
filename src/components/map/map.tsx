@@ -1,13 +1,7 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { Loader } from "@googlemaps/js-api-loader";
 import { Clinic } from "@/lib/interface";
-
-interface VetClinic {
-  lat: number;
-  lng: number;
-  name: string;
-}
 
 export default function Map({
   city,
@@ -17,7 +11,6 @@ export default function Map({
   cityClinics: Clinic[];
 }) {
   const mapRef = useRef<HTMLDivElement>(null);
-  const [clinics, setClinics] = useState<VetClinic[]>([]);
 
   useEffect(() => {
     const initMap = async () => {
@@ -67,8 +60,6 @@ export default function Map({
               name: place.name || "Vet Clinic",
             }));
 
-            setClinics(clinicData);
-
             clinicData.forEach((clinic) => {
               new google.maps.Marker({
                 position: { lat: clinic.lat, lng: clinic.lng },
@@ -87,7 +78,7 @@ export default function Map({
   const sortedClinics = [...cityClinics]
     .map((clinic) => {
       const ratings = Array.isArray(clinic.ClinicReview)
-        ? clinic.ClinicReview.map((review) => parseFloat(review.rating || "0"))
+        ? clinic.ClinicReview.map((review) => parseFloat(String(review.rating || "0")))
         : [];
       const avgRating = ratings.length
         ? (ratings.reduce((a, b) => a + b, 0) / ratings.length).toFixed(1)

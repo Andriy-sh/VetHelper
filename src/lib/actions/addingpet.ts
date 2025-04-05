@@ -1,4 +1,5 @@
 "use server";
+import { Gender, Species } from "@prisma/client";
 import { auth } from "../../../auth";
 import { prisma } from "../../../prisma";
 import { petSchema } from "../schema";
@@ -43,10 +44,10 @@ export const addingPet = async (
   await prisma.pet.create({
     data: {
       name: validate.data.name,
-      species: validate.data.species,
+      species: validate.data.species as Species,
       breed: validate.data.breed,
       age: validate.data.age,
-      gender: validate.data.gender,
+      gender: validate.data.gender as Gender,
       userId: user.id,
     },
   });

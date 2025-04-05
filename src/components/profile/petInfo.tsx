@@ -55,7 +55,7 @@ export const PetInfo = async ({ userId }: { userId: string }) => {
                   <div className="space-y-1">
                     <h3 className="text-xl font-semibold">{pet.name}</h3>
                     <p className="text-gray-600">Вік: {pet.age}</p>
-                    <p className="text-gray-600">Вага: {pet.weight}</p>
+                    <p className="text-gray-600">Вага: Не вказано</p>
                     <p className="text-gray-600">Порода: {pet.breed}</p>
                   </div>
                 </Link>

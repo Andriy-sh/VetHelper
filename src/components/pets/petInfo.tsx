@@ -117,13 +117,13 @@ export default function PetInfo({
               <strong className="flex items-center mr-2">
                 <FaPhone className="mr-1" /> Телефон:
               </strong>
-              {user.phone || "Не вказано"}
+              Не вказано
             </p>
             <p className="flex items-center">
               <strong className="flex items-center mr-2">
                 <FaMapMarkerAlt className="mr-1" /> Адреса:
               </strong>
-              {user.address || "Не вказано"}
+              Не вказано
             </p>
           </div>
         </div>
@@ -168,23 +168,17 @@ export default function PetInfo({
             <p className="flex items-center mb-2">
               <FaSyringe className="mr-2 text-gray-500" />
               <strong>Вакцинації:</strong>{" "}
-              <span className="ml-1">
-                {petData.vaccinations || "Не записано"}
-              </span>
+              <span className="ml-1">Не записано</span>
             </p>
             <p className="flex items-center mb-2">
               <GiHealthNormal className="mr-2 text-gray-500" />
               <strong>Хвороби:</strong>{" "}
-              <span className="ml-1">
-                {petData.illnesses || "Немає відомих хвороб"}
-              </span>
+              <span className="ml-1">Немає відомих хвороб</span>
             </p>
             <p className="flex items-center">
               <FaBone className="mr-2 text-gray-500" />
               <strong>Харчування:</strong>{" "}
-              <span className="ml-1">
-                {petData.diet || "Стандартний раціон"}
-              </span>
+              <span className="ml-1">Стандартний раціон</span>
             </p>
           </div>
         </div>

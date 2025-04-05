@@ -14,7 +14,13 @@ import {
   AlertDialogTrigger,
 } from "../ui/alert-dialog";
 import { HandleSignOut } from "../auth/SignOut";
-export default function DeleteUser({ userId }: { userId: string }) {
+export default function DeleteUser({
+  userId,
+  children,
+}: {
+  userId: string;
+  children?: React.ReactNode;
+}) {
   const handleDelete = async () => {
     try {
       await deleteUser(userId);
@@ -25,6 +31,7 @@ export default function DeleteUser({ userId }: { userId: string }) {
   };
   return (
     <div>
+      {children}
       <AlertDialog>
         <AlertDialogTrigger asChild>
           <Button variant="destructive">Видалити</Button>

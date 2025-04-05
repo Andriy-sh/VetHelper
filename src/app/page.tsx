@@ -156,12 +156,12 @@ export default async function Home() {
               <p className="text-lg text-gray-600 mt-4">
                 Seamless access on any device.
               </p>
-              <a
+              <Link
                 href="/profile"
                 className="text-purple-600 font-semibold mt-6 inline-block"
               >
                 Learn More
-              </a>
+              </Link>
             </div>
 
             <div className="bg-white rounded-lg shadow-lg p-8 text-center">
@@ -186,12 +186,12 @@ export default async function Home() {
               <p className="text-lg text-gray-600 mt-4">
                 Quickly set up your profile and pets.
               </p>
-              <a
+              <Link
                 href="/profile"
                 className="text-purple-600 font-semibold mt-6 inline-block"
               >
                 Sign Up
-              </a>
+              </Link>
             </div>
 
             <div className="bg-white rounded-lg shadow-lg p-8 text-center">
@@ -216,12 +216,12 @@ export default async function Home() {
               <p className="text-lg text-gray-600 mt-4">
                 Connect with Google or GitHub effortlessly.
               </p>
-              <a
+              <Link
                 href="/profile"
                 className="text-purple-600 font-semibold mt-6 inline-block"
               >
                 Join Us
-              </a>
+              </Link>
             </div>
           </div>
         </div>

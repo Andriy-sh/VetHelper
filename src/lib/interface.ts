@@ -36,7 +36,7 @@ export interface Appointment {
     website: string | null;
     createdAt: Date;
     updatedAt: Date;
-    };
+  };
 }
 export interface Clinic {
   id: string;
@@ -48,15 +48,7 @@ export interface Clinic {
   website: string | null;
   createdAt: Date;
   updatedAt: Date;
-  ClinicReview: {
-    id: string;
-    userId: string;
-    clinicId: string;
-    rating: string | null;
-    comment: string | null;
-    createdAt: Date;
-    updatedAt: Date;
-  };
+  ClinicReview?: ClinicReviews[];
 }
 export interface Pet {
   id: string;
@@ -88,6 +80,7 @@ export interface Vacctination {
   date: Date;
   nextDoseDue: Date | null;
   notes: string | null;
+  clinic: Clinic;
 }
 
 export interface Allergy {
@@ -97,6 +90,7 @@ export interface Allergy {
   symptoms: string;
   recommendations: string | null;
   dateDetected: Date;
+  clinic: Clinic;
 }
 
 export interface Blogs {

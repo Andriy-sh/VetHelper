@@ -16,7 +16,7 @@ export default async function Page() {
   }
   const clinics = await prisma.clinic.findMany();
   if (!user.city) {
-    return <AddingCity user={user} session={session} />;
+    return <AddingCity userId={user.id} />;
   }
   return (
     <div>

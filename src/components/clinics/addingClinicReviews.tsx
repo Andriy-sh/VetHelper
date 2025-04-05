@@ -50,7 +50,12 @@ export default function AddingClinicReviews({
             <FormItem>
               <Label>Залиште відгук</Label>
               <FormControl>
-                <Input type="text" placeholder="Ваш відгук" {...field} />
+                <Input
+                  type="text"
+                  placeholder="Ваш відгук"
+                  {...field}
+                  value={field.value ?? ""}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>

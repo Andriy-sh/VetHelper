@@ -12,17 +12,15 @@ import { citySchema, CitySchema } from "@/lib/schema";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { addingCity } from "@/lib/actions/addingcity";
-import { User } from "@/lib/interface";
-import { Session } from "next-auth";
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
 
 export default function AddingCity({
-  user,
-  session,
+  userId,
+  children,
 }: {
-  user: User;
-  session: Session | null;
+  userId: string;
+  children?: React.ReactNode;
 }) {
   const router = useRouter();
   const form = useForm<CitySchema>({
@@ -34,15 +32,14 @@ export default function AddingCity({
   const handleSumbit = async (data: CitySchema) => {
     const formData = new FormData();
     formData.append("city", data.city);
-    formData.append("userId", user.id);
+    formData.append("userId", userId);
     await addingCity(formData);
     router.refresh();
     form.reset();
   };
-  console.log(user.id);
-  console.log(session?.user?.id);
   return (
     <div>
+      {children}
       <Form {...form}>
         <form onClick={form.handleSubmit(handleSumbit)}>
           <FormField

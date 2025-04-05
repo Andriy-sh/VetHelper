@@ -3,7 +3,7 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import { prisma } from "./prisma";
 import Credentials from "next-auth/providers/credentials";
 import Google from "next-auth/providers/google";
-export const { handlers,auth, signIn, signOut } = NextAuth({
+export const { handlers, auth, signIn, signOut } = NextAuth({
   session: { strategy: "jwt" },
   adapter: PrismaAdapter(prisma),
   providers: [
@@ -17,6 +17,9 @@ export const { handlers,auth, signIn, signOut } = NextAuth({
         password: {},
       },
       authorize: async (credentials) => {
+        if (!credentials?.email || typeof credentials?.password !== "string") {
+          throw new Error("Invalid credentials");
+        }
         const user = await prisma.user.findFirst({
           where: {
             email: credentials.email,

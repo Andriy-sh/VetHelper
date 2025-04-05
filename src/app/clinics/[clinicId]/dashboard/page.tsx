@@ -22,6 +22,7 @@ export default async function Page() {
   }
   const appointments = await prisma.appointment.findMany({
     where: { clinicId: clinic.id },
+    include: { clinic: true },
   });
   return <Dashboard appointments={appointments} user={user} />;
 }

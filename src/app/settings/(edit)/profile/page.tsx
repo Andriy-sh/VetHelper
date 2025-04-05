@@ -1,11 +1,6 @@
 import { auth } from "../../../../../auth";
 import { prisma } from "../../../../../prisma";
-import {
-  Card,
-  CardHeader,
-  CardContent,
-  CardFooter,
-} from "@/components/ui/card";
+import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Pencil, MapPin, Trash2 } from "lucide-react";
 import { Separator } from "@radix-ui/react-select";
@@ -45,7 +40,7 @@ export default async function Page() {
             <p className="text-gray-700">
               {user.city ? `Місто: ${user.city}` : "Місто не вказано"}
             </p>
-            <AddingCity user={user} session={session}>
+            <AddingCity userId={user.id}>
               <Button variant="outline" size="sm">
                 <Pencil className="w-4 h-4 mr-2" />
                 {user.city ? "Змінити" : "Додати"}

@@ -14,12 +14,26 @@ export default async function MapPage() {
   const user = await getUser({ user: { email: session.user.email } });
 
   if (!user.city) {
-    return <AddingCity session={session} user={user} />;
+    return <AddingCity userId={user.id} />;
   }
-  const clinics = await prisma.clinic.findMany({
-    where: { city: user.city },
-    include: { ClinicReview: true },
-  });
+  const clinics = (
+    await prisma.clinic.findMany({
+      where: { city: user.city },
+      include: {
+        ClinicReview: {
+          include: {
+            user: true,
+          },
+        },
+      },
+    })
+  ).map((clinic) => ({
+    ...clinic,
+    ClinicReview: clinic.ClinicReview.map((review) => ({
+      ...review,
+      rating: review.rating ? Number(review.rating) : null,
+    })),
+  }));
 
   return (
     <div className="flex justify-center items-center ">
