@@ -3,14 +3,11 @@ import { auth } from "../../../../auth";
 import { prisma } from "../../../../prisma";
 import { PetInfo } from "@/components/profile/petInfo";
 import { User } from "@/lib/interface";
-
-export default async function UserProfile({
-  params,
-}: {
-  params: { id: string };
-}) {
+type Params = Promise<{ id: string }>;
+export default async function UserProfile({ params }: { params: Params }) {
+  const resolvedParams = await params;
   const user = await prisma.user.findUnique({
-    where: { id: params.id },
+    where: { id: resolvedParams.id },
   });
   const session = await auth();
 

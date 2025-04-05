@@ -272,7 +272,7 @@ export default function PetInfo({
                         </p>
                         <p className="text-sm text-gray-600 flex items-center">
                           <FaMapMarkerAlt className="mr-2 text-pink-500" />
-                          <strong>Клініка:</strong> {vac.clinic.name}
+                          <strong>Клініка:</strong> {vac?.clinic?.name}
                         </p>
                       </div>
                     ))}
@@ -338,7 +338,7 @@ export default function PetInfo({
                         </p>
                         <p className="text-sm text-gray-600 flex items-center">
                           <FaMapMarkerAlt className="mr-2 text-pink-500" />
-                          <strong>Клініка:</strong> {allergy.clinic.name}
+                          <strong>Клініка:</strong> {allergy?.clinic?.name}
                         </p>
                       </div>
                     ))}

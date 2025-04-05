@@ -80,7 +80,7 @@ export interface Vacctination {
   date: Date;
   nextDoseDue: Date | null;
   notes: string | null;
-  clinic: Clinic;
+  clinic: Clinic | null;
 }
 
 export interface Allergy {
@@ -90,7 +90,7 @@ export interface Allergy {
   symptoms: string;
   recommendations: string | null;
   dateDetected: Date;
-  clinic: Clinic;
+  clinic: Clinic | null;
 }
 
 export interface Blogs {

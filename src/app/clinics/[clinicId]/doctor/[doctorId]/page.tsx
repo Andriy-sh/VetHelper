@@ -1,13 +1,10 @@
 import { prisma } from "../../../../../../prisma";
-
-export default async function page({
-  params,
-}: {
-  params: { clinicId: string; doctorId: string };
-}) {
+type Params = { clinicId: string; doctorId: string };
+export default async function page({ params }: { params: Promise<Params> }) {
+  const resolvedParams = await params;
   try {
     const doctor = await prisma.user.findUnique({
-      where: { id: params.doctorId },
+      where: { id: resolvedParams.doctorId },
     });
 
     if (!doctor) {
