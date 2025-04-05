@@ -1,8 +1,7 @@
 import { auth } from "../../../../../auth";
 import { prisma } from "../../../../../prisma";
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Pencil, MapPin, Trash2 } from "lucide-react";
+import { MapPin, Trash2 } from "lucide-react";
 import { Separator } from "@radix-ui/react-select";
 import AddingCity from "@/components/profile/addingCity";
 import DeleteUser from "@/components/settings/deleteUser";
@@ -40,12 +39,7 @@ export default async function Page() {
             <p className="text-gray-700">
               {user.city ? `Місто: ${user.city}` : "Місто не вказано"}
             </p>
-            <AddingCity userId={user.id}>
-              <Button variant="outline" size="sm">
-                <Pencil className="w-4 h-4 mr-2" />
-                {user.city ? "Змінити" : "Додати"}
-              </Button>
-            </AddingCity>
+            <AddingCity userId={user.id} />
           </div>
         </CardContent>
       </Card>
@@ -66,12 +60,7 @@ export default async function Page() {
               Видалення акаунту є незворотньою дією. Усі ваші дані буде видалено
               назавжди.
             </p>
-            <DeleteUser userId={user.id}>
-              <Button variant="destructive">
-                <Trash2 className="w-4 h-4 mr-2" />
-                Видалити акаунт
-              </Button>
-            </DeleteUser>
+            <DeleteUser userId={user.id} />
           </div>
         </CardContent>
       </Card>
