@@ -4,13 +4,12 @@ import { prisma } from "../../../../prisma";
 import { PetInfo } from "@/components/profile/petInfo";
 import { User } from "@/lib/interface";
 type Params = Promise<{ id: string }>;
-export default async function UserProfile({ params }: { params: Params }) {
+export default async function page({ params }: { params: Params }) {
   const resolvedParams = await params;
   const user = await prisma.user.findUnique({
     where: { id: resolvedParams.id },
   });
   const session = await auth();
-
   if (!session?.user?.email) {
     throw new Error("User not authenticated");
   }

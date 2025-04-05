@@ -28,10 +28,10 @@ export default async function Clinic(props: { params: Params }) {
   const clinic = await prisma.clinic.findUnique({
     where: { id: clinicId },
     include: {
-      user: true, // Включаємо всі дані про користувача
+      user: true, 
       ClinicReview: {
         include: {
-          user: true, // Включаємо дані користувача для кожного відгуку
+          user: true, 
         },
       },
       ClinicFAQ: true,
