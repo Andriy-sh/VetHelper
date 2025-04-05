@@ -1,8 +1,13 @@
 import { prisma } from "../../../../prisma";
 import { auth } from "../../../../auth";
 import BlogInfo from "@/components/blogs/blog/blogInfo";
+import { ParsedUrlQuery } from "querystring";
 
-export default async function Page({ params }: { params: { blogId: string } }) {
+interface PageProps {
+  params: ParsedUrlQuery & { blogId: string };
+}
+
+export default async function Page({ params }: PageProps) {
   const session = await auth();
   if (!session) {
     throw new Error("aijsbdiasd");
