@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default function BlogPostCard({ blogs }: { blogs: Blogs[] }) {
   return (
-    <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+    <div className="h-screen bg-gradient-to-b from-white to-slate-200 grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
       {blogs.map((blog) => (
         <div
           key={blog.id}

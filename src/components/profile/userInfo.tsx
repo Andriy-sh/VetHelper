@@ -23,8 +23,8 @@ export default function UserInfo({
   clinics,
 }: UserInfoProps) {
   return (
-    <div className="flex-1 flex flex-col items-center max-w-5xl justify-center bg-gray-50 py-12">
-      <div className="w-full  min-h-[72vh] bg-white rounded-3xl shadow-lg overflow-hidden">
+    <div className="flex-1 flex flex-col items-center max-w-5xl justify-center bg-gray-50 ">
+      <div className="w-full   bg-white rounded-3xl shadow-lg overflow-hidden">
         <div className="bg-indigo-600 p-8 text-white">
           <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
             <div className="relative w-32 h-32 rounded-full border-4 border-white shadow-lg">

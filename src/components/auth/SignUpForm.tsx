@@ -46,9 +46,9 @@ export const SignUpForm = () => {
   };
 
   return (
-    <div className="mt-[72px] flex justify-center items-center min-h-screen">
+    <div className=" flex justify-center items-start min-h-screen">
       <div className="w-96 p-8 bg-white shadow-lg rounded-2xl">
-        <h2 className="text-2xl font-semibold text-center mb-6">Sign Up</h2>
+        <h2 className="text-2xl font-semibold text-center ">Sign Up</h2>
 
         <GoogleButtonSingUp info="Sign Up with Google" />
 

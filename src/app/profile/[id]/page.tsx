@@ -24,7 +24,7 @@ export default async function page({ params }: { params: Params }) {
   });
   const clinics = await prisma.clinic.findMany();
   return (
-    <div className="p-8 space-x-8 flex bg-gray-100 justify-between">
+    <div className="min-h-screen bg-gradient-to-b from-white to-slate-200 p-8 space-x-8 flex items-start justify-between">
       <UserInfo
         user={user || ({} as User)}
         session={session}

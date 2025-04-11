@@ -97,7 +97,7 @@ export default function AppointmentInfo({
   };
 
   return (
-    <div className="p-3 bg-gradient-to-r from-blue-50 to-purple-50 min-h-screen">
+    <div className=" p-3 bg-gradient-to-r from-blue-50 to-purple-50 min-h-screen">
       <div className="bg-white rounded-2xl shadow-2xl overflow-hidden">
         <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-8">
           <h1 className="text-3xl font-bold text-white text-center">

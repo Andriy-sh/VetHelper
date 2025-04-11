@@ -31,7 +31,7 @@ export default function PetsPage({ pets }: { pets: Pet[] }) {
   };
 
   return (
-    <div className="p-6">
+    <div className="h-screen bg-gradient-to-b from-white to-slate-200 p-6">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold text-gray-800">Ваші улюбленці</h1>
         <Link

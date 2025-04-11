@@ -76,7 +76,7 @@ export default function PetInfo({
   };
 
   return (
-    <div className="flex justify-center min-h-[80vh] bg-gray-50 py-12">
+    <div className="flex justify-center min-h-screen bg-gradient-to-b from-white to-slate-200  py-12">
       <div className="bg-white shadow-xl rounded-2xl p-8 w-full max-w-4xl border-t-8 border-blue-500">
         <div className="flex flex-col md:flex-row items-center space-x-0 md:space-x-6 space-y-4 md:space-y-0 mb-8">
           <div className="relative w-32 h-32">

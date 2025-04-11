@@ -112,7 +112,7 @@ export default function Dashboard({
   };
 
   return (
-    <div className="mt-[72px] p-6">
+    <div className="min-h-screen bg-gradient-to-b from-white to-slate-200 mt-[72px] p-6">
       {user.role === "VETERINARIAN" && (
         <div>
           <h2 className="text-2xl font-semibold text-gray-700 border-b-2 border-blue-500 pb-2">

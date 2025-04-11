@@ -54,7 +54,7 @@ export default function FAQPage() {
   const [showAll, setShowAll] = useState(false);
 
   return (
-    <div className="max-w-3xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-b from-white to-slate-200 max-w-3xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
       <div className="text-center mb-12">
         <h1 className="text-3xl font-bold text-gray-900 mb-4">
           Часто задавані питання

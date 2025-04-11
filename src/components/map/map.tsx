@@ -78,7 +78,9 @@ export default function Map({
   const sortedClinics = [...cityClinics]
     .map((clinic) => {
       const ratings = Array.isArray(clinic.ClinicReview)
-        ? clinic.ClinicReview.map((review) => parseFloat(String(review.rating || "0")))
+        ? clinic.ClinicReview.map((review) =>
+            parseFloat(String(review.rating || "0"))
+          )
         : [];
       const avgRating = ratings.length
         ? (ratings.reduce((a, b) => a + b, 0) / ratings.length).toFixed(1)
@@ -89,7 +91,7 @@ export default function Map({
     .sort((a, b) => parseFloat(b.avgRating) - parseFloat(a.avgRating));
 
   return (
-    <div className="flex space-x-6 p-4">
+    <div className="h-screen bg-gradient-to-b from-white to-slate-200 flex space-x-6 p-4">
       <div
         ref={mapRef}
         className="w-[700px] h-[500px] rounded-lg shadow-lg border border-gray-300 overflow-hidden"
