@@ -8,7 +8,7 @@ import { useState, useEffect } from "react";
 import Notification from "./notification";
 import ChangeAvatar from "../profile/changeAvatar";
 import { User } from "@/lib/interface";
-
+import { motion, AnimatePresence } from "framer-motion";
 interface NavLinkProps {
   href: string;
   children: React.ReactNode;
@@ -25,21 +25,28 @@ const NavLink = ({
   const isActive = exact ? currentPath === href : currentPath.startsWith(href);
 
   return (
-    <Link
-      href={href}
-      className={`px-4 py-1 text-lg font-medium transition-colors relative group
-        ${
-          isActive ? "text-indigo-600" : "text-gray-800 hover:text-indigo-600"
-        }`}
+    <motion.div
+      initial={{ y: -20, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      whileHover={{ scale: 1.05 }}
+      transition={{ type: "spring", stiffness: 300 }}
     >
-      {children}
-      <span
-        className={`absolute bottom-0 left-0 h-0.5 bg-indigo-600 rounded-full
-        transition-all duration-300 ease-out
-        ${isActive ? "w-full" : "w-0 group-hover:w-full"}
-        ${isActive ? "opacity-100" : "opacity-0 group-hover:opacity-50"}`}
-      ></span>
-    </Link>
+      <Link
+        href={href}
+        className={`px-4 py-1 text-lg font-medium transition-colors relative group
+          ${
+            isActive ? "text-indigo-600" : "text-gray-800 hover:text-indigo-600"
+          }`}
+      >
+        {children}
+        <motion.span
+          initial={{ width: isActive ? "100%" : "0%" }}
+          animate={{ width: isActive ? "100%" : "0%" }}
+          className={`absolute bottom-0 left-0 h-0.5 bg-indigo-600 rounded-full
+          ${isActive ? "opacity-100" : "opacity-0 group-hover:opacity-50"}`}
+        />
+      </Link>
+    </motion.div>
   );
 };
 
@@ -102,20 +109,48 @@ export default function NavBarElements({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  const navVariants = {
+    hidden: { y: -20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration: 0.5,
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { y: -20, opacity: 0 },
+    visible: { y: 0, opacity: 1 },
+  };
+
   return (
-    <nav className="fixed z-50 top-0 left-0 w-full bg-white/80 shadow-sm shadow-slate-400 backdrop-blur-md border-b border-gray-200">
+    <motion.nav
+      variants={navVariants}
+      initial="hidden"
+      animate="visible"
+      className="fixed z-50 top-0 left-0 w-full bg-white/90 backdrop-blur-lg border-b border-gray-200"
+    >
       <div className="max-w-7xl mx-auto px-6 flex justify-between items-center h-16">
-        <Link
-          href="/"
-          className="text-3xl font-bold tracking-tight text-gray-900 hover:text-indigo-600 transition-colors"
+        <motion.div
+          variants={itemVariants}
+          whileHover={{ scale: 1.05 }}
+          transition={{ type: "spring", stiffness: 300 }}
         >
-          VetHelper
-        </Link>
+          <Link
+            href="/"
+            className="text-3xl font-bold tracking-tight text-gray-900 hover:text-indigo-600 transition-colors"
+          >
+            VetHelper
+          </Link>
+        </motion.div>
 
         <div className="hidden md:flex items-center gap-8">
           {session ? (
             <>
-              <div className="flex gap-6">
+              <motion.div variants={itemVariants} className="flex gap-6">
                 {authLinks.map(({ href, label }) => (
                   <NavLink
                     key={href}
@@ -126,15 +161,25 @@ export default function NavBarElements({
                     {label}
                   </NavLink>
                 ))}
-              </div>
+              </motion.div>
 
-              <div className="flex items-center gap-4">
-                <Notification notifications={notifications} senders={senders} />
+              <motion.div
+                variants={itemVariants}
+                className="flex items-center gap-4"
+              >
+                <motion.div whileHover={{ scale: 1.05 }}>
+                  <Notification
+                    notifications={notifications}
+                    senders={senders}
+                  />
+                </motion.div>
 
                 <div className="relative profile-menu">
-                  <button
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
                     onClick={toggleProfileMenu}
-                    className="w-10 h-10 rounded-full overflow-hidden border-2 border-gray-200 hover:border-indigo-300 transition-colors"
+                    className="w-10 h-10 rounded-full overflow-hidden border-2 border-gray-200 hover:border-indigo-300 transition-colors shadow-md"
                     aria-label="Profile menu"
                   >
                     {user && (
@@ -146,48 +191,53 @@ export default function NavBarElements({
                         change={false}
                       />
                     )}
-                  </button>
+                  </motion.button>
 
-                  {isProfileMenuOpen && (
-                    <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200">
-                      <div className="absolute -top-1.5 right-3 w-3 h-3 bg-white transform rotate-45 border-t border-l border-gray-200"></div>
-                      {profileLinks.map(({ href, label }) => {
-                        const isActive = pathname.startsWith(href);
-                        return (
-                          <Link
-                            key={href}
-                            onClick={closeProfileMenu}
-                            href={href}
-                            className={`block px-4 py-2.5 transition-colors relative
-                              ${
-                                isActive
-                                  ? "text-indigo-600 bg-indigo-50"
-                                  : "text-gray-700 hover:bg-gray-50 hover:text-indigo-600"
-                              }`}
-                          >
-                            {label}
-                            {isActive && (
-                              <span className="absolute left-0 top-0 h-full w-1 bg-indigo-600 rounded-r"></span>
-                            )}
-                          </Link>
-                        );
-                      })}
-                      <button
-                        onClick={() => {
-                          HandleSignOut();
-                          closeProfileMenu();
-                        }}
-                        className="w-full text-left px-4 py-2.5 text-red-600 hover:bg-red-50 transition-colors border-t border-gray-100"
+                  <AnimatePresence>
+                    {isProfileMenuOpen && (
+                      <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        transition={{ duration: 0.2 }}
+                        className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-xl border border-gray-200"
                       >
-                        Вийти
-                      </button>
-                    </div>
-                  )}
+                        <div className="absolute -top-1.5 right-3 w-3 h-3 bg-white transform rotate-45 border-t border-l border-gray-200" />
+                        {profileLinks.map(({ href, label }, index) => {
+                          const isActive = pathname.startsWith(href);
+                          return (
+                            <motion.div
+                              key={href}
+                              initial={{ opacity: 0, x: -20 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ delay: index * 0.1 }}
+                              whileHover={{ x: 5 }}
+                            >
+                              {label}
+                              {isActive && (
+                                <span className="absolute left-0 top-0 h-full w-1 bg-indigo-600 rounded-r"></span>
+                              )}
+                            </motion.div>
+                          );
+                        })}
+                        <motion.button
+                          whileHover={{ backgroundColor: "#FEE2E2" }}
+                          onClick={() => {
+                            HandleSignOut();
+                            closeProfileMenu();
+                          }}
+                          className="w-full text-left px-4 py-2.5 text-red-600 transition-colors border-t border-gray-100"
+                        >
+                          Вийти
+                        </motion.button>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
-              </div>
+              </motion.div>
             </>
           ) : (
-            <div className="flex gap-4">
+            <motion.div variants={itemVariants} className="flex gap-4">
               {guestLinks.map(({ href, label }) => (
                 <NavLink
                   key={href}
@@ -198,10 +248,10 @@ export default function NavBarElements({
                   {label}
                 </NavLink>
               ))}
-            </div>
+            </motion.div>
           )}
         </div>
       </div>
-    </nav>
+    </motion.nav>
   );
 }
