@@ -3,6 +3,7 @@ import { auth } from "../../../../auth";
 import { prisma } from "../../../../prisma";
 import { PetInfo } from "@/components/profile/petInfo";
 import { User } from "@/lib/interface";
+import { getPets } from "@/lib/service/user";
 type Params = Promise<{ id: string }>;
 export default async function page({ params }: { params: Params }) {
   const resolvedParams = await params;
@@ -13,6 +14,7 @@ export default async function page({ params }: { params: Params }) {
   if (!session?.user?.email) {
     throw new Error("User not authenticated");
   }
+  const pets = await getPets(user?.id || "");
 
   const appointment = await prisma.appointment.findMany({
     where: {
@@ -32,8 +34,13 @@ export default async function page({ params }: { params: Params }) {
         clinics={clinics}
       />
 
-      <div className="w-[400px] rounded-2xl  max-h-[72vh]  bg-white  flex  flex-col justify-top">
-        <PetInfo userId={user?.id || ""} />
+      <div className="w-[350px] rounded-2xl  max-h-[72vh]  bg-white  flex  flex-col justify-top">
+        <PetInfo
+          userId={user?.id || ""}
+          pets={pets}
+          session={session}
+          user={user || ({} as User)}
+        />
       </div>
     </div>
   );
