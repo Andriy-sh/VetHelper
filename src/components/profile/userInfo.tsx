@@ -9,6 +9,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "../ui/accordion";
+import { motion } from "framer-motion";
 
 interface UserInfoProps {
   user: User;
@@ -23,8 +24,19 @@ export default function UserInfo({
   clinics,
 }: UserInfoProps) {
   return (
-    <div className="flex-1 flex flex-col items-center max-w-5xl justify-center bg-gray-50 ">
-      <div className="w-full   bg-white rounded-3xl shadow-lg overflow-hidden">
+    <motion.div
+      className="flex-1 flex flex-col items-center max-w-5xl justify-center bg-gray-50"
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      <motion.div
+        className="w-full bg-white rounded-3xl shadow-lg overflow-hidden"
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.1 }}
+      >
+        {/* Заголовок профілю */}
         <div className="bg-indigo-600 p-8 text-white">
           <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
             <div className="relative w-32 h-32 rounded-full border-4 border-white shadow-lg">
@@ -45,8 +57,15 @@ export default function UserInfo({
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 ">
-          <div className="lg:col-span-1 bg-gray-50 p-6 rounded-xl border border-gray-200">
+        {/* Контент */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Контактна інформація */}
+          <motion.div
+            className="lg:col-span-1 bg-gray-50 p-6 rounded-xl border border-gray-200"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
             <h2 className="text-2xl font-bold text-gray-800 mb-6">
               Контактна інформація
             </h2>
@@ -92,10 +111,21 @@ export default function UserInfo({
               <EditIcon className="h-5 w-5" />
               Редагувати профіль
             </Link>
-          </div>
+          </motion.div>
 
-          <div className="lg:col-span-2">
-            <div className="bg-white p-6 rounded-xl border border-gray-200">
+          {/* Блок з відвідуваннями */}
+          <motion.div
+            className="lg:col-span-2"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+          >
+            <motion.div
+              className="bg-white p-6 rounded-xl border border-gray-200"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+            >
               <h2 className="text-2xl font-bold text-gray-800 mb-6">
                 Ваші відвідування
               </h2>
@@ -170,11 +200,11 @@ export default function UserInfo({
                   </AccordionItem>
                 </Accordion>
               )}
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }
 

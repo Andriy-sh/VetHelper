@@ -6,7 +6,14 @@ import Image from "next/image";
 export default function Hero() {
   return (
     <div className="min-h-screen justify-center flex items-center bg-gradient-to-b from-white to-slate-300 ">
-      <div className="grid grid-cols-3 grid-rows-[1fr,2fr,2fr] w-[1000px] h-[800px]">
+      <div className="grid grid-cols-3 grid-rows-[1fr,2fr,2.5fr] w-[1000px] h-[800px]">
+        <Image
+          alt=""
+          src={"/cloudcat.png"}
+          width={300}
+          height={300}
+          className="absolute top-20 left-10"
+        />
         <motion.div
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -59,9 +66,15 @@ export default function Hero() {
           initial={{ scale: 0, opacity: 0, y: 20 }}
           animate={{ scale: 1, opacity: 1, y: 0 }}
           transition={{ duration: 0.3 }}
-          className="flex justify-center items-start"
+          className="flex justify-center items-start rounded-full"
         >
-          <Image width={200} height={200} alt="dog" src={"/hero_left.png"} />
+          <Image
+            width={300}
+            height={300}
+            alt="dog"
+            src={"/mavik.png"}
+            className="rounded-full  w-64 h-64 object-contain"
+          />
         </motion.div>
         <motion.div
           initial={{ scale: 0, opacity: 0, y: 20 }}
@@ -69,7 +82,13 @@ export default function Hero() {
           transition={{ duration: 0.3 }}
           className="flex justify-center items-start"
         >
-          <Image width={200} height={200} alt="dog" src={"/hero_right.png"} />
+          <Image
+            width={300}
+            height={300}
+            alt="dog"
+            src={"/nanochka.png"}
+            className="rounded-full   w-64 h-64 object-contain"
+          />
         </motion.div>
       </div>
     </div>

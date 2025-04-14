@@ -213,10 +213,20 @@ export default function NavBarElements({
                               transition={{ delay: index * 0.1 }}
                               whileHover={{ x: 5 }}
                             >
-                              {label}
-                              {isActive && (
-                                <span className="absolute left-0 top-0 h-full w-1 bg-indigo-600 rounded-r"></span>
-                              )}
+                              <Link
+                                href={href}
+                                onClick={closeProfileMenu}
+                                className={`block px-4 py-2.5 ${
+                                  isActive
+                                    ? "text-indigo-600"
+                                    : "text-gray-700 hover:text-indigo-600"
+                                } transition-colors relative`}
+                              >
+                                {label}
+                                {isActive && (
+                                  <span className="absolute left-0 top-0 h-full w-1 bg-indigo-600 rounded-r" />
+                                )}
+                              </Link>
                             </motion.div>
                           );
                         })}
