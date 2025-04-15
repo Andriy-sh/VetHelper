@@ -28,22 +28,18 @@ export default function Info({
   appointments: Appointment[];
   pets: Pet[];
 }) {
-
   const totalAppointments = appointments.length;
   const uniqueUsers = new Set(appointments.map((app) => app.userId)).size;
   const uniquePets = new Set(appointments.map((app) => app.petId)).size;
   const [clinicData, setClinicData] = useState(clinic);
 
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-
       transition={{ duration: 0.4 }}
       className="space-y-8 max-w-6xl mx-auto px-4 py-8"
     >
-      {/* Header Card */}
       <motion.div
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
@@ -79,7 +75,6 @@ export default function Info({
         </div>
       </motion.div>
 
-      {/* Stats Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <StatCard
           icon={<CalendarDays className="text-blue-500" size={24} />}
