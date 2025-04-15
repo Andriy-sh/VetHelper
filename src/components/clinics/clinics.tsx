@@ -85,6 +85,7 @@ export default function Clinics({
               Клінік не знайдено в місті {user.city}, виберіть інше місто в
               фільтрі
             </p>
+
           </motion.div>
         ) : (
           <motion.div layout>
