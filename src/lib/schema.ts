@@ -157,3 +157,13 @@ export const clinicNewSchema = z.object({
   categoryId: z.string().optional(),
 });
 export type ClinicNewSchema = z.infer<typeof clinicNewSchema>;
+
+export const clinicSchema = z.object({
+  name: z.string(),
+  address: z.string(),
+  phone: z.string().optional(),
+  website: z.string().optional(),
+  city: z.string(),
+  description: z.string(),
+});
+export type ClinicSchema = z.infer<typeof clinicSchema>;

@@ -81,7 +81,10 @@ export default function Clinics({
             exit={{ opacity: 0, y: -20 }}
             className="text-center py-10 text-gray-500"
           >
-            <p>Клінік не знайдено</p>
+            <p>
+              Клінік не знайдено в місті {user.city}, виберіть інше місто в
+              фільтрі
+            </p>
           </motion.div>
         ) : (
           <motion.div layout>

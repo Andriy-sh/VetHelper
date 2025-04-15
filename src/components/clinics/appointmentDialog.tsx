@@ -126,7 +126,12 @@ export function AppointmentDialog({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline">Записатися на прийом</Button>
+        <Button
+          className="text-black hover:text-slate-800 hover:scale-105 transition duration-300 ease-in-out"
+          variant="outline"
+        >
+          Записатися на прийом
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>

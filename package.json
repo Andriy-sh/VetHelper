@@ -26,6 +26,7 @@
     "@radix-ui/react-popover": "^1.1.6",
     "@radix-ui/react-select": "^2.1.6",
     "@radix-ui/react-slot": "^1.1.2",
+    "@react-input/mask": "^2.0.4",
     "@types/bcrypt": "^5.0.2",
     "@types/google.maps": "^3.58.1",
     "axios": "^1.8.4",
