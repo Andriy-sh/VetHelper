@@ -71,7 +71,9 @@ export default function Info({
           />
         </motion.div>
         <div className="absolute top-0 right-0">
-          <EditClinicDialog clinic={clinic} setClinicData={setClinicData} />
+          {user.clinicId === clinic.id && (
+            <EditClinicDialog clinic={clinic} setClinicData={setClinicData} />
+          )}
         </div>
       </motion.div>
 
