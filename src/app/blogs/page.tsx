@@ -16,9 +16,9 @@ export default async function Page() {
   }
   const blogs = await prisma.blogPost.findMany({ include: { clinic: true } });
   return (
-    <h1>
+    <div className="min-h-screen  bg-gradient-to-b from-white to-slate-200">
       {user.role === "VETERINARIAN" && <AddPostButton user={user} />}
       <BlogPostCard blogs={blogs} />
-    </h1>
+    </div>
   );
 }

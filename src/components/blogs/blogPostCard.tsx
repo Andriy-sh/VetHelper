@@ -1,13 +1,20 @@
+"use client";
 import { Blogs } from "@/lib/interface";
 import Image from "next/image";
+import { motion } from "framer-motion";
+import Link from "next/link";
 
 export default function BlogPostCard({ blogs }: { blogs: Blogs[] }) {
   return (
-    <div className="h-screen bg-gradient-to-b from-white to-slate-200 grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-      {blogs.map((blog) => (
-        <div
+    <div className=" grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 p-6">
+      {blogs.map((blog, index) => (
+        <motion.div
           key={blog.id}
-          className="max-w-md rounded-2xl overflow-hidden shadow-lg border border-gray-300 bg-white transition transform hover:-translate-y-1 hover:shadow-xl"
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: index * 0.1, duration: 0.5, type: "spring" }}
+          whileHover={{ scale: 1.03 }}
+          className="max-w-md rounded-2xl overflow-hidden shadow-lg border border-gray-300 bg-white"
         >
           <div className="relative w-full h-56">
             <Image
@@ -37,13 +44,16 @@ export default function BlogPostCard({ blogs }: { blogs: Blogs[] }) {
                 <span className="text-red-500 font-semibold">Чорновик</span>
               )}
             </div>
-            <div className="mt-4">
-              <button className="w-full px-5 py-2.5 bg-blue-600 text-white rounded-xl font-semibold text-lg hover:bg-blue-700 transition duration-300 ease-in-out shadow-md hover:shadow-lg">
+            <motion.div whileTap={{ scale: 0.95 }} className="mt-4">
+              <Link
+                href={`/blogs/${blog.id}`}
+                className="w-full px-5 py-2.5 bg-blue-600 text-white rounded-xl font-semibold text-lg hover:bg-blue-700 transition duration-300 ease-in-out shadow-md hover:shadow-lg"
+              >
                 Читати більше
-              </button>
-            </div>
+              </Link>
+            </motion.div>
           </div>
-        </div>
+        </motion.div>
       ))}
     </div>
   );
