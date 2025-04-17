@@ -271,6 +271,13 @@ export default function PetInfo({
                           {new Date(vac.date).toLocaleDateString()}
                         </p>
                         <p className="text-sm text-gray-600 flex items-center">
+                          <FaCalendarAlt className="mr-2 text-yellow-500" />
+                          <strong>Наступна дата вакцинації:</strong>{" "}
+                          {vac.nextDoseDue
+                            ? new Date(vac.nextDoseDue).toLocaleDateString()
+                            : "Не назначено"}
+                        </p>
+                        <p className="text-sm text-gray-600 flex items-center">
                           <FaMapMarkerAlt className="mr-2 text-pink-500" />
                           <strong>Клініка:</strong> {vac?.clinic?.name}
                         </p>

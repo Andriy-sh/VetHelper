@@ -159,42 +159,47 @@ export default function UserInfo({
                     </AccordionTrigger>
                     <AccordionContent>
                       <div className="space-y-4 mt-4">
-                        {appointment.map((appointment) => (
-                          <Link
-                            key={appointment.id}
-                            href={`/clinics/${appointment.clinicId}/appointment/${appointment.id}`}
-                          >
-                            <div className="p-6 bg-gray-50 rounded-lg border border-gray-200 hover:border-indigo-300 transition-colors group">
-                              <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                                <div>
-                                  <h3 className="text-lg font-semibold text-gray-800 group-hover:text-indigo-600 transition-colors">
-                                    {clinics.find(
-                                      (clinic) =>
-                                        clinic.id === appointment.clinicId
-                                    )?.name || "Unknown Clinic"}
-                                  </h3>
-                                  <p className="text-gray-600 mt-1">
-                                    <ClockIcon className="inline h-4 w-4 mr-1" />
-                                    {appointment.time}
-                                  </p>
+                        {appointment
+                          .filter((appt) => appt.status !== "COMPLETED")
+                          .map((appointment) => (
+                            <Link
+                              key={appointment.id}
+                              href={`/clinics/${appointment.clinicId}/appointment/${appointment.id}`}
+                            >
+                              <div className="p-6 bg-gray-50 rounded-lg border border-gray-200 hover:border-indigo-300 transition-colors group">
+                                <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                                  <div>
+                                    <h3 className="text-lg font-semibold text-gray-800 group-hover:text-indigo-600 transition-colors">
+                                      {clinics.find(
+                                        (clinic) =>
+                                          clinic.id === appointment.clinicId
+                                      )?.name || "Unknown Clinic"}
+                                    </h3>
+                                    <p className="text-gray-600 mt-1 flex items-center gap-1">
+                                      <ClockIcon className="h-4 w-4 text-gray-500" />
+                                      {new Date(
+                                        appointment.date
+                                      ).toLocaleDateString("uk-UA")}{" "}
+                                      о {appointment.time}
+                                    </p>
+                                  </div>
+                                  <div className="flex items-center gap-2">
+                                    <span className="px-3 py-1 bg-indigo-100 text-indigo-800 text-sm rounded-full">
+                                      {appointment.status || "Заплановано"}
+                                    </span>
+                                    <ChevronRightIcon className="h-5 w-5 text-gray-400 group-hover:text-indigo-600 transition-colors" />
+                                  </div>
                                 </div>
-                                <div className="flex items-center gap-2">
-                                  <span className="px-3 py-1 bg-indigo-100 text-indigo-800 text-sm rounded-full">
-                                    {appointment.status || "Заплановано"}
-                                  </span>
-                                  <ChevronRightIcon className="h-5 w-5 text-gray-400 group-hover:text-indigo-600 transition-colors" />
-                                </div>
+                                {appointment.notes && (
+                                  <div className="mt-3 p-3 bg-white rounded border border-gray-100">
+                                    <p className="text-gray-700">
+                                      Опис: {appointment.notes}
+                                    </p>
+                                  </div>
+                                )}
                               </div>
-                              {appointment.notes && (
-                                <div className="mt-3 p-3 bg-white rounded border border-gray-100">
-                                  <p className="text-gray-700">
-                                    {appointment.notes}
-                                  </p>
-                                </div>
-                              )}
-                            </div>
-                          </Link>
-                        ))}
+                            </Link>
+                          ))}
                       </div>
                     </AccordionContent>
                   </AccordionItem>
