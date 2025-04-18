@@ -1,6 +1,7 @@
 import PetsPage from "@/components/pets/petsPage";
 import { auth } from "../../../auth";
 import { prisma } from "../../../prisma";
+export const dynamic = "force-dynamic";
 
 export default async function page() {
   const session = await auth();

@@ -25,7 +25,7 @@ export default function PetsPage({ pets }: { pets: Pet[] }) {
   const handleDelete = async (petId: string) => {
     try {
       await deletePet(petId);
-      setPetsList(petsList.filter((pet) => pet.id !== petId));
+      setPetsList((prevPets) => prevPets.filter((pet) => pet.id !== petId));
     } catch (error) {
       console.error("Помилка при видаленні улюбленця:", error);
     }

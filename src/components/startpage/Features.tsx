@@ -44,23 +44,25 @@ export default function Features() {
       },
     },
   ];
+
   const { ref, inView } = useInViewOnce();
+
   return (
-    <div className="h-screen flex flex-col justify-center items-center bg-gradient-to-b from-slate-300 to-slate-400">
-      <div className="w-[80%] px-16 py-28">
+    <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-b from-slate-300 to-slate-400 px-4 py-16 sm:px-6 lg:px-16">
+      <div className="w-full max-w-7xl">
         <motion.div
           ref={ref}
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-16 px-4"
         >
           <motion.p
             ref={ref}
             initial={{ opacity: 0, y: 20 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.4 }}
-            className="text-lg text-gray-600 font-semibold"
+            className="text-md sm:text-lg text-gray-600 font-semibold"
           >
             Можливості
           </motion.p>
@@ -69,7 +71,7 @@ export default function Features() {
             initial={{ opacity: 0, y: 20 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.3 }}
-            className="font-bold text-5xl mt-4 text-gray-800"
+            className="font-bold text-3xl sm:text-4xl lg:text-5xl mt-4 text-gray-800"
           >
             Основні Функції VetHelper
           </motion.h1>
@@ -78,13 +80,13 @@ export default function Features() {
             initial={{ opacity: 0, y: 20 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.4 }}
-            className="text-xl text-gray-600 mt-4 max-w-2xl mx-auto"
+            className="text-base sm:text-lg lg:text-xl text-gray-600 mt-4 max-w-2xl mx-auto"
           >
             Зручний доступ до ветеринарних послуг на будь-якому пристрої
           </motion.p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 px-4">
           {features.map((feature, index) => {
             const Icon = feature.icon;
             return (
@@ -95,18 +97,22 @@ export default function Features() {
                 transition={{ duration: 0.5 }}
                 viewport={{ once: false }}
                 exit={{ opacity: 0, y: 40 }}
-                className="bg-white rounded-2xl shadow-lg p-8 text-center hover:shadow-xl transition-all group"
+                className="bg-white rounded-2xl shadow-lg p-6 sm:p-8 text-center hover:shadow-xl transition-all group"
               >
                 <motion.div
                   whileHover={{ scale: 1.1, rotate: 5 }}
-                  className={`${feature.color.bg} w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6 transition-transform`}
+                  className={`${feature.color.bg} w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-6 transition-transform`}
                 >
-                  <Icon className={`w-8 h-8 ${feature.color.text}`} />
+                  <Icon
+                    className={`w-6 h-6 sm:w-8 sm:h-8 ${feature.color.text}`}
+                  />
                 </motion.div>
-                <h2 className="font-bold text-2xl text-gray-800 mb-4">
+                <h2 className="font-bold text-xl sm:text-2xl text-gray-800 mb-2 sm:mb-4">
                   {feature.title}
                 </h2>
-                <p className="text-gray-600 mb-6">{feature.description}</p>
+                <p className="text-sm sm:text-base text-gray-600">
+                  {feature.description}
+                </p>
               </motion.div>
             );
           })}
