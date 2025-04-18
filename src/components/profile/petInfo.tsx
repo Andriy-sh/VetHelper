@@ -26,23 +26,23 @@ export const PetInfo = ({
   const isOwner = user.id === profileId;
 
   return (
-    <div className="space-y-4 ">
+    <div className="space-y-4">
       <div className="flex justify-center items-center">
         <h2 className="text-3xl font-bold text-center flex space-x-4">
           Улюбленці
-          <span className=" ml-2 flex justify-center items-center text-3xl font-bold w-10 h-10 bg-red-400 rounded-full">
+          <span className="ml-2 flex justify-center items-center text-3xl font-bold w-10 h-10 bg-red-400 rounded-full">
             <span>{pets.length}</span>
           </span>
         </h2>
       </div>
 
       <hr className="my-2" />
-      <div className="flex flex-col justify-center overflow-auto ">
+      <div className="flex flex-col justify-center overflow-auto">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 2 }}
-          className=" mt-5 space-y-4 max-h-[64vh] overflow-x-hidden "
+          className="mt-5 space-y-4 max-h-[64vh] overflow-x-hidden"
         >
           {pets.length > 0 ? (
             pets.map((pet, inx) => (
@@ -60,7 +60,7 @@ export const PetInfo = ({
                   href={`/pets/${pet.id}`}
                   className="flex items-center gap-4"
                 >
-                  <div className="relative w-20 h-20">
+                  <div className="relative w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28">
                     {pet.image ? (
                       <Image
                         width={80}
@@ -91,6 +91,17 @@ export const PetInfo = ({
           )}
         </motion.div>
       </div>
+
+      {/* Адаптивна кнопка для малих екранів */}
+      <div className="lg:hidden flex justify-center">
+        <Link
+          href="/pets"
+          className="flex items-center gap-2 px-6 py-2 bg-blue-600 text-white rounded-full shadow-md hover:bg-blue-700 transition"
+        >
+          Показати всіх тваринок
+        </Link>
+      </div>
+
       {isOwner && (
         <motion.div
           initial={{ opacity: 0, y: 20 }}

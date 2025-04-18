@@ -3,6 +3,7 @@ import { Clinic, ClinicFAQ, User } from "@/lib/interface";
 import { motion } from "framer-motion";
 import AddingClinicFAQ from "../addingClinicFAQ";
 import { useState } from "react";
+
 export default function Faq({
   clinic,
   user,
@@ -13,6 +14,7 @@ export default function Faq({
   FAQ: ClinicFAQ[];
 }) {
   const [showAll, setShowAll] = useState(false);
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -29,6 +31,7 @@ export default function Faq({
           <AddingClinicFAQ clinicId={clinic.id} />
         </motion.div>
       )}
+
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}

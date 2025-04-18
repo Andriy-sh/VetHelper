@@ -6,7 +6,7 @@ import Link from "next/link";
 
 export default function BlogPostCard({ blogs }: { blogs: Blogs[] }) {
   return (
-    <div className=" grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 p-6">
+    <div className="grid gap-8 p-4 sm:p-6 lg:p-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
       {blogs.map((blog, index) => (
         <motion.div
           key={blog.id}
@@ -16,7 +16,7 @@ export default function BlogPostCard({ blogs }: { blogs: Blogs[] }) {
           whileHover={{ scale: 1.03 }}
           className="max-w-md rounded-2xl overflow-hidden shadow-lg border border-gray-300 bg-white"
         >
-          <div className="relative w-full h-56">
+          <div className="relative w-full h-56 sm:h-64 lg:h-72">
             <Image
               fill
               src={`https://res.cloudinary.com/dddgmovz2/image/upload/w_400,h_400,c_thumb/${blog.imageId}`}
@@ -24,11 +24,11 @@ export default function BlogPostCard({ blogs }: { blogs: Blogs[] }) {
               className="rounded-t-2xl object-cover"
             />
           </div>
-          <div className="p-6">
+          <div className="p-4 sm:p-6">
             <p className="text-gray-500 text-sm font-medium uppercase tracking-wide mb-2">
               {blog.clinic.name}
             </p>
-            <h2 className="text-2xl font-bold text-gray-900 mb-3 line-clamp-2">
+            <h2 className="text-xl sm:text-2xl font-semibold text-gray-900 mb-3 line-clamp-2">
               {blog.title}
             </h2>
             <p className="text-gray-600 text-sm line-clamp-3 mb-4">

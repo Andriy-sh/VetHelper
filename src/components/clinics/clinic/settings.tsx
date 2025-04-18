@@ -27,6 +27,7 @@ import { editClinic } from "@/lib/actions/editClinic";
 import { Textarea } from "@/components/ui/textarea";
 import { Settings } from "lucide-react";
 import { InputMask } from "@react-input/mask";
+
 export default function EditClinicDialog({
   clinic,
   setClinicData,
@@ -36,6 +37,7 @@ export default function EditClinicDialog({
 }) {
   const [name, setName] = useState(clinic.name);
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   const form = useForm<ClinicSchema>({
@@ -64,7 +66,7 @@ export default function EditClinicDialog({
   }, [clinic, form]);
 
   const handleClinicSubmit = async (data: ClinicSchema) => {
-    // Додаємо "вул." до адреси, якщо ще не додано
+    setLoading(true); // Set loading state
     const formattedAddress = data.address.startsWith("вул.")
       ? data.address
       : `вул. ${data.address}`;
@@ -84,11 +86,18 @@ export default function EditClinicDialog({
     formData.append("city", data.city);
     formData.append("description", data.description || "");
 
-    await editClinic(formData);
-    setOpen(false);
-    setName(data.name);
-    setClinicData(updateData);
-    router.refresh();
+    try {
+      await editClinic(formData);
+      setOpen(false);
+      setName(data.name);
+      setClinicData(updateData);
+      router.refresh();
+    } catch (error) {
+      // Handle error
+      console.error("Error updating clinic:", error);
+    } finally {
+      setLoading(false); // Reset loading state
+    }
   };
 
   return (
@@ -209,8 +218,9 @@ export default function EditClinicDialog({
             <Button
               type="submit"
               className="w-full bg-blue-500 hover:bg-blue-600"
+              disabled={loading} // Disable button when loading
             >
-              Оновити дані клініки
+              {loading ? "Оновлення..." : "Оновити дані клініки"}
             </Button>
           </form>
         </Form>

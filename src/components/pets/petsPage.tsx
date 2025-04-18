@@ -35,7 +35,7 @@ export default function PetsPage({ pets }: { pets: Pet[] }) {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="h-screen bg-gradient-to-b from-white to-slate-200 p-6"
+      className="min-h-screen bg-gradient-to-b from-white to-slate-200 p-4 sm:p-6 lg:p-8"
     >
       <motion.div
         initial={{ y: -20, opacity: 0 }}
@@ -43,7 +43,9 @@ export default function PetsPage({ pets }: { pets: Pet[] }) {
         transition={{ delay: 0.2 }}
         className="flex justify-between items-center mb-6"
       >
-        <h1 className="text-3xl font-bold text-gray-800">Ваші улюбленці</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-800">
+          Ваші улюбленці
+        </h1>
         <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
           <Link
             href="/adding-pet"
@@ -79,7 +81,7 @@ export default function PetsPage({ pets }: { pets: Pet[] }) {
                 exit={{ opacity: 0, y: -50 }}
                 transition={{ delay: index * 0.1 }}
                 whileHover={{ y: -8, scale: 1.02 }}
-                className="relative group rounded-3xl shadow-3xl overflow-hidden border-t-4 border-blue-500 bg-white"
+                className="relative group rounded-3xl shadow-xl overflow-hidden border-t-4 border-blue-500 bg-white"
               >
                 <Link href={`/pets/${pet.id}`} className="block h-full">
                   <motion.div

@@ -3,6 +3,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { Clinic, ClinicImages, User } from "@/lib/interface";
 import AddPostButton from "../addingClinicImages";
+
 export default function Gallery({
   clinic,
   user,
@@ -29,7 +30,7 @@ export default function Gallery({
       </motion.div>
 
       <motion.div
-        className="grid grid-cols-1 md:grid-cols-3 gap-6"
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.4 }}

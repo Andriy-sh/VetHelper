@@ -40,6 +40,7 @@ export default function Info({
       transition={{ duration: 0.4 }}
       className="space-y-8 min-h-screen max-w-6xl mx-auto px-4 py-8"
     >
+      {/* Clinic Header Section */}
       <motion.div
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
@@ -77,6 +78,7 @@ export default function Info({
         </div>
       </motion.div>
 
+      {/* Statistics Cards Section */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <StatCard
           icon={<CalendarDays className="text-blue-500" size={24} />}
@@ -95,7 +97,9 @@ export default function Info({
         />
       </div>
 
+      {/* Contact Information & Metadata Sections */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Contact Info */}
         <motion.div
           initial={{ opacity: 0, x: -10 }}
           animate={{ opacity: 1, x: 0 }}
@@ -149,6 +153,7 @@ export default function Info({
           </div>
         </motion.div>
 
+        {/* Metadata Info */}
         <motion.div
           initial={{ opacity: 0, x: 10 }}
           animate={{ opacity: 1, x: 0 }}

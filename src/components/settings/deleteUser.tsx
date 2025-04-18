@@ -1,6 +1,8 @@
 "use client";
 
+import { useState } from "react";
 import { deleteUser } from "@/lib/actions/deleteUser";
+import { HandleSignOut } from "../auth/SignOut";
 import { Button } from "../ui/button";
 import {
   AlertDialog,
@@ -13,7 +15,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "../ui/alert-dialog";
-import { HandleSignOut } from "../auth/SignOut";
+
 export default function DeleteUser({
   userId,
   children,
@@ -21,17 +23,23 @@ export default function DeleteUser({
   userId: string;
   children?: React.ReactNode;
 }) {
+  const [loading, setLoading] = useState(false);
+
   const handleDelete = async () => {
+    setLoading(true);
     try {
       await deleteUser(userId);
       await HandleSignOut();
     } catch (error) {
       console.error("Error deleting user:", error);
+    } finally {
+      setLoading(false);
     }
   };
+
   return (
     <div>
-      {children}
+      {children && <div className="mb-2">{children}</div>}
       <AlertDialog>
         <AlertDialogTrigger asChild>
           <Button variant="destructive">Видалити</Button>
@@ -43,13 +51,17 @@ export default function DeleteUser({
             </AlertDialogTitle>
             <AlertDialogDescription>
               Цю дію не можна скасувати. Це назавжди видалить ваш аккаунт та всі
-              пов`язані дані з нашої бази даних. Якщо ви впевнені, натисніть
+              пов&aspos;язані дані з нашої бази даних.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Ні</AlertDialogCancel>
-            <AlertDialogAction onClick={() => handleDelete()}>
-              Так, видалити
+            <AlertDialogCancel disabled={loading}>Ні</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleDelete}
+              disabled={loading}
+              className="bg-red-600 hover:bg-red-700"
+            >
+              {loading ? "Видалення..." : "Так, видалити"}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

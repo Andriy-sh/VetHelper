@@ -1,6 +1,7 @@
 "use client";
 import { Clinic } from "@/lib/interface";
 import { motion } from "framer-motion";
+
 export default function Contact({ clinic }: { clinic: Clinic }) {
   return (
     <motion.div
@@ -28,7 +29,7 @@ export default function Contact({ clinic }: { clinic: Clinic }) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.3, delay: 0.3 }}
-          className="flex items-center p-3 bg-gray-50 rounded-lg"
+          className="flex items-center p-4 bg-gray-50 rounded-lg shadow-sm"
         >
           <span className="text-blue-600 mr-2">📍</span>
           <div>
@@ -49,7 +50,7 @@ export default function Contact({ clinic }: { clinic: Clinic }) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.3, delay: 0.4 }}
-          className="flex items-center p-3 bg-gray-50 rounded-lg"
+          className="flex items-center p-4 bg-gray-50 rounded-lg shadow-sm"
         >
           <span className="text-blue-600 mr-2">📞</span>
           <div>
@@ -69,7 +70,7 @@ export default function Contact({ clinic }: { clinic: Clinic }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.3, delay: 0.6 }}
-            className="flex items-center p-3 bg-gray-50 rounded-lg"
+            className="flex items-center p-4 bg-gray-50 rounded-lg shadow-sm"
           >
             <span className="text-blue-600 mr-2">🌐</span>
             <div>
@@ -89,7 +90,7 @@ export default function Contact({ clinic }: { clinic: Clinic }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.3, delay: 0.6 }}
-            className="flex items-center p-3 bg-gray-50 rounded-lg"
+            className="flex items-center p-4 bg-gray-50 rounded-lg shadow-sm"
           >
             <span className="text-blue-600 mr-2">🌐</span>
             <div>

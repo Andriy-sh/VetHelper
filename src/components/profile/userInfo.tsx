@@ -25,7 +25,7 @@ export default function UserInfo({
 }: UserInfoProps) {
   return (
     <motion.div
-      className="flex-1 flex flex-col items-center max-w-5xl justify-center bg-gray-50"
+      className="flex-1 flex flex-col items-center max-w-5xl justify-center bg-gray-50 p-4"
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
@@ -36,7 +36,6 @@ export default function UserInfo({
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.1 }}
       >
-        {/* Заголовок профілю */}
         <div className="bg-indigo-600 p-8 text-white">
           <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
             <div className="relative w-32 h-32 rounded-full border-4 border-white shadow-lg">
@@ -49,7 +48,7 @@ export default function UserInfo({
               />
             </div>
             <div className="text-center md:text-left">
-              <h1 className="text-4xl font-bold">{user.name || "Guest"}</h1>
+              <h1 className="text-3xl font-bold">{user.name || "Guest"}</h1>
               <p className="text-indigo-100 text-xl mt-2">
                 {user.email || "No email available"}
               </p>
@@ -57,9 +56,7 @@ export default function UserInfo({
           </div>
         </div>
 
-        {/* Контент */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Контактна інформація */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <motion.div
             className="lg:col-span-1 bg-gray-50 p-6 rounded-xl border border-gray-200"
             initial={{ opacity: 0, y: 30 }}
@@ -113,7 +110,6 @@ export default function UserInfo({
             </Link>
           </motion.div>
 
-          {/* Блок з відвідуваннями */}
           <motion.div
             className="lg:col-span-2"
             initial={{ opacity: 0, y: 30 }}

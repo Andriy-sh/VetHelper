@@ -30,6 +30,7 @@ export default function News({
       >
         Новини та акції
       </motion.h2>
+
       {clinic.id === user.clinicId && (
         <motion.div
           initial={{ opacity: 0, y: 10 }}
@@ -40,12 +41,13 @@ export default function News({
           <AddingClinicNews clinicId={clinic.id} category={newsCategory} />
         </motion.div>
       )}
+
       {clinicNews.length > 0 ? (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.3 }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
         >
           {clinicNews.map((newsItem, index) => (
             <motion.div
@@ -68,6 +70,7 @@ export default function News({
                 >
                   {newsItem.title}
                 </motion.h3>
+
                 <motion.p
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
@@ -76,6 +79,7 @@ export default function News({
                 >
                   {newsItem.content}
                 </motion.p>
+
                 {newsItem.imageUrl && (
                   <motion.div
                     initial={{ opacity: 0, scale: 0.95 }}
@@ -96,6 +100,7 @@ export default function News({
                     />
                   </motion.div>
                 )}
+
                 <motion.p
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
@@ -104,13 +109,14 @@ export default function News({
                 >
                   {newsItem?.category?.name}
                 </motion.p>
+
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.3, delay: index * 0.1 + 0.5 }}
                   className="text-gray-500 text-sm mt-2 italic"
                 >
-                  {new Date(newsItem.createdAt).toLocaleDateString()}
+                  {new Date(newsItem.createdAt).toLocaleDateString("uk-UA")}
                 </motion.div>
               </motion.div>
             </motion.div>

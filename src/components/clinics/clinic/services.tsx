@@ -39,7 +39,7 @@ export default function Services({
         </motion.div>
       )}
       {clinicServices.length > 0 ? (
-        <motion.div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <motion.div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {clinicServices.map((service, index) => (
             <motion.div
               key={service.id}
@@ -84,7 +84,12 @@ export default function Services({
                   className="text-gray-800 mb-4"
                 >
                   <strong>Ціна: </strong>
-                  {service.price ? `$${service.price}` : "Не вказано"}
+                  {service.price
+                    ? new Intl.NumberFormat("uk-UA", {
+                        style: "currency",
+                        currency: "UAH",
+                      }).format(service.price)
+                    : "Не вказано"}
                 </motion.div>
                 <motion.div
                   initial={{ opacity: 0 }}
@@ -116,7 +121,7 @@ export default function Services({
                     {service.name}
                   </p>
                   <p className="text-sm text-gray-500">
-                    {new Date(service.createdAt).toLocaleDateString()}
+                    {new Date(service.createdAt).toLocaleDateString("uk-UA")}
                   </p>
                 </div>
               </motion.div>

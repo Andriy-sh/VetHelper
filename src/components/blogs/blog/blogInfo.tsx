@@ -37,17 +37,21 @@ export default function BlogInfo({ blog, user }: { blog: Blogs; user: User }) {
           height={400}
           src={`https://res.cloudinary.com/dddgmovz2/image/upload/w_800,h_400,c_thumb/${blog.imageId}`}
           alt={blog.title}
-          className="w-full h-64 object-cover"
+          className="w-full h-64 sm:h-72 md:h-80 lg:h-96 object-cover"
         />
       )}
       <div className="p-6">
-        <h1 className="text-2xl font-bold text-gray-900 mb-4">{blog.title}</h1>
-        <p className="text-gray-500 text-sm">
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">
+          {blog.title}
+        </h1>
+        <p className="text-gray-500 text-sm sm:text-base">
           Опубліковано: {new Date(blog.createdAt).toLocaleDateString()}
         </p>
-        <p className="text-gray-700 text-lg leading-relaxed">{blog.content}</p>
+        <p className="text-gray-700 text-lg sm:text-xl leading-relaxed mt-4">
+          {blog.content}
+        </p>
         <div className="mt-6 border-t pt-4">
-          <h2 className="text-lg font-semibold text-gray-800">
+          <h2 className="text-lg sm:text-xl font-semibold text-gray-800">
             Інформація про клініку
           </h2>
           <p className="text-gray-600">Назва: {blog.clinic.name}</p>
@@ -78,7 +82,9 @@ export default function BlogInfo({ blog, user }: { blog: Blogs; user: User }) {
         </div>
 
         <div className="mt-6 border-t pt-4">
-          <h2 className="text-lg font-semibold text-gray-800">Коментарі</h2>
+          <h2 className="text-lg sm:text-xl font-semibold text-gray-800">
+            Коментарі
+          </h2>
           <textarea
             className="w-full border p-2 rounded-lg mt-2"
             placeholder="Напишіть коментар..."
