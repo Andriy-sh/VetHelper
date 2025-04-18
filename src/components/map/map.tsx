@@ -11,7 +11,7 @@ export default function Map({
   cityClinics: Clinic[];
 }) {
   const mapRef = useRef<HTMLDivElement>(null);
-  const [isLoading, setIsLoading] = useState(true); // Loading state
+  const [isLoading, setIsLoading] = useState(true); 
 
   useEffect(() => {
     const initMap = async () => {
@@ -36,14 +36,14 @@ export default function Map({
       geocoder.geocode({ address: city }, async (results, status) => {
         if (status !== "OK" || !results || results.length === 0) {
           console.error("City not found:", city);
-          setIsLoading(false); // Stop loading in case of error
+          setIsLoading(false);
           return;
         }
 
         const cityLocation = results[0].geometry.location;
         const mapOptions: google.maps.MapOptions = {
           center: cityLocation,
-          zoom: 14, // Adjusted zoom level for better detail
+          zoom: 14, 
         };
 
         const map = new Map(mapRef.current as HTMLDivElement, mapOptions);
@@ -72,7 +72,7 @@ export default function Map({
           } else {
             console.error("Failed to load nearby clinics");
           }
-          setIsLoading(false); // Stop loading after request
+          setIsLoading(false);
         });
       });
     };

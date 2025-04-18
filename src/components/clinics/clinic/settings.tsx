@@ -66,7 +66,7 @@ export default function EditClinicDialog({
   }, [clinic, form]);
 
   const handleClinicSubmit = async (data: ClinicSchema) => {
-    setLoading(true); // Set loading state
+    setLoading(true); 
     const formattedAddress = data.address.startsWith("вул.")
       ? data.address
       : `вул. ${data.address}`;
@@ -93,10 +93,9 @@ export default function EditClinicDialog({
       setClinicData(updateData);
       router.refresh();
     } catch (error) {
-      // Handle error
       console.error("Error updating clinic:", error);
     } finally {
-      setLoading(false); // Reset loading state
+      setLoading(false); 
     }
   };
 
@@ -218,7 +217,7 @@ export default function EditClinicDialog({
             <Button
               type="submit"
               className="w-full bg-blue-500 hover:bg-blue-600"
-              disabled={loading} // Disable button when loading
+              disabled={loading} 
             >
               {loading ? "Оновлення..." : "Оновити дані клініки"}
             </Button>

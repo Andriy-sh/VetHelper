@@ -47,7 +47,6 @@ export default function Support() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-slate-300 to-neutral-200 px-4 md:px-8 lg:px-16 py-16 md:py-24">
       <div className="w-full max-w-7xl flex flex-col lg:flex-row gap-y-12 lg:gap-x-20">
-        {/* Лівий блок: текст + іконки */}
         <div className="flex-1 flex-col flex justify-center space-y-8">
           <motion.h1
             ref={ref}
@@ -97,7 +96,6 @@ export default function Support() {
           </div>
         </div>
 
-        {/* Правий блок: зображення */}
         <motion.div
           ref={ref}
           initial={{ scale: 0.5, opacity: 0 }}

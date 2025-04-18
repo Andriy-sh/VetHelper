@@ -46,7 +46,6 @@ export default function ChatBot() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-neutral-200 to-slate-300 px-4 py-20 sm:px-6 lg:px-16">
       <div className="w-full max-w-7xl flex flex-col lg:flex-row gap-12 items-center">
-        {/* Ліва частина */}
         <div className="flex-1 flex flex-col justify-center space-y-8">
           <motion.h1
             ref={ref}
@@ -98,7 +97,6 @@ export default function ChatBot() {
           </div>
         </div>
 
-        {/* Права частина */}
         <motion.div
           ref={ref}
           initial={{ scale: 0.5, opacity: 0 }}

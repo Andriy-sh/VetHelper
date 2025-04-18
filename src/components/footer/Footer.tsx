@@ -11,7 +11,6 @@ export default function Footer() {
     <footer className="bg-gradient-to-b from-gray-700 to-gray-950 text-white py-12 md:py-16">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 lg:gap-12">
-          {/* Швидкі Посилання */}
           <div>
             <h2 className="text-lg sm:text-xl font-bold mb-4 sm:mb-6 text-white">
               Швидкі Посилання
@@ -56,7 +55,6 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Ресурси */}
           <div>
             <h2 className="text-lg sm:text-xl font-bold mb-4 sm:mb-6 text-white">
               Ресурси
@@ -97,7 +95,6 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Соціальні Мережі */}
           <div>
             <h2 className="text-lg sm:text-xl font-bold mb-4 sm:mb-6 text-white">
               Соціальні Мережі
@@ -142,7 +139,6 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Підписка на Новини */}
           <div className="md:col-span-2 lg:col-span-1">
             <h2 className="text-lg sm:text-xl font-bold mb-4 sm:mb-6 text-white">
               Підписка на Новини

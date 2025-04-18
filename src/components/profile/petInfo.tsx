@@ -92,7 +92,6 @@ export const PetInfo = ({
         </motion.div>
       </div>
 
-      {/* Адаптивна кнопка для малих екранів */}
       <div className="lg:hidden flex justify-center">
         <Link
           href="/pets"
