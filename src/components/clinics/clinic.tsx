@@ -63,8 +63,7 @@ export default function SingleClinic({
           )}
         </div>
 
-        {/* Tab Buttons */}
-        <div className="flex flex-wrap justify-center space-x-4 mb-6 sm:space-x-0 sm:space-y-4 sm:flex-col">
+        <div className="flex flex-wrap w-auto flex-row justify-center space-x-4 mb-6 sm:space-x-0  sm:flex-col lg:space-x-5 lg:flex-row">
           {[
             "info",
             "services",
@@ -77,7 +76,7 @@ export default function SingleClinic({
           ].map((section) => (
             <button
               key={section}
-              className={`px-4 py-2 rounded-lg transition duration-300 w-full sm:w-auto ${
+              className={`px-4 py-2 rounded-lg transition duration-300 sm:w-auto flex ${
                 view === section ? "bg-blue-500 text-white" : "bg-gray-200"
               }`}
               onClick={() => setView(section)}
@@ -94,7 +93,6 @@ export default function SingleClinic({
           ))}
         </div>
 
-        {/* Content Sections */}
         {view === "info" && (
           <Info
             appointments={appointments}
