@@ -11,7 +11,7 @@ export default function Map({
   cityClinics: Clinic[];
 }) {
   const mapRef = useRef<HTMLDivElement>(null);
-  const [isLoading, setIsLoading] = useState(true); 
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const initMap = async () => {
@@ -43,7 +43,7 @@ export default function Map({
         const cityLocation = results[0].geometry.location;
         const mapOptions: google.maps.MapOptions = {
           center: cityLocation,
-          zoom: 14, 
+          zoom: 14,
         };
 
         const map = new Map(mapRef.current as HTMLDivElement, mapOptions);
