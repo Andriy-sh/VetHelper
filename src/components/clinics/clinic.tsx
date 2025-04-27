@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import Link from "next/link";
+import { Menu, X } from "lucide-react"; // Іконки для бургер-меню
 import {
   Appointment,
   Clinic,
@@ -48,6 +49,18 @@ export default function SingleClinic({
   clinicNews: ClinicNews[];
 }) {
   const [view, setView] = useState("info");
+  const [menuOpen, setMenuOpen] = useState(false); // Стан для бургер-меню
+
+  const sections = [
+    { id: "info", label: "Основна інформація" },
+    { id: "services", label: "Послуги" },
+    { id: "doctors", label: "Спеціалісти" },
+    { id: "reviews", label: "Відгуки" },
+    { id: "gallery", label: "Фотогалерея" },
+    { id: "faq", label: "Часті питання" },
+    { id: "news", label: "Новини та акції" },
+    { id: "contact", label: "Контакти" },
+  ];
 
   return (
     <div className="min-h-screen p-4 sm:p-8 bg-gray-50 flex items-center justify-center">
@@ -61,38 +74,57 @@ export default function SingleClinic({
               Перегляд прийомів
             </Link>
           )}
+          <button
+            className="text-blue-500 md:hidden"
+            onClick={() => setMenuOpen(!menuOpen)}
+          >
+            {menuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
         </div>
 
-        <div className="flex flex-wrap w-auto flex-row justify-center space-x-4 mb-6 sm:space-x-0  sm:flex-col lg:space-x-5 lg:flex-row">
-          {[
-            "info",
-            "services",
-            "doctors",
-            "reviews",
-            "gallery",
-            "faq",
-            "news",
-            "contact",
-          ].map((section) => (
+        {/* Бургер-меню для мобільних пристроїв */}
+        {menuOpen && (
+          <div className="bg-blue-100 p-4 rounded-lg mb-6 md:hidden">
+            <ul className="space-y-4">
+              {sections.map((section) => (
+                <li key={section.id}>
+                  <button
+                    className={`w-full text-left px-4 py-2 rounded-lg transition duration-300 ${
+                      view === section.id
+                        ? "bg-blue-500 text-white"
+                        : "bg-gray-200 text-gray-700"
+                    }`}
+                    onClick={() => {
+                      setView(section.id);
+                      setMenuOpen(false); // Закриваємо меню після вибору
+                    }}
+                  >
+                    {section.label}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {/* Навігація для великих екранів */}
+        <div className="hidden md:flex flex-wrap w-auto flex-row justify-center space-x-4 mb-6">
+          {sections.map((section) => (
             <button
-              key={section}
-              className={`px-4 py-2 rounded-lg transition duration-300 sm:w-auto flex ${
-                view === section ? "bg-blue-500 text-white" : "bg-gray-200"
+              key={section.id}
+              className={`px-4 py-2 rounded-lg transition duration-300 ${
+                view === section.id
+                  ? "bg-blue-500 text-white"
+                  : "bg-gray-200 text-gray-700"
               }`}
-              onClick={() => setView(section)}
+              onClick={() => setView(section.id)}
             >
-              {section === "info" && "Основна інформація"}
-              {section === "services" && "Послуги"}
-              {section === "doctors" && "Спеціалісти"}
-              {section === "reviews" && "Відгуки"}
-              {section === "gallery" && "Фотогалерея"}
-              {section === "faq" && "Часті питання"}
-              {section === "news" && "Новини та акції"}
-              {section === "contact" && "Контакти"}
+              {section.label}
             </button>
           ))}
         </div>
 
+        {/* Вміст розділів */}
         {view === "info" && (
           <Info
             appointments={appointments}

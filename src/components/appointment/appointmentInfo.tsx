@@ -39,7 +39,7 @@ import {
 } from "../ui/hover-card";
 import ChangePetAvatar from "../pets/changePetAvatar";
 import { useRouter } from "next/navigation";
-import AllergyDialog from "../pets/allergyDialog";
+// import AllergyDialog from "../pets/allergyDialog";
 
 export default function AppointmentInfo({
   appointment,
@@ -302,7 +302,7 @@ export default function AppointmentInfo({
                 </p>
               )}
             </div>
-            <AllergyDialog petId={pet.id} clinicId={clinic.id} />
+            {/* <AllergyDialog petId={pet.id} clinicId={clinic.id} /> */}
           </div>
         </div>
       </div>

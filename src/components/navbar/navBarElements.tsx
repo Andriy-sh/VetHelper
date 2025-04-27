@@ -13,7 +13,6 @@ import { Menu, X } from "lucide-react";
 
 const authLinks = [
   { href: "/clinics", label: "Клініки" },
-  { href: "/map", label: "Карта" },
   { href: "/blogs", label: "Блоги" },
   { href: "/pets", label: "Ваші улюбленці" },
 ];

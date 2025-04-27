@@ -51,7 +51,7 @@ export default function ChatBot() {
             ref={ref}
             initial={{ opacity: 0, y: -50 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.1 }}
             className="font-bold text-3xl sm:text-4xl lg:text-5xl text-center lg:text-left"
           >
             Розумний чат-бот для перевірки симптомів вашого улюбленця
@@ -61,7 +61,7 @@ export default function ChatBot() {
             ref={ref}
             initial={{ opacity: 0, y: 50 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.4, delay: 0.2 }}
+            transition={{ duration: 0.1, delay: 0.04 }}
             className="text-gray-700 text-base sm:text-lg text-center lg:text-left"
           >
             Наш інтелектуальний помічник надає миттєві рекомендації на основі
